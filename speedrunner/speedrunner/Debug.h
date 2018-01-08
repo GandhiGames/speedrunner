@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <array>
 #include <SFML\Graphics.hpp>
 
@@ -18,11 +19,13 @@ public:
 	static void DrawRect(const sf::Vector2f& pos, const sf::Vector2f size, sf::Color colour = sf::Color::White);
 
 	static void Log(const sf::Vector2f& v);
-	static void Log(const char* msg);
-	static void LogWarning(const char* msg);
-	static void LogError(const char* msg);
+	static void Log(const std::string& msg);
+	static void LogWarning(const std::string& msg);
+	static void LogError(const std::string& msg);
 
 	static void ToggleGridCoordinates(bool draw);
+
+	//TODO: implement function timer for performance measurement see math_engine
 
 private:
 	static std::vector<std::array<sf::Vertex, 2>> m_lines;

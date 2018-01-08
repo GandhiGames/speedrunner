@@ -95,25 +95,24 @@ void Debug::DrawRect(const sf::Vector2f& pos, const sf::Vector2f size, sf::Color
 
 void Debug::Log(const sf::Vector2f& v)
 {
-	char result[100];
-	sprintf_s(result, "\n{%f, %f}", v.x, v.y);
-	printf(result);
+	std::cout << v.x << ", " << v.y << std::endl;
 }
 
-void Debug::Log(const char* msg)
+void Debug::Log(const std::string& msg)
 {
-	printf(msg);
+	std::cout << msg << std::endl;
 }
 
-//TODO: differentiate between log, warning, and error
-void Debug::LogWarning(const char* msg)
+void Debug::LogWarning(const std::string& msg)
 {
-	printf(msg);
+	std::cout << "WARNING: " << msg << std::endl;
 }
 
-void Debug::LogError(const char* msg)
+void Debug::LogError(const std::string& msg)
 {
-	printf(msg);
+	std::cout << "ERROR: " << msg << std::endl;
+	//TODO: test debug break.
+	__debugbreak();
 }
 
 void Debug::ToggleGridCoordinates(bool draw)

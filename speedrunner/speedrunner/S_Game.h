@@ -11,6 +11,7 @@
 #include "Debug.h"
 #include "FPS.h"
 #include "ResourceManager.h"
+#include "Map.h"
 
 class S_Game : public Scene
 {
@@ -33,5 +34,6 @@ private:
 	std::shared_ptr<Object> m_player;
 	FPS m_fps;
 	ResourceManager<sf::Texture> m_textureManager;
+	Map m_map;
 };
 

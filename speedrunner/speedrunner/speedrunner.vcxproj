@@ -166,6 +166,7 @@
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Raycast.h" />
     <ClInclude Include="RaycastResult.h" />
@@ -213,13 +214,13 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Raycast.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="S_Game.cpp" />
     <ClCompile Include="S_Intro.cpp" />
     <ClCompile Include="S_Paused.cpp" />
-    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

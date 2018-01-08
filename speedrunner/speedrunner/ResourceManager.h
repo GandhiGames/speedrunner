@@ -22,7 +22,6 @@ public:
 		}
 
 		// At this point the texture doesn't exists, so we'll create and add it.
-		m_currentId++;
 
 		std::shared_ptr<T> resource = std::make_shared<T>();
 		if (!resource->loadFromFile(filePath))
@@ -33,7 +32,7 @@ public:
 		m_resources.insert(std::make_pair(filePath, std::make_pair(m_currentId, resource)));
 
 		// Return the resource id.
-		return m_currentId;
+		return m_currentId++;
 	}
 
 	// Removes a texture from the manager from a given id.
