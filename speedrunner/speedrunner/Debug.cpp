@@ -1,6 +1,5 @@
 #include "Debug.h"
 #include "SharedContext.h"
-#include "DungeonGenerator.h"
 
 std::vector<std::array<sf::Vertex, 2>> Debug::m_lines = {};
 std::vector<sf::RectangleShape> Debug::m_rects = {};
@@ -13,6 +12,8 @@ void Debug::Initialise(SharedContext& context)
 	//TODO: create generic resource manager that includes fonts
 	m_debugFont.loadFromFile("../resources/fonts/Gisha.ttf");
 
+	//TODO: re-implement debug tile coordinate text (see below).
+	/*
 	auto level = context.m_level;
 	auto nodes = level->GetNodes();
 
@@ -32,13 +33,14 @@ void Debug::Initialise(SharedContext& context)
 			text.setOrigin(textRect.left + textRect.width / 2.0f,
 				textRect.top + textRect.height / 2.0f);
 		
-			float tileHalf = DUNGEON_TILE_SIZE * 0.5f;
+			float tileHalf = TILE_SIZE * 0.5f;
 			text.setPosition(level->GetTilePosition(x, y) +
 				sf::Vector2f(tileHalf , tileHalf));
 
 			m_coordinateTexts.push_back(text);
 		}
 	}
+	*/
 }
 
 void Debug::Draw(sf::RenderWindow& window)

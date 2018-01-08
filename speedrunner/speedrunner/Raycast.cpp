@@ -1,7 +1,7 @@
 #include "Raycast.h"
 #include "SharedContext.h"
-#include "DungeonGenerator.h"
 #include "Object.h"
+#include "Tile.h"
 
 SharedContext* Raycast::m_context;
 
@@ -10,7 +10,7 @@ void Raycast::Initialise(SharedContext* context)
 	m_context = context;
 }
 
-//TODO: increment step to tile size?
+
 std::vector<sf::Vector2f> Raycast::BresenhamLine(const sf::Vector2f& from, const sf::Vector2f& to)
 {
 	// TODO: it would be preferable to calculate in
@@ -26,17 +26,17 @@ std::vector<sf::Vector2f> Raycast::BresenhamLine(const sf::Vector2f& from, const
 
 	if (absDiffX > absDiffY)
 	{
-		steps = (absDiffX / DUNGEON_TILE_SIZE) + 1;
+		steps = (absDiffX / Sheet::TILE_SIZE) + 1;
 	}
 	else
 	{
-		steps = (absDiffY / DUNGEON_TILE_SIZE) + 1;
+		steps = (absDiffY / Sheet::TILE_SIZE) + 1;
 	}
 
 	float xStep = diff.x / steps;
 	float yStep = diff.y / steps;
 
-	if (xStep >= DUNGEON_TILE_SIZE || yStep >= DUNGEON_TILE_SIZE)
+	if (xStep >= Sheet::TILE_SIZE || yStep >= Sheet::TILE_SIZE)
 	{
 		//TODO: ensure this is never called and remove
 		Debug::LogWarning("Raycast::Raycast not granular enough");
@@ -54,6 +54,8 @@ std::vector<sf::Vector2f> Raycast::BresenhamLine(const sf::Vector2f& from, const
 	}
 
 	return result;
+	
+	//TODO: re-add bresenham line calculation? What benefits does it have over the simplified implementation above.
 
 	/*
 	float x0 = from.x;
@@ -142,6 +144,8 @@ std::vector<std::shared_ptr<Object>> Raycast::CircleCast(const sf::Vector2f& pos
 // Raycast using Bresenham algorithm 
 RaycastResult Raycast::Cast(const sf::Vector2f& from, const sf::Vector2f& to)
 {
+	Debug::LogError("RAYCAST NOT FUNCTIONING");
+
 	RaycastResult result;
 	result.collision = false;
 
@@ -171,14 +175,16 @@ RaycastResult Raycast::Cast(const sf::Vector2f& from, const sf::Vector2f& to)
 			sf::Vector2f& rayPoint = rayLine[rayPointIndex];
 	
 			//auto tile = m_context->m_level->GetNodes().GetTile(rayPoint);
-
 			//Debug::DrawRect(m_context->m_level->GetTilePosition(tile->x, tile->y), sf::Vector2f(DUNGEON_TILE_SIZE, DUNGEON_TILE_SIZE));
 
+			//TODO: re-implement level collision checking (see below).
+			/*
 			if (m_context->m_level->IsSolid(rayPoint)) 
 			{
 				result.collision = true;
 				return result;
 			}
+			*/
 			
 			if (rayLine[0] != from) 
 			{

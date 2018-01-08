@@ -3,28 +3,6 @@
 #include <string>
 #include <SFML\Graphics.hpp>
 
-enum class DungeonTileType
-{
-	Invalid = -1,
-	Wall,
-	WallTopLeft,
-	WallTopMiddle,
-	WallTopRight,
-	WallMiddleLeft,
-	WallMiddle,
-	WallMiddleRight,
-	WallBottomLeft,
-	WallBottomMiddle,
-	WallBottomRight,
-	Floor,
-	Entry,
-	Exit,
-	FacadeLeft,
-	FacadeMiddle,
-	FacadeRight,
-	Max
-};
-
 enum class ANIMATION_STATE 
 {
 	WALK,

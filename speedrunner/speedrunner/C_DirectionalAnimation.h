@@ -9,7 +9,6 @@
 #include "C_Velocity.h"
 #include "C_Direction.h"
 #include "Util.h"
-#include "TextureManager.h"
 
 
 class C_DirectionalAnimation : public Component, public C_Updateable

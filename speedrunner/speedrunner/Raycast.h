@@ -6,6 +6,7 @@
 #include "RaycastResult.h"
 #include "Debug.h"
 
+
 class Raycast
 {
 	friend class SharedContext;

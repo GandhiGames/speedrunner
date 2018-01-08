@@ -19,7 +19,6 @@
 #include "C_BoxCollider.h"
 #include "C_CollidableTest.h"
 #include "C_Camera.h"
-#include "C_PathFinding.h"
 #include "C_RaycastTest.h"
 #include "C_MovementBehavior.h"
 #include "C_Seperation.h"

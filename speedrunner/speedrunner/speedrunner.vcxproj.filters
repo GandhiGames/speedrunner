@@ -6,9 +6,6 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Animation</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationFactory.cpp">
-      <Filter>Animation</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationGroup.cpp">
       <Filter>Animation</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
     <ClCompile Include="C_MovementBehavior.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="C_PathFinding.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="C_RaycastTest.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -108,9 +102,6 @@
     <ClCompile Include="StateManager.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Resource Management</Filter>
-    </ClCompile>
     <ClCompile Include="Raycast.cpp">
       <Filter>Raycast</Filter>
     </ClCompile>
@@ -123,8 +114,8 @@
     <ClCompile Include="CollisionResolver.cpp">
       <Filter>Collisions</Filter>
     </ClCompile>
-    <ClCompile Include="PathFinder.cpp">
-      <Filter>Pathfinding</Filter>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,9 +123,6 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="SharedContext.h" />
     <ClInclude Include="Animation.h">
-      <Filter>Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationFactory.h">
       <Filter>Animation</Filter>
     </ClInclude>
     <ClInclude Include="AnimationGroup.h">
@@ -197,9 +185,6 @@
     <ClInclude Include="C_MovementBehavior.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="C_PathFinding.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="C_RaycastTest.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -245,9 +230,6 @@
     <ClInclude Include="StateManager.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Resource Management</Filter>
-    </ClInclude>
     <ClInclude Include="Raycast.h">
       <Filter>Raycast</Filter>
     </ClInclude>
@@ -266,8 +248,11 @@
     <ClInclude Include="CollisionResolver.h">
       <Filter>Collisions</Filter>
     </ClInclude>
-    <ClInclude Include="PathFinder.h">
-      <Filter>Pathfinding</Filter>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -300,6 +285,9 @@
     </Filter>
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{47a6f111-b902-4d71-806f-0b43b483cada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{e44f6f47-d49f-46fc-8e96-288a95c4263b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
