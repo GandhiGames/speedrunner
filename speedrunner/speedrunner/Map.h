@@ -6,7 +6,6 @@
 #include <sstream>
 
 #include "Tile.h"
-#include "Debug.h"
 
 // Holds the actual tile map.
 using TileMap = std::unordered_map<unsigned int, std::shared_ptr<Tile>>;

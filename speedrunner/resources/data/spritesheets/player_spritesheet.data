@@ -1,0 +1,10 @@
+Texture characters/player_spritesheet.png
+Size 32 32
+Scale 1.0 1.0
+|Type|Name|StartFrame|EndFrame|Row|FrameTime|Loop|
+Animation IDLE 0 7 0 0.2 1
+Animation WALK 0 5 2 0.1 1
+Animation JUMP 0 3 4 0.2 1
+Animation ATTACK 0 4 6 0.08 1
+Animation HURT 0 2 8 0.2 1	 
+Animation DEATH 0 8 10 0.15 0

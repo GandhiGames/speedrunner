@@ -114,7 +114,10 @@
     <ClCompile Include="CollisionResolver.cpp">
       <Filter>Collisions</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Map.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h" />
@@ -252,7 +255,10 @@
     <ClInclude Include="Tile.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="Map.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">

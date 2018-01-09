@@ -7,33 +7,23 @@ enum class ANIMATION_STATE
 {
 	WALK,
 	IDLE,
-	SWING,
+	JUMP,
+	ATTACK,
+	HURT,
+	DEATH,
 	COUNT
 };
 
 enum class MOVEMENT_DIRECTION
 {
 	LEFT,
-	DOWN,
 	RIGHT,
-	UP,
-	COUNT
-};
-
-enum class SPRITE_TYPE
-{
-	BODY,
-	SHIRT,
-	HAIR,
-	PANTS,
-	SHOES,
-	SWORD,
-	BOW,
 	COUNT
 };
 
 const std::string PLAYER_TAG = "Player";
 const std::string FOLLOWER_TAG = "Follower";
+const std::string ENEMY_TAG = "Follower";
 
 const std::string BODY_PARTS_ROOT_FOLDER = "../resources/characters/body_parts/";
 
@@ -121,6 +111,7 @@ public:
 		return sf::Vector2f(v1.x * v2.x, v1.y * v2.y);
 	}
 
+	//TODO: duplicated in map class. Remove map class method and use this one if any other methods will use it.
 	static int to1DIndex(int x, int y, int width)
 	{
 		return y * width + x;

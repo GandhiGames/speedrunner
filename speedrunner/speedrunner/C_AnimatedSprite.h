@@ -21,7 +21,7 @@ public:
 	virtual void Draw(sf::RenderWindow &window, float timeDelta) override;
 
 	//TODO: look into optomising pass by-reference? convert to data only struct?
-	void AddAnimation(ANIMATION_STATE state, AnimationGroup& animationGroup);
+	void AddAnimation(ANIMATION_STATE state, std::shared_ptr<AnimationGroup> animationGroup);
 	void SetCurrentAnimation(ANIMATION_STATE state);
 	
 	std::shared_ptr<AnimationGroup> GetAnimation(ANIMATION_STATE state);

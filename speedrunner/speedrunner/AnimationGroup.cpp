@@ -1,17 +1,17 @@
 #include "AnimationGroup.h"
 
 
-void AnimationGroup::AddAnimation(MOVEMENT_DIRECTION dir, Animation& animation)
+void AnimationGroup::AddAnimation(MOVEMENT_DIRECTION dir, std::shared_ptr<Animation> animation)
 {
 	auto animationGroup = m_animations.find(dir);
 
 	if (animationGroup == m_animations.end())
 	{
-		m_animations.insert(std::make_pair(dir, std::vector<std::shared_ptr<Animation>> { std::make_shared<Animation>(animation) }));
+		m_animations.insert(std::make_pair(dir, std::vector<std::shared_ptr<Animation>> { animation }));
 	}
 	else
 	{
-		animationGroup->second.emplace_back(std::make_shared<Animation>(animation));
+		animationGroup->second.emplace_back(animation);
 	}
 }
 
@@ -58,6 +58,7 @@ void AnimationGroup::Reset()
 	}
 }
 
+/*
 std::vector<std::shared_ptr<Animation>> AnimationGroup::GetAnimations(MOVEMENT_DIRECTION dir)
 {
 	auto animationGroup = m_animations.find(dir);
@@ -87,3 +88,4 @@ std::vector<std::shared_ptr<Animation>> AnimationGroup::GetAnimations(SPRITE_TYP
 
 	return animations;
 }
+*/

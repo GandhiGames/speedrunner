@@ -1,8 +1,7 @@
 #include "Animation.h"
 
-Animation::Animation(SPRITE_TYPE animationType, sf::Texture& texture, int row, int width, int height, int frameStart, 
-	int frameEnd, int frameSpeed, bool loop) :
-	m_animationType(animationType),
+Animation::Animation(std::shared_ptr<sf::Texture> texture, int row, int width, int height, int frameStart, 
+	int frameEnd, float frameSpeed, bool loop) :
 	m_row(row),
 	m_width(width),
 	m_height(height),
@@ -14,7 +13,7 @@ Animation::Animation(SPRITE_TYPE animationType, sf::Texture& texture, int row, i
 	m_loop(loop),
 	m_shouldAnimate(true)
 {
-	m_sprite.setTexture(texture);
+	m_sprite.setTexture(*texture);
 
 	m_sprite.setOrigin(m_width / 2.f, m_height / 2.f);
 
@@ -34,7 +33,7 @@ void Animation::Draw(sf::RenderWindow &window, float timeDelta)
 		m_timeDelta += timeDelta;
 
 		// check if the frame should be updated
-		if (m_timeDelta >= (1.f / m_frameSpeed))
+		if (m_timeDelta >= m_frameSpeed)
 		{
 			NextFrame();
 			m_timeDelta = 0;
@@ -103,9 +102,4 @@ void Animation::SetFrameAction(int frame, std::function<void(void)> action)
 			actionKey->second = action;
 		}
 	}
-}
-
-SPRITE_TYPE Animation::GetType() const
-{
-	return m_animationType;
 }

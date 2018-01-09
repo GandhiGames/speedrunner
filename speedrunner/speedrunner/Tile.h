@@ -2,7 +2,6 @@
 
 #include "SharedContext.h"
 #include "ResourceManager.h"
-
 #include "Debug.h"
 
 //TODO: load maps from tmx

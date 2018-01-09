@@ -15,6 +15,7 @@ void C_MeleeAttack::Awake()
 
 void C_MeleeAttack::Start()
 {
+	/*
 	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::LEFT, sf::Vector2f(-hitDistance, 0.f)));
 	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::RIGHT, sf::Vector2f(hitDistance, 0.f)));
 	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::DOWN, sf::Vector2f(0.f, hitDistance)));
@@ -32,6 +33,7 @@ void C_MeleeAttack::Start()
 			a->SetFrameAction(3, std::bind(&C_MeleeAttack::DoMeleeAttack, this));
 		}
 	}
+	*/
 
 }
 
@@ -39,7 +41,7 @@ void C_MeleeAttack::Update(float deltaTime)
 {
 	if (Input::IsKeyDown(Input::KEY::KEY_ATTACK))
 	{
-		m_animation->SetCurrentAnimation(ANIMATION_STATE::SWING);
+		m_animation->SetCurrentAnimation(ANIMATION_STATE::ATTACK);
 	}
 }
 

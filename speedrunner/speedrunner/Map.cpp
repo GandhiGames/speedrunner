@@ -164,7 +164,7 @@ void Map::LoadTiles(const std::string& tileDataPath,
 	int textureId = m_context.m_textureManager->Add(tileTexturePath);
 	if (textureId < 0)
 	{
-		Debug::LogError("Map spritesheet not found");
+		Debug::LogError("Map spritesheet not found: " + tileTexturePath);
 		return;
 	}
 

@@ -12,6 +12,7 @@
 #include "FPS.h"
 #include "ResourceManager.h"
 #include "Map.h"
+#include "AnimationFactory.h"
 
 class S_Game : public Scene
 {

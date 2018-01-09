@@ -16,9 +16,12 @@ public:
 	void Set(sf::Vector2f& velocity);
 	const sf::Vector2f& Get() const;
 
+	void SetMaxVelocity(const sf::Vector2f& max);
+
 private:
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_force;
+	sf::Vector2f m_maxVelocity;
 };
 
 

@@ -9,6 +9,14 @@ m_animated(false), m_curDirection(MOVEMENT_DIRECTION::COUNT)
 void C_AnimatedSprite::Awake()
 {
 	m_direction = m_owner->GetComponent<C_Direction>();
+
+	if (!m_direction)
+	{
+		Debug::LogError("Cannot animate without direction. Adding Direction. To remove this warning add direction to object before this component");
+		
+		//TODO: enable ability to add components in awake function:
+		//m_direction = m_owner->AddComponent<C_Direction>();
+	}
 }
 
 void C_AnimatedSprite::LateUpdate(float deltaTime)
@@ -37,9 +45,9 @@ void C_AnimatedSprite::Draw(sf::RenderWindow &window, float timeDelta)
 	}
 }
 
-void C_AnimatedSprite::AddAnimation(ANIMATION_STATE state, AnimationGroup& animationGroup)
+void C_AnimatedSprite::AddAnimation(ANIMATION_STATE state, std::shared_ptr<AnimationGroup> animationGroup)
 {
-	auto inserted = m_animations.insert(std::make_pair(state, std::make_shared<AnimationGroup>(animationGroup)));
+	auto inserted = m_animations.insert(std::make_pair(state, animationGroup));
 
 	if (!m_curAnimation)
 	{
