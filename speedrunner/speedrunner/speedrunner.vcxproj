@@ -154,6 +154,7 @@
     <ClInclude Include="C_InstanceID.h" />
     <ClInclude Include="C_KeyboardController.h" />
     <ClInclude Include="C_KnockBack.h" />
+    <ClInclude Include="C_MapCollision.h" />
     <ClInclude Include="C_MeleeAttack.h" />
     <ClInclude Include="C_Velocity.h" />
     <ClInclude Include="C_MovementBehavior.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="C_InstanceID.cpp" />
     <ClCompile Include="C_KeyboardController.cpp" />
     <ClCompile Include="C_KnockBack.cpp" />
+    <ClCompile Include="C_MapCollision.cpp" />
     <ClCompile Include="C_MeleeAttack.cpp" />
     <ClCompile Include="C_Updateable.cpp" />
     <ClCompile Include="C_Velocity.cpp" />

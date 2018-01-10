@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "Component.h"
-#include "C_Updateable.h"
 #include "C_Velocity.h"
 #include "Util.h"
 

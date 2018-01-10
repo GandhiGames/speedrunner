@@ -12,19 +12,10 @@
     <ClCompile Include="C_AnimatedSprite.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="C_BoxCollider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="C_Camera.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="C_CircleCollider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="C_CollidableTest.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="C_Collider2D.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="C_DebugPositionLabel.cpp">
@@ -115,6 +106,16 @@
     <ClCompile Include="C_Seperation.cpp">
       <Filter>Components\Steering Behaviors</Filter>
     </ClCompile>
+    <ClCompile Include="C_BoxCollider.cpp">
+      <Filter>Components\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="C_CircleCollider.cpp">
+      <Filter>Components\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Collider2D.cpp">
+      <Filter>Components\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="C_MapCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h" />
@@ -129,19 +130,10 @@
     <ClInclude Include="C_AnimatedSprite.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="C_BoxCollider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="C_Camera.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="C_CircleCollider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="C_CollidableTest.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="C_Collider2D.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="C_DebugPositionLabel.h">
@@ -256,6 +248,16 @@
     <ClInclude Include="C_Seperation.h">
       <Filter>Components\Steering Behaviors</Filter>
     </ClInclude>
+    <ClInclude Include="C_BoxCollider.h">
+      <Filter>Components\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="C_CircleCollider.h">
+      <Filter>Components\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Collider2D.h">
+      <Filter>Components\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="C_MapCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">
@@ -296,6 +298,9 @@
     </Filter>
     <Filter Include="Components\Steering Behaviors">
       <UniqueIdentifier>{d7c33bc9-0c10-4a4e-a9c5-4438b1e6e17c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Collisions">
+      <UniqueIdentifier>{ad619e13-bbb8-4dd2-bd00-4b860d11778b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

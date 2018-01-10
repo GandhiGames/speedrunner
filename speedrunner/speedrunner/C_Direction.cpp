@@ -30,19 +30,6 @@ void C_Direction::Update(float timeDelta)
 				m_moveDir = MOVEMENT_DIRECTION::RIGHT;
 			}
 		}
-		/*
-		else
-		{
-			if (velocity.y <= 0)
-			{
-				m_moveDir = MOVEMENT_DIRECTION::UP;
-			}
-			else
-			{
-				m_moveDir = MOVEMENT_DIRECTION::DOWN;
-			}
-		}
-		*/
 	}
 }
 

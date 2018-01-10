@@ -21,12 +21,10 @@ public:
 	* @param position The new position of the player.
 	*/
 	void SetPosition(sf::Vector2f position);
-
-	//TODO: should we clamp values so they do not enter tiles.
 	void SetPosition(float x, float y);
 
 	void AddPosition(sf::Vector2f position);
-
+	void AddPosition(float x, float y);
 
 	void SetX(float x);
 

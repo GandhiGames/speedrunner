@@ -24,5 +24,6 @@ private:
 
 	//TODO: should keyboard controller decide movement speed? nope.
 	int m_speed;
+	int m_jumpForce;
 };
 

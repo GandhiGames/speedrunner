@@ -1,4 +1,6 @@
 #include "AnimationFactory.h"
+#include "SharedContext.h"
+#include "ResourceManager.h"
 
 std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::FromFile(SharedContext& context, const std::string& filePath)
 {
@@ -40,7 +42,7 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 		{
 			std::string textureName;
 			keystream >> textureName;
-
+			
 			textureIndex = context.m_textureManager->Add("../resources/spritesheets/" + textureName);
 		}
 		else if (type == "Size")

@@ -21,7 +21,7 @@ void S_Game::OnCreate()
 	m_view.setSize((float)size.x, (float)size.y);
 	m_view.setCenter(size.x / 2.f, size.y / 2.f);
 	//TODO: move to camera component.
-	m_view.zoom(.8f);
+	m_view.zoom(.6f);
 	context->m_window->setView(m_view);
 
 
@@ -36,8 +36,9 @@ void S_Game::OnCreate()
 	m_player->AddComponent<C_KeyboardController>();
 	m_player->AddComponent<C_Direction>();
 	auto collider1 = m_player->AddComponent<C_BoxCollider>();
-	collider1->SetCollidable(sf::FloatRect()); 	//TODO: need to setup player collider size
+	collider1->SetCollidable(sf::FloatRect(0, 0, 32, 32)); 	//TODO: need to setup player collider size
 	collider1->SetLayer(CollisionLayer::Player);
+	m_player->AddComponent<C_MapCollision>();
 
 	auto animation = m_player->AddComponent<C_AnimatedSprite>();
 	

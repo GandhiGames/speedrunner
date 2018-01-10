@@ -109,7 +109,7 @@ void C_BoxCollider::ResolveOverlap(const Manifold& m)
 	auto vel = m_owner->GetComponent<C_Velocity>();
 	if (vel)
 	{
-		vel->SetVelovity(vel->GetVelocity() + (m.resolve * .5f));
+		vel->SetVelocity(vel->GetVelocity() + (m.resolve * .5f));
 	}
 	//m_owner->m_transform->SetPosition(m_owner->m_transform->GetPosition() + m.resolve);
 }

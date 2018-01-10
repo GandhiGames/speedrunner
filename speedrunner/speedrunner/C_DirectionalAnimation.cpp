@@ -20,7 +20,7 @@ void C_DirectionalAnimation::Update(float deltaTime)
 
 	const sf::Vector2f& velocity = m_movement->GetVelocity();
 
-	if ((velocity.x != 0) || (velocity.y != 0))
+	if (velocity.x != 0)
 	{
 		animState = ANIMATION_STATE::WALK;
 	}

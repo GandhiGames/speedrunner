@@ -28,6 +28,7 @@
 #include "C_Damageable.h"
 #include "C_Health.h"
 #include "C_KnockBack.h"
+#include "C_MapCollision.h"
 
 class Object
 {

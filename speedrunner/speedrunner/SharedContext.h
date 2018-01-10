@@ -3,13 +3,11 @@
 #include <memory>
 #include <SFML\Graphics.hpp>
 
-#include "Object.h"
-#include "ResourceManager.h"
-
 class SharedContext
 {
+	friend class Object;
 	friend class Map;
-
+	template<typename T> friend class ResourceManager;
 public:
 	sf::RenderWindow* m_window;
 	std::shared_ptr<Object> m_player;

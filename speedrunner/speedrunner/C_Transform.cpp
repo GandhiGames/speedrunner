@@ -23,6 +23,12 @@ void C_Transform::AddPosition(sf::Vector2f position)
 	m_position += position;
 }
 
+void C_Transform::AddPosition(float x, float y)
+{
+	m_position.x += x;
+	m_position.y += y;
+}
+
 void C_Transform::SetX(float x)
 {
 	m_position.x = x;

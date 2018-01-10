@@ -119,3 +119,14 @@ void Debug::ToggleGridCoordinates(bool draw)
 {
 	m_drawGridCoordinates = draw;
 }
+
+void Debug::TimeFunction(std::function<void()> func)
+{
+	std::clock_t start = std::clock();
+
+	func();
+
+	double ms = (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000);
+
+	std::cout << "Finished in " << ms << "ms" << std::endl;
+}

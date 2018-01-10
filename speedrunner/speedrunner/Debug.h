@@ -1,7 +1,8 @@
 #pragma once
 
-
 #include <array>
+#include <iostream>
+#include <functional>
 #include <SFML\Graphics.hpp>
 
 #include "Raycast.h"
@@ -24,6 +25,8 @@ public:
 	static void LogError(const std::string& msg);
 
 	static void ToggleGridCoordinates(bool draw);
+
+	static void Debug::TimeFunction(std::function<void()> func);
 
 	//TODO: implement function timer for performance measurement see math_engine
 

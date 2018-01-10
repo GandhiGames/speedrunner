@@ -13,5 +13,6 @@ void C_KnockBack::Awake()
 
 void C_KnockBack::DoDamage(const sf::Vector2f& dir, int damage)
 {
-	m_velocity->AddForce(dir * force);
+	//TODO: re-implement
+	//m_velocity->AddForce(dir * force);
 }
