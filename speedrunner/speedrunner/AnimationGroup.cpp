@@ -1,60 +1,40 @@
 #include "AnimationGroup.h"
 
 
-void AnimationGroup::AddAnimation(MOVEMENT_DIRECTION dir, std::shared_ptr<Animation> animation)
+void AnimationGroup::AddAnimation(std::shared_ptr<Animation> animation)
 {
-	auto animationGroup = m_animations.find(dir);
-
-	if (animationGroup == m_animations.end())
-	{
-		m_animations.insert(std::make_pair(dir, std::vector<std::shared_ptr<Animation>> { animation }));
-	}
-	else
-	{
-		animationGroup->second.emplace_back(animation);
-	}
+	m_animations.emplace_back(animation);
 }
 
-void AnimationGroup::SetDirection(MOVEMENT_DIRECTION dir)
+void AnimationGroup::Flip()
 {
-	auto animationGroup = m_animations.find(dir);
-
-	if (animationGroup != m_animations.end())
+	for (auto& a : m_animations)
 	{
-		m_curAnimation = &animationGroup->second;
+		a->Flip();
 	}
 }
 
 void AnimationGroup::Draw(sf::RenderWindow &window, float timeDelta)
 {
-	if (m_curAnimation)
+	for (auto& a : m_animations)
 	{
-		for (auto& a : *m_curAnimation)
-		{
-			a->Draw(window, timeDelta);
-		}
+		a->Draw(window, timeDelta);
 	}
 }
 
 void AnimationGroup::Update(const sf::Vector2f pos)
 {
-	if (m_curAnimation)
+	for (auto& a : m_animations)
 	{
-		for (auto& a : *m_curAnimation)
-		{
-			a->SetPosition(pos);
-		}
+		a->SetPosition(pos);
 	}
 }
 
 void AnimationGroup::Reset()
 {
-	if (m_curAnimation)
+	for (auto& a : m_animations)
 	{
-		for (auto& a : *m_curAnimation)
-		{
-			a->Reset();
-		}
+		a->Reset();
 	}
 }
 

@@ -15,10 +15,11 @@ void C_Velocity::Update(float timeDelta)
 	//TODO: move force calculations to fixed update method (create fixed update method!)
 	if (abs(m_force.x) > 0.f || abs(m_force.y) > 0.f)
 	{
-		m_velocity += m_force * timeDelta;
+		m_velocity += m_force; // *timeDelta;
 
-		m_force *= 0.9f;
+		//m_force *= 0.9f;
 	}
+
 
 	if (abs(m_velocity.x) > 0.f || abs(m_velocity.y) > 0.f)
 	{
@@ -26,11 +27,14 @@ void C_Velocity::Update(float timeDelta)
 		
 		transform->AddPosition(m_velocity);
 
+		//TODO: do we want map clamp in velocity class?
 		Map* map = m_owner->m_context.m_map;
+
+		//TODO: these can be stored.
 		const sf::Vector2u& mapSize = map->GetMapSize();
 		const unsigned int tileSize = map->GetTileSize();
 
-		const sf::Vector2f& pos = m_velocity + transform->GetPosition();
+		const sf::Vector2f& pos = transform->GetPosition();
 
 		if (pos.x < 0) 
 		{
@@ -53,12 +57,18 @@ void C_Velocity::Update(float timeDelta)
 	}
 }
 
+void C_Velocity::AddForce(float x, float y)
+{
+	m_force.x = x;
+	m_force.y = y;
+}
+
 void C_Velocity::AddForce(const sf::Vector2f& force)
 {
 	m_force = force;
 }
 
-void C_Velocity::Set(sf::Vector2f& velocity)
+void C_Velocity::SetVelovity(sf::Vector2f& velocity)
 {
 	m_velocity = velocity;
 
@@ -73,7 +83,37 @@ void C_Velocity::Set(sf::Vector2f& velocity)
 	}
 }
 
-const sf::Vector2f& C_Velocity::Get() const
+void C_Velocity::ApplyFriction(int x, int y)
+{
+	if (x != 0 && m_force.x != 0)
+	{
+		if (abs(m_force.x) - abs(x) < 0)
+		{
+			m_force.x = 0;
+		}
+		else
+		{
+			if (m_force.x < 0) { m_force.x += x; }
+			else { m_force.x -= x; }
+		}
+	}
+
+	//TODO: this is copied and pasted from above (just editing y value). Remove duplication
+	if (y != 0 && m_force.y != 0)
+	{
+		if (abs(m_force.y) - abs(y) < 0)
+		{
+			m_force.y = 0;
+		}
+		else
+		{
+			if (m_force.y < 0) { m_force.y += y; }
+			else { m_force.y -= y; }
+		}
+	}
+}
+
+const sf::Vector2f& C_Velocity::GetVelocity() const
 {
 	return m_velocity;
 }

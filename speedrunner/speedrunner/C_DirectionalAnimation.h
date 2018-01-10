@@ -26,7 +26,6 @@ public:
 private:
 	std::shared_ptr<C_AnimatedSprite> m_sprite;
 	std::shared_ptr<C_Velocity> m_movement;
-	std::shared_ptr<C_Direction> m_direction;
 
 	ANIMATION_STATE m_currentState;
 };

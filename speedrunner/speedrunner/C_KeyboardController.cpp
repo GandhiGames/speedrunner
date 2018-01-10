@@ -1,7 +1,10 @@
 #include "C_KeyboardController.h"
 #include "Object.h"
+#include "SharedContext.h"
+#include "Map.h"
 
-C_KeyboardController::C_KeyboardController(Object* owner) : Component(owner), m_speed(1)
+C_KeyboardController::C_KeyboardController(Object* owner) : Component(owner), 
+m_speed(200)
 {
 }
 
@@ -13,28 +16,31 @@ void C_KeyboardController::Awake()
 
 void C_KeyboardController::Update(float timeDelta)
 {
-	// Calculate movement speed based on the timeDelta since the last update.
 	sf::Vector2f movementSpeed(0.f, 0.f);
 
 	if (Input::IsKeyPressed(Input::KEY::KEY_LEFT))
 	{
-		movementSpeed.x = -m_speed * timeDelta;;
+		movementSpeed.x = -m_speed;
 	}
 	else if (Input::IsKeyPressed(Input::KEY::KEY_RIGHT))
 	{
-		movementSpeed.x = m_speed * timeDelta;;
+		movementSpeed.x = m_speed;
 	}
 
-	if (Input::IsKeyPressed(Input::KEY::KEY_UP))
-	{
-		movementSpeed.y = -m_speed * timeDelta;;
-	}
-	else if (Input::IsKeyPressed(Input::KEY::KEY_DOWN))
-	{
-		movementSpeed.y = m_speed * timeDelta;;
-	}
+	//TODO: keyboard controller should not have calculate friction/gravity etc. 
+	//Move to seperate physics class.
+	Map* map = m_owner->m_context.m_map;
 
-	m_movement->Set(movementSpeed);
+	float gravity = map->GetGravity();
+	m_movement->AddForce(0, gravity);
+
+	m_movement->SetVelovity(movementSpeed * timeDelta);
+
+	//TODO: get current tile friction.
+	const sf::Vector2f& tileFriction = map->GetDefaultTile().m_friction;
+	float frictionX = (movementSpeed.x * tileFriction.x) * timeDelta; 
+	float frictionY = (movementSpeed.y * tileFriction.y) * timeDelta; 
+	m_movement->ApplyFriction(frictionX, frictionY);
 }
 
 void C_KeyboardController::SetMovementSpeed(int speed)

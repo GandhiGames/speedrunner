@@ -12,11 +12,15 @@ public:
 
 	void Update(float timeDelta) override;
 
+	void AddForce(float x, float y);
 	void AddForce(const sf::Vector2f& force);
-	void Set(sf::Vector2f& velocity);
-	const sf::Vector2f& Get() const;
+	
+	void SetVelovity(sf::Vector2f& velocity);
+	const sf::Vector2f& GetVelocity() const;
 
 	void SetMaxVelocity(const sf::Vector2f& max);
+
+	void ApplyFriction(int x, int y);
 
 private:
 	sf::Vector2f m_velocity;

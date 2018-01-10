@@ -28,7 +28,7 @@ void C_AnimatedSprite::LateUpdate(float deltaTime)
 		if (curDir != m_curDirection)
 		{
 			m_curDirection = curDir;
-			m_curAnimation->SetDirection(curDir);
+			m_curAnimation->Flip();
 			m_curAnimation->Reset();
 		}
 
@@ -63,7 +63,6 @@ void C_AnimatedSprite::SetCurrentAnimation(ANIMATION_STATE state)
 	if (animation != m_animations.end())
 	{
 		m_curAnimation = animation->second;
-		m_curAnimation->SetDirection(m_curDirection);
 		m_curAnimation->Reset();
 	}
 }

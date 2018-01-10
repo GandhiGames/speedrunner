@@ -15,7 +15,7 @@ C_Direction::C_Direction(Object* owner) : Component(owner), m_moveDir(MOVEMENT_D
 
 void C_Direction::Update(float timeDelta)
 {
-	const sf::Vector2f& velocity = m_movement->Get();
+	const sf::Vector2f& velocity = m_movement->GetVelocity();
 
 	if ((velocity.x != 0) || (velocity.y != 0))
 	{

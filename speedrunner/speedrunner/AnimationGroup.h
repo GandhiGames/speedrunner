@@ -5,11 +5,12 @@
 #include "Animation.h"
 #include "Util.h"
 
+//TODO: is this class still necessary?
 class AnimationGroup
 {
 public:
-	void AddAnimation(MOVEMENT_DIRECTION dir, std::shared_ptr<Animation> animation);
-	void SetDirection(MOVEMENT_DIRECTION dir);
+	void AddAnimation(std::shared_ptr<Animation> animation);
+	void Flip();
 	void Draw(sf::RenderWindow &window, float timeDelta);
 	void Update(const sf::Vector2f pos);
 	void Reset();
@@ -18,7 +19,6 @@ public:
 
 private:
 	//TODO: get rid of the outdated m_ notation!
-	std::map<MOVEMENT_DIRECTION, std::vector<std::shared_ptr<Animation>>> m_animations;
-	std::vector<std::shared_ptr<Animation>>* m_curAnimation;
+	std::vector<std::shared_ptr<Animation>> m_animations;
 };
 

@@ -33,6 +33,7 @@ void S_Game::OnCreate()
 	m_player->GetComponent<C_Tag>()->Set(PLAYER_TAG);
 	m_player->AddComponent<C_Camera>();
 	m_player->AddComponent<C_Velocity>();
+	m_player->AddComponent<C_KeyboardController>();
 	m_player->AddComponent<C_Direction>();
 	auto collider1 = m_player->AddComponent<C_BoxCollider>();
 	collider1->SetCollidable(sf::FloatRect()); 	//TODO: need to setup player collider size
@@ -49,6 +50,8 @@ void S_Game::OnCreate()
 	}
 
 	animation->SetCurrentAnimation(ANIMATION_STATE::IDLE);
+
+	m_player->AddComponent<C_DirectionalAnimation>();
 
 	/*******************
 	 Player setup start.

@@ -22,6 +22,6 @@ void C_BehaviorApplier::Update(float deltaTime)
 
 	if (Mathf::sqrMagnitude(force) > 0)
 	{
-		m_movement->Set(m_movement->Get() + force);
+		m_movement->SetVelovity(m_movement->GetVelocity() + force);
 	}
 }

@@ -191,7 +191,6 @@
     <ClCompile Include="C_BoxCollider.cpp" />
     <ClCompile Include="C_Camera.cpp" />
     <ClCompile Include="C_CircleCollider.cpp" />
-    <ClCompile Include="C_Collidable.cpp" />
     <ClCompile Include="C_CollidableTest.cpp" />
     <ClCompile Include="C_Collider2D.cpp" />
     <ClCompile Include="C_DebugPositionLabel.cpp" />
@@ -203,6 +202,7 @@
     <ClCompile Include="C_KeyboardController.cpp" />
     <ClCompile Include="C_KnockBack.cpp" />
     <ClCompile Include="C_MeleeAttack.cpp" />
+    <ClCompile Include="C_Updateable.cpp" />
     <ClCompile Include="C_Velocity.cpp" />
     <ClCompile Include="C_MovementBehavior.cpp" />
     <ClCompile Include="C_RaycastTest.cpp" />
@@ -210,7 +210,6 @@
     <ClCompile Include="C_StaticSprite.cpp" />
     <ClCompile Include="C_Tag.cpp" />
     <ClCompile Include="C_Transform.cpp" />
-    <ClCompile Include="C_Updateable.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="Game.cpp" />

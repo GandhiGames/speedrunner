@@ -91,12 +91,12 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 			{
 				std::shared_ptr<AnimationGroup> g = std::make_shared<AnimationGroup>();
 				//TODO: need to get movement direction from data file.
-				g->AddAnimation(MOVEMENT_DIRECTION::RIGHT, a);
+				g->AddAnimation(a);
 				animations.emplace(std::make_pair(animState, g));
 			}
 			else
 			{
-				animations[animState]->AddAnimation(MOVEMENT_DIRECTION::RIGHT, a);
+				animations[animState]->AddAnimation(a);
 			}
 
 

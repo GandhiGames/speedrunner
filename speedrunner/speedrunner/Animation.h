@@ -26,6 +26,8 @@ public:
 
 	const sf::Sprite& GetSprite() const;
 
+	void Flip();
+
 private:
 	sf::Sprite m_sprite;
 
@@ -35,7 +37,9 @@ private:
 	int m_height;
 	int m_frameCountStart;
 	int m_frameCountEnd;
+	int m_initial;
 	float m_frameSpeed;
+	int m_widthDir;
 	int m_currentFrame;
 	bool m_loop;
 	bool m_shouldAnimate;
