@@ -12,10 +12,11 @@ public:
 
 	void Update(float timeDelta) override;
 
-	//void AddForce(float x, float y);
-	//void AddForce(const sf::Vector2f& force);
+	void AddForce(float x, float y);
+	void AddForce(const sf::Vector2f& force);
 	
-	void AddVelovity(sf::Vector2f& velocity);
+	void AddVelocity(float x, float y);
+	void AddVelocity(sf::Vector2f& velocity);
 
 	void SetVelocity(sf::Vector2f& velocity);
 	void SetVelocity(float x, float y);
@@ -25,15 +26,27 @@ public:
 
 	void ApplyFriction(float x, float y);
 
+	void Move(const sf::Vector2f& move);
 	void Move(float x, float y);
+
+	void SetAcceleration(float x, float y);
+	void SetAcceleration(const sf::Vector2f& acceleration);
+	const sf::Vector2f& GetAcceleration();
 
 private:
 	void ClampVelocity();
+	void ClampToMap();
 
 private:
 	sf::Vector2f m_velocity;
-//	sf::Vector2f m_force;
+	sf::Vector2f m_force;
+	sf::Vector2f m_acceleration;
+
+	//TODO: set max force and acceleration?
 	sf::Vector2f m_maxVelocity;
+
+	float m_inverseMass;
+	float damping;
 };
 
 

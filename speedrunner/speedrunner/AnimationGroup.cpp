@@ -6,12 +6,18 @@ void AnimationGroup::AddAnimation(std::shared_ptr<Animation> animation)
 	m_animations.emplace_back(animation);
 }
 
-void AnimationGroup::Flip()
+void AnimationGroup::SetFacingDirection(MOVEMENT_DIRECTION dir)
 {
 	for (auto& a : m_animations)
 	{
-		a->Flip();
+		a->SetFacingDirection(dir);
 	}
+}
+
+//TODO: convert this to facing direction
+MOVEMENT_DIRECTION AnimationGroup::GetFacingFirection()
+{
+	return (m_animations.size() > 0) ? m_animations.at(0)->GetFacingFirection() : MOVEMENT_DIRECTION::COUNT;
 }
 
 void AnimationGroup::Draw(sf::RenderWindow &window, float timeDelta)

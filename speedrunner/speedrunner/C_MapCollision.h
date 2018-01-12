@@ -31,6 +31,8 @@ public:
 
 	void Update(float deltaTime) override;
 
+	std::shared_ptr<TileInfo> GetTileBelow();
+
 private:
 	static bool SortCollisions(const MapCollisionElement& a, const MapCollisionElement& b);
 	void CheckCollisions(Map* gameMap, const sf::FloatRect& AABB);

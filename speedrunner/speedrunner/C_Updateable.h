@@ -8,7 +8,6 @@ public:
 	virtual ~C_Updateable() = 0;
 
 	virtual void Update(float deltaTime) {}
-
 	virtual void LateUpdate(float deltaTime) {}
 };
 

@@ -11,12 +11,13 @@ class C_Direction : public Component, public C_Updateable
 public:
 	C_Direction(Object* owner);
 
-	void Update(float timeDelta) override;
+	void LateUpdate(float timeDelta) override;
 
 	MOVEMENT_DIRECTION Get();
 
 private:
 	std::shared_ptr<C_Velocity> m_movement;
 	MOVEMENT_DIRECTION m_moveDir;	
+	bool m_cached;
 };
 

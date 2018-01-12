@@ -2,7 +2,10 @@
 #include "Object.h"
 #include "Debug.h"
 
-C_Direction::C_Direction(Object* owner) : Component(owner), m_moveDir(MOVEMENT_DIRECTION::RIGHT)
+C_Direction::C_Direction(Object* owner) :
+	Component(owner),
+	m_moveDir(MOVEMENT_DIRECTION::RIGHT),
+	m_cached(false)
 {
 	//TODO: creates issue when components added out of order. Create Awake/Start methods and move these to them.
 	m_movement = owner->GetComponent<C_Velocity>();
@@ -13,13 +16,19 @@ C_Direction::C_Direction(Object* owner) : Component(owner), m_moveDir(MOVEMENT_D
 	}
 }
 
-void C_Direction::Update(float timeDelta)
+//TODO: this can introduce a bug if a movement direction is requested in lateupdate.
+void C_Direction::LateUpdate(float timeDelta)
 {
-	const sf::Vector2f& velocity = m_movement->GetVelocity();
+	m_cached = false;
+}
 
-	if ((velocity.x != 0) || (velocity.y != 0))
+MOVEMENT_DIRECTION C_Direction::Get()
+{
+	if (!m_cached)
 	{
-		if (abs(velocity.x) > abs(velocity.y))
+		const sf::Vector2f& velocity = m_movement->GetVelocity();
+
+		if (velocity.x != 0)
 		{
 			if (velocity.x <= 0)
 			{
@@ -30,10 +39,9 @@ void C_Direction::Update(float timeDelta)
 				m_moveDir = MOVEMENT_DIRECTION::RIGHT;
 			}
 		}
-	}
-}
 
-MOVEMENT_DIRECTION C_Direction::Get()
-{
+		m_cached = true;
+	}
+
 	return m_moveDir;
 }

@@ -78,6 +78,10 @@ void C_MapCollision::CheckCollisions(Map* gameMap, const sf::FloatRect& AABB)
 
 void C_MapCollision::ResolveCollisions(Map* gameMap)
 {
+	m_collidingOnX = false;
+	m_collidingOnY = false;
+	m_standingOnTile = nullptr;
+
 	if (!m_collisions.empty())
 	{
 		std::sort(m_collisions.begin(), m_collisions.end(), SortCollisions);
@@ -127,21 +131,24 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 				
 				if (m_collidingOnY) { continue; } 
 				
-				m_standingOnTile = itr.m_tile;
+				if (yDiff < 0.f) // If tile below player
+				{
+					m_standingOnTile = itr.m_tile;
+				}
 				
 				m_collidingOnY = true; 
 			}
 		} 
 		m_collisions.clear();
 	} 
-
-	if (!m_collidingOnY) 
-	{
-		m_standingOnTile = nullptr;
-	}
 }
 
 bool C_MapCollision::SortCollisions(const MapCollisionElement& a, const MapCollisionElement& b)
 {
 	return a.m_area > b.m_area;
+}
+
+std::shared_ptr<TileInfo> C_MapCollision::GetTileBelow()
+{
+	return m_standingOnTile;
 }

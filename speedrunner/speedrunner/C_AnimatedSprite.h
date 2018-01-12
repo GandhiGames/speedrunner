@@ -15,6 +15,7 @@ public:
 	C_AnimatedSprite(Object* owner);
 	
 	void Awake() override;
+	void Start() override;
 
 	void LateUpdate(float deltaTime) override;
 

@@ -10,7 +10,7 @@
 #include "C_Direction.h"
 #include "Util.h"
 
-
+//TODO: rename class
 class C_DirectionalAnimation : public Component, public C_Updateable
 {
 	friend class Object;
@@ -22,11 +22,11 @@ public:
 
 	void Update(float timeDelta) override;
 
-
 private:
 	std::shared_ptr<C_AnimatedSprite> m_sprite;
 	std::shared_ptr<C_Velocity> m_movement;
 
 	ANIMATION_STATE m_currentState;
+	float m_minWalkVelocity;
 };
 

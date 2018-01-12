@@ -38,6 +38,8 @@ bool Input::IsKeyDown(KEY keycode)
 	{
 		return !key->second;
 	}
+
+	return false;
 }
 
 bool Input::IsKeyPressed(KEY keycode)

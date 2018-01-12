@@ -2,7 +2,7 @@
 
 //TODO: current assumes sprites are facing right. May not always be the case.
 Animation::Animation(std::shared_ptr<sf::Texture> texture, int row, int width, int height, int frameStart,
-	int frameEnd, float frameSpeed, bool loop) :
+	int frameEnd, float frameSpeed, bool loop, MOVEMENT_DIRECTION facingDir) :
 	m_row(row),
 	m_width(width),
 	m_height(height),
@@ -11,10 +11,12 @@ Animation::Animation(std::shared_ptr<sf::Texture> texture, int row, int width, i
 	m_frameSpeed(frameSpeed),
 	m_currentFrame(m_frameCountStart),
 	m_timeDelta(0.f),
-	m_initial(0),
+	m_initialSpriteOffset(0),
 	m_loop(loop),
 	m_shouldAnimate(true),
-	m_widthDir(1)
+	m_scale(1),
+	m_initialFacingDir(facingDir),
+	m_curFacingDir(facingDir)
 {
 	m_sprite.setTexture(*texture);
 
@@ -66,9 +68,9 @@ void Animation::NextFrame()
 
 	// update the texture rect
 	m_sprite.setTextureRect(sf::IntRect(
-		m_width * m_currentFrame + m_initial, 
+		m_width * m_currentFrame + m_initialSpriteOffset, 
 		(m_row * m_height), 
-		m_width * m_widthDir, 
+		m_width * m_scale, 
 		m_height));
 
 	if (m_shouldAnimate)
@@ -82,11 +84,31 @@ void Animation::NextFrame()
 	}
 }
 
-void Animation::Flip()
+void Animation::SetFacingDirection(MOVEMENT_DIRECTION dir)
 {
-	m_initial = (m_widthDir > 0) ? m_width : 0;
+	//TODO: minimise this check in the flip sprite pipeline
+	if (m_curFacingDir == dir)
+	{
+		return;
+	}
 
-	m_widthDir *= -1;
+	m_curFacingDir = dir;
+
+	if (m_initialFacingDir == dir) 	// Need to undo any scalling.
+	{
+		m_initialSpriteOffset =  0;
+		m_scale = 1;
+	}
+	else
+	{
+		m_initialSpriteOffset = m_width;
+		m_scale = -1;
+	}
+}
+
+MOVEMENT_DIRECTION Animation::GetFacingFirection()
+{
+	return m_curFacingDir;
 }
 
 void Animation::Reset()
@@ -95,9 +117,9 @@ void Animation::Reset()
 	m_timeDelta = 0.f;
 	m_currentFrame = m_frameCountStart;
 	m_sprite.setTextureRect(sf::IntRect(
-		m_initial, 
+		m_initialSpriteOffset, 
 		m_row * m_height, 
-		m_width * m_widthDir,
+		m_width * m_scale,
 		m_height
 	));
 }

@@ -12,7 +12,8 @@ class Animation
 {
 public:
 	Animation(std::shared_ptr<sf::Texture> texture, int row, int width,
-		int height, int frameStart, int frameEnd, float frameSpeed, bool loop);
+		int height, int frameStart, int frameEnd, float frameSpeed, bool loop,
+		MOVEMENT_DIRECTION facingDir);
 
 	void SetPosition(const sf::Vector2f& pos);
 
@@ -26,7 +27,9 @@ public:
 
 	const sf::Sprite& GetSprite() const;
 
-	void Flip();
+	void SetFacingDirection(MOVEMENT_DIRECTION dir);
+
+	MOVEMENT_DIRECTION GetFacingFirection();
 
 private:
 	sf::Sprite m_sprite;
@@ -37,12 +40,14 @@ private:
 	int m_height;
 	int m_frameCountStart;
 	int m_frameCountEnd;
-	int m_initial;
+	int m_initialSpriteOffset;
 	float m_frameSpeed;
-	int m_widthDir;
+	int m_scale;
 	int m_currentFrame;
 	bool m_loop;
 	bool m_shouldAnimate;
+	MOVEMENT_DIRECTION m_initialFacingDir;
+	MOVEMENT_DIRECTION m_curFacingDir;
 
 	std::map<int, std::function<void(void)>> m_actions;
 };

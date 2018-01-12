@@ -14,6 +14,11 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 	animationStateLookup.emplace(std::make_pair("IDLE", ANIMATION_STATE::IDLE));
 	animationStateLookup.emplace(std::make_pair("JUMP", ANIMATION_STATE::JUMP));
 	animationStateLookup.emplace(std::make_pair("WALK", ANIMATION_STATE::WALK));
+	
+	//TODO: cache this.
+	std::map<std::string, MOVEMENT_DIRECTION> moveDirLookup;
+	moveDirLookup.emplace(std::make_pair("Right", MOVEMENT_DIRECTION::RIGHT));
+	moveDirLookup.emplace(std::make_pair("Left", MOVEMENT_DIRECTION::LEFT));
 
 	std::ifstream animationDataFile;
 	animationDataFile.open(filePath);
@@ -28,6 +33,7 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 	int xScale = 1;
 	int yScale = 1;
 	int textureIndex = -1;
+	MOVEMENT_DIRECTION spriteDir = MOVEMENT_DIRECTION::COUNT;
 
 	std::string line;
 	while (std::getline(animationDataFile, line))
@@ -54,6 +60,19 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 			//TODO: not implementing scale.
 			keystream >> xScale >> yScale;
 		}
+		else if (type == "Direction")
+		{
+			std::string dir;
+			keystream >> dir;
+			
+			if (moveDirLookup.find(dir) == moveDirLookup.end())
+			{
+				Debug::LogError("Sprite dir not found in lookup, cannot build animation for: " + dir);
+				return animations;
+			}
+
+			spriteDir = moveDirLookup[dir];
+		}
 		else if (type == "Animation")
 		{
 			if (xSize < 0 || ySize < 0)
@@ -68,6 +87,12 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 				return animations;
 			}
 
+			if (spriteDir == MOVEMENT_DIRECTION::COUNT)
+			{
+				Debug::LogError("Cannot load animations as no direction set");
+				return animations;
+			}
+
 			std::string animationName;
 			int startFrame;
 			int endFrame;
@@ -77,7 +102,7 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 
 			keystream >> animationName >> startFrame >> endFrame >> row >> frameTime >> loop;
 
-			// Get animation state from snimation name string.
+			// Get animation state from animation name string.
 
 			if (animationStateLookup.find(animationName) == animationStateLookup.end())
 			{
@@ -87,7 +112,10 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 
 			ANIMATION_STATE animState = animationStateLookup[animationName];
 
-			std::shared_ptr<Animation> a = std::make_shared<Animation>(context.m_textureManager->Get(textureIndex), row, xSize, ySize, startFrame, endFrame, frameTime, loop);
+			std::shared_ptr<Animation> a = 
+				std::make_shared<Animation>(context.m_textureManager->Get(textureIndex), row, 
+					xSize, ySize, startFrame, endFrame, frameTime, 
+					loop, spriteDir);
 
 			if (animations.find(animState) == animations.end())
 			{

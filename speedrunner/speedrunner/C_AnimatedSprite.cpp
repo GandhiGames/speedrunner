@@ -19,6 +19,11 @@ void C_AnimatedSprite::Awake()
 	}
 }
 
+void C_AnimatedSprite::Start()
+{
+	m_curDirection = m_direction->Get();
+}
+
 void C_AnimatedSprite::LateUpdate(float deltaTime)
 {
 	if (m_curAnimation)
@@ -28,7 +33,7 @@ void C_AnimatedSprite::LateUpdate(float deltaTime)
 		if (curDir != m_curDirection)
 		{
 			m_curDirection = curDir;
-			m_curAnimation->Flip();
+			m_curAnimation->SetFacingDirection(curDir);
 			m_curAnimation->Reset();
 		}
 
@@ -62,7 +67,20 @@ void C_AnimatedSprite::SetCurrentAnimation(ANIMATION_STATE state)
 	auto animation = m_animations.find(state);
 	if (animation != m_animations.end())
 	{
+		// Get current flip scale.
+		MOVEMENT_DIRECTION curDir = MOVEMENT_DIRECTION::COUNT;
+		if (m_curAnimation)
+		{
+			curDir = m_curAnimation->GetFacingFirection();
+		}
+
 		m_curAnimation = animation->second;
+
+		if (curDir != MOVEMENT_DIRECTION::COUNT)
+		{
+			m_curAnimation->SetFacingDirection(curDir);
+		}
+
 		m_curAnimation->Reset();
 	}
 }

@@ -90,7 +90,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationFactory.cpp" />
     <ClCompile Include="C_Drawable.cpp">
       <Filter>Components\Base</Filter>
     </ClCompile>
@@ -115,7 +114,12 @@
     <ClCompile Include="C_Collider2D.cpp">
       <Filter>Components\Collisions</Filter>
     </ClCompile>
-    <ClCompile Include="C_MapCollision.cpp" />
+    <ClCompile Include="AnimationFactory.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="C_MapCollision.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h" />
@@ -223,7 +227,6 @@
     <ClInclude Include="Map.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationFactory.h" />
     <ClInclude Include="C_Collidable.h">
       <Filter>Components\Base</Filter>
     </ClInclude>
@@ -257,7 +260,12 @@
     <ClInclude Include="C_Collider2D.h">
       <Filter>Components\Collisions</Filter>
     </ClInclude>
-    <ClInclude Include="C_MapCollision.h" />
+    <ClInclude Include="AnimationFactory.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="C_MapCollision.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">
