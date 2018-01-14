@@ -34,15 +34,15 @@ void C_MapCollision::Awake()
 void C_MapCollision::Update(float deltaTime)
 {
 	Map* gameMap = m_owner->m_context.m_map;
-	//TODO: cache this.
-	const sf::FloatRect& AABB = m_collider->GetCollidable();
-	CheckCollisions(gameMap, AABB);
+	
+	CheckCollisions(gameMap);
 	ResolveCollisions(gameMap);
 }
 
-void C_MapCollision::CheckCollisions(Map* gameMap, const sf::FloatRect& AABB)
+void C_MapCollision::CheckCollisions(Map* gameMap)
 {
 	unsigned int tileSize = gameMap->GetTileSize();
+	const sf::FloatRect& AABB = m_collider->GetCollidable();
 
 	int fromX = floor(AABB.left / tileSize);
 	int toX = floor((AABB.left + AABB.width) / tileSize);
@@ -64,14 +64,6 @@ void C_MapCollision::CheckCollisions(Map* gameMap, const sf::FloatRect& AABB)
 			float area = intersection.width * intersection.height;
 			MapCollisionElement e(area, tile->m_properties, tileBounds);
 			m_collisions.emplace_back(e);
-
-			//TODO: do we want to implement level warp?
-			/*
-			if (tile->m_warp && m_type == EntityType::Player)
-			{
-			gameMap->LoadNext();
-			}
-			*/
 		}
 	}
 }

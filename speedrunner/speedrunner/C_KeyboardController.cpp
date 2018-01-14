@@ -24,6 +24,8 @@ void C_KeyboardController::Start()
 	m_movement->SetAcceleration(0.f, gravity);
 }
 
+//TODO: keyboard controller should not have calculate friction/gravity etc. 
+//Move to seperate physics class.
 void C_KeyboardController::Update(float timeDelta)
 {
 	float gravity = m_owner->m_context.m_map->GetGravity();
@@ -47,10 +49,10 @@ void C_KeyboardController::CalculateMovementForce(float timeDelta, float gravity
 
 	m_movement->SetVelocity(velocity);
 
-	//TODO: keyboard controller should not have calculate friction/gravity etc. 
-	//Move to seperate physics class.
-	std::shared_ptr<TileInfo> standingOnTile = m_mapCollision->GetTileBelow();
+	
+	
 
+	//TODO: implement tile and air friction
 	/*
 	if (m_jumping)
 	{
@@ -98,12 +100,12 @@ void C_KeyboardController::CalculateJumpForce(float timeDelta, float gravity)
 
 	if (velocity.y > 0.f && !standingOnTile)
 	{
-		velocity.y += gravity * (m_fallMultiplier - 1.f) * timeDelta;
+		velocity.y += gravity * (m_fallMultiplier - 1) * timeDelta;
 		m_movement->SetVelocity(velocity.x, velocity.y);
 	}
 	else if (velocity.y < 0.f && !standingOnTile && !Input::IsKeyPressed(Input::KEY::KEY_UP))
 	{
-		velocity.y += gravity * (m_lowJumpMultiplier - 1.f) * timeDelta;
+		velocity.y += gravity * (m_lowJumpMultiplier - 1) * timeDelta;
 		m_movement->SetVelocity(velocity.x, velocity.y);
 	}
 }

@@ -170,6 +170,10 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="rapidxml.hpp" />
+    <ClInclude Include="rapidxml_iterators.hpp" />
+    <ClInclude Include="rapidxml_print.hpp" />
+    <ClInclude Include="rapidxml_utils.hpp" />
     <ClInclude Include="Raycast.h" />
     <ClInclude Include="RaycastResult.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -180,6 +184,7 @@
     <ClInclude Include="S_Intro.h" />
     <ClInclude Include="S_Paused.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TilemapParser.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +229,7 @@
     <ClCompile Include="S_Game.cpp" />
     <ClCompile Include="S_Intro.cpp" />
     <ClCompile Include="S_Paused.cpp" />
+    <ClCompile Include="TilemapParser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
