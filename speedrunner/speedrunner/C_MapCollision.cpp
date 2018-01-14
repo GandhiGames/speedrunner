@@ -41,7 +41,7 @@ void C_MapCollision::Update(float deltaTime)
 
 void C_MapCollision::CheckCollisions(Map* gameMap)
 {
-	unsigned int tileSize = gameMap->GetTileSize();
+	const unsigned int tileSize = gameMap->GetTileSize().x;
 	const sf::FloatRect& AABB = m_collider->GetCollidable();
 
 	int fromX = floor(AABB.left / tileSize);
@@ -78,7 +78,7 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 	{
 		std::sort(m_collisions.begin(), m_collisions.end(), SortCollisions);
 
-		unsigned int tileSize = gameMap->GetTileSize();
+		const unsigned int tileSize = gameMap->GetTileSize().x;
 		for (auto &itr : m_collisions)
 		{
 			const sf::FloatRect& AABB = m_collider->GetCollidable();

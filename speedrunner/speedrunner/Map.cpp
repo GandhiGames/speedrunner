@@ -1,11 +1,9 @@
 #include "Map.h"
-
-
+#include "TilemapParser.h"
 
 Map::Map(SharedContext& context) : m_context(context),
-m_defaultTile(context),
-m_maxMapSize(32, 32), m_tileCount(0), m_tileSetCount(0),
-m_gravity(512.f)
+m_defaultTile(),
+m_mapParser(context)
 {
 	
 }
@@ -13,19 +11,20 @@ m_gravity(512.f)
 
 Map::~Map()
 {
-	PurgeMap();
-	PurgeTileSet();
 }
 
-
 TileInfo& Map::GetDefaultTile() { return m_defaultTile; }
-float Map::GetGravity() const { return m_gravity; }
-unsigned int Map::GetTileSize() const { return Sheet::TILE_SIZE; }
-const sf::Vector2u& Map::GetMapSize() const { return m_maxMapSize; }
+const sf::Vector2u& Map::GetTileSize() const { return m_mapParser.GetTilesheetData()->m_tileSize; }
+float Map::GetGravity() const { return m_mapParser.GetMapData()->m_gravity; }
+const sf::Vector2u& Map::GetMapSize() const { return m_mapParser.GetMapData()->m_mapSize; }
 const sf::Vector2f& Map::GetStartPosition() const { return m_startPosition; }
 
-void Map::LoadMap(const std::string& mapFilePath)
+void Map::LoadMap(std::string mapFilePath, std::string mapFileName)
 {
+	m_mapParser.Parse(mapFilePath, mapFileName);
+
+	return;
+	/*
 	std::ifstream mapFile;
 	mapFile.open(mapFilePath);
 	if (!mapFile.is_open())
@@ -64,23 +63,27 @@ void Map::LoadMap(const std::string& mapFilePath)
 
 			sf::Vector2i tileCoords;
 			keystream >> tileCoords.x >> tileCoords.y;
+			/*
 			if (tileCoords.x > m_maxMapSize.x || tileCoords.y > m_maxMapSize.y)
 			{
 				Debug::LogWarning("Tile is out of range: " + tileCoords.x + ',' + tileCoords.y);
 				continue;
 			}
+			
 
 			std::shared_ptr<Tile> tile = std::make_shared<Tile>();
 			// Bind properties of a tile from a set.
 			tile->m_properties = itr->second;
 
-			if (!m_map.emplace(ConvertTo1DCoord(tileCoords.x, tileCoords.y), tile).second)
+			/*
+			if (!m_map.emplace(Mathf::to1DIndex(tileCoords.x, tileCoords.y, m_maxMapSize.x), tile).second)
 			{
 				// Duplicate tile detected!
 				Debug::LogWarning("Duplicate tile: " + tileCoords.x + ',' + tileCoords.y);
 				tile = nullptr;
 				continue;
 			}
+			
 
 			std::string warp;
 			keystream >> warp;
@@ -106,10 +109,10 @@ void Map::LoadMap(const std::string& mapFilePath)
 			scaleFactors.y = viewSize.y / textureSize.y;
 			m_background.setScale(scaleFactors);
 		}
-		*/
+	
 		else if (type == "SIZE") 
 		{
-			keystream >> m_maxMapSize.x >> m_maxMapSize.y;
+			//keystream >> m_maxMapSize.x >> m_maxMapSize.y;
 		}
 		else if (type == "GRAVITY") 
 		{
@@ -117,13 +120,13 @@ void Map::LoadMap(const std::string& mapFilePath)
 		}
 		else if (type == "DEFAULT_FRICTION") 
 		{
-			keystream >> m_defaultTile.m_friction.x >> m_defaultTile.m_friction.y;
+			//keystream >> m_defaultTile.m_friction.x >> m_defaultTile.m_friction.y;
 		}
 		/*
 		else if (type == "NEXTMAP") {
 			keystream >> m_nextMap;
 		}
-		*/
+		
 		else if (type == "PLAYER") 
 		{
 			float playerX = 0; float playerY = 0;
@@ -140,13 +143,14 @@ void Map::LoadMap(const std::string& mapFilePath)
 			keystream >> enemyX >> enemyY;
 			entityMgr->Find(enemyId)->SetPosition(enemyX, enemyY);
 		}
-		*/
+		
 		else 
 		{
 			Debug::LogWarning("Unknown map data type " + type);
 		}
 	}
 	mapFile.close();
+	*/
 }
 
 void Map::LoadTiles(const std::string& tileDataPath,
@@ -179,26 +183,25 @@ void Map::LoadTiles(const std::string& tileDataPath,
 		keystream >> tileId;
 		if (tileId < 0) { continue; }
 
-		std::shared_ptr<TileInfo> tile = std::make_shared<TileInfo>(m_context, textureId, tileId);
-		keystream >> tile->m_name >> tile->m_friction.x >> tile->m_friction.y >> tile->m_deadly;
+		//std::shared_ptr<TileInfo> tile = std::make_shared<TileInfo>(m_context, textureId, tileId);
+		//keystream >> tile->m_name >> tile->m_friction.x >> tile->m_friction.y >> tile->m_deadly;
 
+		/*
 		if (!m_tileSet.emplace(tileId, tile).second)
 		{
-			Debug::LogWarning("Duplicate tile type: " + tile->m_name);
+		//	Debug::LogWarning("Duplicate tile type: " + tile->m_name);
 		}
+		*/
 	}
 	file.close();
 }
 
 std::shared_ptr<Tile> Map::GetTile(unsigned int x, unsigned int y)
 {
-	auto itr = m_map.find(ConvertTo1DCoord(x, y));
-	return(itr != m_map.end() ? itr->second : nullptr);
-}
-
-unsigned int Map::ConvertTo1DCoord(unsigned int x, unsigned int y)
-{
-	return (x * m_maxMapSize.x) + y;
+	const sf::Vector2u& mapSize = GetMapSize(); //TODO: cache 
+	TileMap& map = m_mapParser.GetMap();
+	auto itr = map.find(Mathf::to1DIndex(x, y, mapSize.x));
+	return(itr != map.end() ? itr->second : nullptr);
 }
 
 void Map::Draw(sf::RenderWindow& window)
@@ -209,9 +212,12 @@ void Map::Draw(sf::RenderWindow& window)
 	sf::Vector2f viewSizeHalf(viewSize.x / 2, viewSize.y / 2);
 	sf::FloatRect viewSpace(viewCenter - viewSizeHalf, viewSize);
 
+	//TODO: cache this.
+	const unsigned int tileSize = GetTileSize().x;
+
 	// Set up culling space
-	sf::Vector2i tileBegin(floor(viewSpace.left / Sheet::TILE_SIZE), floor(viewSpace.top / Sheet::TILE_SIZE));
-	sf::Vector2i tileEnd(ceil((viewSpace.left + viewSpace.width) / Sheet::TILE_SIZE), ceil((viewSpace.top + viewSpace.height) / Sheet::TILE_SIZE));
+	sf::Vector2i tileBegin(floor(viewSpace.left / tileSize), floor(viewSpace.top / tileSize));
+	sf::Vector2i tileEnd(ceil((viewSpace.left + viewSpace.width) / tileSize), ceil((viewSpace.top + viewSpace.height) / tileSize));
 
 	unsigned int count = 0;
 	for (int x = tileBegin.x; x <= tileEnd.x; ++x)
@@ -226,7 +232,7 @@ void Map::Draw(sf::RenderWindow& window)
 
 			//TODO: do we need to set the sprite position every frame? Can we not set it once during initialisation.
 			sf::Sprite& sprite = tile->m_properties->m_sprite;
-			sprite.setPosition(x * Sheet::TILE_SIZE, y * Sheet::TILE_SIZE);
+			sprite.setPosition(x * tileSize, y * tileSize);
 			window.draw(sprite);
 
 			count++;
@@ -252,14 +258,4 @@ void Map::Draw(sf::RenderWindow& window)
 	}
 }
 
-void Map::PurgeMap()
-{
-	m_tileCount = 0;
-	m_map.clear();
-}
 
-void Map::PurgeTileSet()
-{
-	m_tileSetCount = 0;
-	m_tileSet.clear();
-}

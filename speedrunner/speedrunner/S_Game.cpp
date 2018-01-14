@@ -110,9 +110,9 @@ void S_Game::OnCreate()
 
 
 	//TODO: change from relative path. Make sure you do this for all paths.
-	m_map.LoadTiles("../resources/data/test_tileset.data",
-		"../resources/spritesheets/test_tileset.png");
-	m_map.LoadMap("../resources/data/maps/map1.data");
+	//m_map.LoadTiles("../resources/data/test_tileset.data",
+	//	"../resources/spritesheets/test_tileset.png");
+	m_map.LoadMap("../resources/data/maps/test_1/", "test_1_map.tmx");
 	m_view.setCenter(m_map.GetStartPosition());
 
 	context->m_map = &m_map;

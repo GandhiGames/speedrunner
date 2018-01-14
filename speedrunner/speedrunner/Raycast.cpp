@@ -1,7 +1,7 @@
 #include "Raycast.h"
 #include "SharedContext.h"
 #include "Object.h"
-#include "Tile.h"
+#include "Map.h"
 
 SharedContext* Raycast::m_context;
 
@@ -10,9 +10,11 @@ void Raycast::Initialise(SharedContext* context)
 	m_context = context;
 }
 
-
 std::vector<sf::Vector2f> Raycast::BresenhamLine(const sf::Vector2f& from, const sf::Vector2f& to)
 {
+	//TODO: cache this. 
+	const unsigned int tileSize = m_context->m_map->GetTileSize().x; //Assumes square tiles
+
 	// TODO: it would be preferable to calculate in
 	// advance the size of "result" and to use a fixed-size array
 	// instead of a list.
@@ -26,17 +28,17 @@ std::vector<sf::Vector2f> Raycast::BresenhamLine(const sf::Vector2f& from, const
 
 	if (absDiffX > absDiffY)
 	{
-		steps = (absDiffX / Sheet::TILE_SIZE) + 1;
+		steps = (absDiffX / tileSize) + 1;
 	}
 	else
 	{
-		steps = (absDiffY / Sheet::TILE_SIZE) + 1;
+		steps = (absDiffY / tileSize) + 1;
 	}
 
 	float xStep = diff.x / steps;
 	float yStep = diff.y / steps;
 
-	if (xStep >= Sheet::TILE_SIZE || yStep >= Sheet::TILE_SIZE)
+	if (xStep >= tileSize || yStep >= tileSize)
 	{
 		//TODO: ensure this is never called and remove
 		Debug::LogWarning("Raycast::Raycast not granular enough");

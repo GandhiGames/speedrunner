@@ -26,8 +26,6 @@ void C_Velocity::Update(float timeDelta)
 
 	m_velocity += resultingAcc * timeDelta;
 
-	float test = powf(damping, timeDelta);
-
 	ClampVelocity();
 
 	m_velocity *= powf(damping, timeDelta);
@@ -43,7 +41,7 @@ void C_Velocity::ClampToMap()
 	Map* map = m_owner->m_context.m_map;
 	//TODO: these can be cached until map changes.
 	const sf::Vector2u& mapSize = map->GetMapSize();
-	const unsigned int tileSize = map->GetTileSize();
+	const unsigned int tileSize = map->GetTileSize().x;
 
 	std::shared_ptr<C_Transform> transform = m_owner->m_transform;
 
