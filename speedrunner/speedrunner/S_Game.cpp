@@ -24,7 +24,6 @@ void S_Game::OnCreate()
 	m_view.zoom(.6f);
 	context->m_window->setView(m_view);
 
-
 	m_player = std::make_shared<Object>(*context);
 	Object::Add(m_player);
 
@@ -54,70 +53,19 @@ void S_Game::OnCreate()
 
 	m_player->AddComponent<C_DirectionalAnimation>();
 
-	/*******************
-	 Player setup start.
-	********************/
-	/*
-	{
-	//TODO: move this a text/data file.
-	const int animationSpeed = 9;
-	const int swingAnimationSpeed = 12;
-	const int startFrame = 1;
-	const int endFrame = 9;
-	const int spriteSize = 64;
-
-		m_player = std::make_shared<Object>(*m_stateManager->m_context);
-
-		m_player->m_transform->SetPosition(sf::Vector2f(0.f, 0.f));
-		m_player->GetComponent<C_Tag>()->Set(PLAYER_TAG);
-
-		m_player->AddComponent<C_Velocity>();
-
-		auto controller = m_player->AddComponent<C_KeyboardController>();
-		controller->SetMovementSpeed(120);
-
-		auto playerSprite = m_player->AddComponent<C_AnimatedSprite>();
-
-		//TODO: need to setup animations.
-
-
-		playerSprite->SetSortOrder(1000);
-
-		m_player->AddComponent<C_DirectionalAnimation>();
-
-		auto collider1 = m_player->AddComponent<C_BoxCollider>();
-		//TODO: need to setup player collider size
-		collider1->SetCollidable(sf::FloatRect());
-		collider1->SetLayer(CollisionLayer::Player);
-
-		//m_player->AddComponent<C_CollidableTest>();
-		//m_player->AddComponent<C_RaycastTest>();
-
-		m_player->AddComponent<C_Camera>();
-		m_player->AddComponent<C_MeleeAttack>();
-		m_player->AddComponent<C_Direction>();
-
-		Object::Add(m_player);
-
-		auto label = m_player->AddComponent<C_DebugPositionLabel>();
-		label->SetOffset(sf::Vector2f(0.f, 0.f));
-		label->SetSortOrder(1010);
-	}
-	*/
-	/*******************
-	 Player setup end.
-	********************/
-
 
 	//TODO: change from relative path. Make sure you do this for all paths.
 	//m_map.LoadTiles("../resources/data/test_tileset.data",
 	//	"../resources/spritesheets/test_tileset.png");
-	m_map.LoadMap("../resources/data/maps/test_1/", "test_1_map.tmx");
-	m_view.setCenter(m_map.GetStartPosition());
+	m_map.LoadMap("../resources/data/maps/boss_1/", "boss_1_map.tmx");
+
+	const sf::Vector2f& mapPos = m_map.GetStartPosition();
+
+	m_view.setCenter(mapPos);
 
 	context->m_map = &m_map;
 
-	m_player->m_transform->SetPosition(m_map.GetStartPosition());
+	m_player->m_transform->SetPosition(mapPos);
 
 	Raycast::Initialise(context);
 	Debug::Initialise(*context);

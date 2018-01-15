@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:9461615af3500bb773f2dc3650ba3e76:ced12bdf80a86a651e16a9a9e22a39d8:151ac7fd2498b11a95a23ac290432847$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="characters/player_spritesheet.png" width="512" height="72">
+
+<direction>Right</direction>
+<animation name = "Hurt" frameTime = "0" loop = "0">
+    <sprite n="hero_GetHit.png" x="448" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+</animation>
+
+<animation name = "Idle" frameTime = "1" loop = "1">
+    <sprite n="hero_Idle-0.png" x="480" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Idle-1.png" x="0" y="32" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Idle-2.png" x="32" y="32" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Idle-3.png" x="416" y="0" w="32" h="32" pX="0.5" pY="0.5"/></animation>
+<animation name = "JumpDown" frameTime = "1" loop = "1">
+    <sprite n="hero_JumpDown-0.png" x="384" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_JumpDown-1.png" x="352" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_JumpDown-2.png" x="320" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+</animation>	
+	
+<animation name = "JumpUp" frameTime = "0" loop = "0">
+    <sprite n="hero_JumpUp.png" x="288" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+</animation>
+	
+<animation name = "AttackAir" frameTime = "1" loop = "0">
+    <sprite n="hero_JumpPunch_Effect-0.png" x="344" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_JumpPunch_Effect-1.png" x="64" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_JumpPunch_Effect-2.png" x="224" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_JumpPunch_Effect-3.png" x="264" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_JumpPunch_Effect-4.png" x="184" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_JumpPunch_Effect-5.png" x="304" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+</animation>	
+
+<animation name = "AttackGround" frameTime = "1" loop = "0">
+    <sprite n="hero_Punch_Effect-0.png" x="424" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Punch_Effect-1.png" x="464" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Punch_Effect-2.png" x="384" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Punch_Effect-3.png" x="144" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Punch_Effect-4.png" x="104" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
+</animation>	
+	<animation name = "Walk" frameTime = "1" loop = "1">
+    <sprite n="hero_Run-0.png" x="64" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Run-1.png" x="96" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Run-2.png" x="32" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Run-3.png" x="128" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Run-4.png" x="160" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Run-5.png" x="224" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Run-6.png" x="256" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="hero_Run-7.png" x="192" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+</animation>	
+	<animation name = "WallJump" frameTime = "0" loop = "0">
+    <sprite n="hero_WallJumpFrame.png" x="0" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
+</animation>
+</TextureAtlas>

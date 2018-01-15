@@ -18,8 +18,7 @@ void C_Camera::LateUpdate(float deltaTime)
 	sf::View view = window->getView();
 
 	const sf::Vector2f& playerPos = m_owner->m_transform->GetPosition();
-	//TODO: remove hard-coding
-	view.setCenter(playerPos.x, 784);
+	view.setCenter(playerPos.x, 120); 	//TODO: remove hard-coding
 
 	//TODO: Needs to take into account level e.g. the camera stops at current level bounds.
 

@@ -6,6 +6,10 @@
 #include "Debug.h"
 #include "AnimationGroup.h"
 #include "SharedContext.h"
+#include "rapidxml.hpp"
+#include "rapidxml_utils.hpp"
+
+using namespace rapidxml;
 
 class AnimationFactory
 {

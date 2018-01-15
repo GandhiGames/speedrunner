@@ -1,8 +1,8 @@
 #include "TilemapParser.h"
 #include "ResourceManager.h"
 
-
-TilemapParser::TilemapParser(SharedContext& context) : m_context(context)
+TilemapParser::TilemapParser(SharedContext& context) : m_context(context), 
+m_startPosition(0.f, 0.f), m_tileMapDataFileLocation("")
 {
 }
 
@@ -20,6 +20,7 @@ void TilemapParser::Parse(const std::string& fileLocation, const std::string& fi
 	char* cstr = new char[file.size() + 1];  
 	strcpy_s(cstr, file.size() + 1, file.c_str());
 
+	//TODO: error checking - check file exists before attempting open
 	rapidxml::file<> xmlFile(cstr);
 	rapidxml::xml_document<> doc;
 	doc.parse<0>(xmlFile.data());
@@ -33,13 +34,14 @@ void TilemapParser::Parse(const std::string& fileLocation, const std::string& fi
 
 }
 
-//TODO: add error checking to ensure these values actually exist.
+//TODO:add support for mroe than one tilemap (including tilemaps of different sizes).
 void TilemapParser::BuildTileSheetData(xml_node<>* rootNode)
 {
 	m_sheetData = std::make_shared<TileSheetData>();
 
 	xml_node<>* tilesheetNode = rootNode->first_node("tileset");
 
+	//TODO: add error checking to ensure these values actually exist.
 	int firstid = std::atoi(tilesheetNode->first_attribute("firstgid")->value()); //TODO: implement this.
 	m_sheetData->m_tileSize.x = std::atoi(tilesheetNode->first_attribute("tilewidth")->value());
 	m_sheetData->m_tileSize.y = std::atoi(tilesheetNode->first_attribute("tileheight")->value());
@@ -62,13 +64,38 @@ void TilemapParser::BuildTileSheetData(xml_node<>* rootNode)
 void TilemapParser::BuildMapData(xml_node<>* rootNode)
 {
 	xml_node<>* layerNode = rootNode->first_node("layer");
+
+	const std::string platformLayerName = "platform";
+	const std::string playerStartLayerName = "player_start";
+
+	std::unordered_map<std::string, xml_node<>*> platformLayers;
+	for (xml_node<> * node = rootNode->first_node("layer"); node; node = node->next_sibling())
+	{
+		const char* layerName = node->first_attribute("name")->value();
+		platformLayers.emplace(layerName, node);
+	}
+
+	auto platformIt = platformLayers.find(platformLayerName);
+	if (platformIt != platformLayers.end())
+	{
+		BuildPlatformLayer(platformIt->second);
+	}
+
+	auto playerPosIt = platformLayers.find(playerStartLayerName);
+	if (playerPosIt != platformLayers.end())
+	{
+		SetPlayersPosition(playerPosIt->second);
+	}
+}
+
+void TilemapParser::BuildPlatformLayer(xml_node<>* platformLayer)
+{
 	m_mapData = std::make_shared<MapData>();
-	m_mapData->m_mapSize.x = std::atoi(layerNode->first_attribute("width")->value());
-	m_mapData->m_mapSize.y = std::atoi(layerNode->first_attribute("height")->value());
+	m_mapData->m_mapSize.x = std::atoi(platformLayer->first_attribute("width")->value());
+	m_mapData->m_mapSize.y = std::atoi(platformLayer->first_attribute("height")->value());
 	m_mapData->m_gravity = 980; //TODO: load this from file.
 
-
-	xml_node<>* dataNode = layerNode->first_node("data");
+	xml_node<>* dataNode = platformLayer->first_node("data");
 
 	char* map = dataNode->value();
 
@@ -103,10 +130,10 @@ void TilemapParser::BuildMapData(xml_node<>* rootNode)
 				int textureX = tileId % m_sheetData->m_columns - 1;
 				int textureY = tileId / m_sheetData->m_columns;
 
-				std::shared_ptr<TileInfo> tileInfo = 
+				std::shared_ptr<TileInfo> tileInfo =
 					std::make_shared<TileInfo>(
-						m_context, m_sheetData->m_textureId, tileId, 
-						textureX, textureY, 
+						m_context, m_sheetData->m_textureId, tileId,
+						textureX, textureY,
 						m_sheetData->m_tileSize.x, m_sheetData->m_tileSize.y);
 
 				m_tileSet.emplace(tileId, tileInfo);
@@ -132,6 +159,43 @@ void TilemapParser::BuildMapData(xml_node<>* rootNode)
 	}
 }
 
+void TilemapParser::SetPlayersPosition(xml_node<>* playerPositionLayer)
+{
+	//TODO: most of the below lines are repeated in BuildPlatformLayer, remove repition
+	xml_node<>* dataNode = playerPositionLayer->first_node("data");
+	char* map = dataNode->value();
+	std::stringstream fileStream(map);
+	int count = 0;
+	std::string line;
+	while (fileStream.good())
+	{
+		std::string substr;
+		std::getline(fileStream, substr, ',');
+
+		if (!Util::IsInteger(substr))
+		{
+			substr.erase(std::remove(substr.begin(), substr.end(), '\r'), substr.end());
+			substr.erase(std::remove(substr.begin(), substr.end(), '\n'), substr.end());
+
+			if (!Util::IsInteger(substr))
+			{
+				Debug::LogError("Not int: " + substr);
+			}
+		}
+
+		int tileId = std::stoi(substr);
+
+		if (tileId != 0)
+		{
+			m_startPosition.x = (count % m_mapData->m_mapSize.x) * m_sheetData->m_tileSize.x;
+			m_startPosition.y = (count / m_mapData->m_mapSize.x) * m_sheetData->m_tileSize.y;
+
+			return;
+		}
+
+		count++;
+	}
+}
 
 const std::shared_ptr<TileSheetData> TilemapParser::GetTilesheetData() const
 {
@@ -156,4 +220,9 @@ void TilemapParser::PurgeMap()
 void TilemapParser::PurgeTileSet()
 {
 	m_tileSet.clear();
+}
+
+const sf::Vector2f& TilemapParser::GetStartPosition() const
+{
+	return m_startPosition;
 }

@@ -8,17 +8,24 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 
 	//TODO: cache this.
 	std::map<std::string, ANIMATION_STATE> animationStateLookup;
-	animationStateLookup.emplace(std::make_pair("ATTACK", ANIMATION_STATE::ATTACK));
-	animationStateLookup.emplace(std::make_pair("DEATH", ANIMATION_STATE::DEATH));
-	animationStateLookup.emplace(std::make_pair("HURT", ANIMATION_STATE::HURT));
-	animationStateLookup.emplace(std::make_pair("IDLE", ANIMATION_STATE::IDLE));
-	animationStateLookup.emplace(std::make_pair("JUMP", ANIMATION_STATE::JUMP));
-	animationStateLookup.emplace(std::make_pair("WALK", ANIMATION_STATE::WALK));
-	
+	animationStateLookup.emplace(std::make_pair("Hurt", ANIMATION_STATE::HURT));
+	animationStateLookup.emplace(std::make_pair("Idle", ANIMATION_STATE::IDLE));
+	animationStateLookup.emplace(std::make_pair("JumpDown", ANIMATION_STATE::JUMP_DOWN));
+	animationStateLookup.emplace(std::make_pair("JumpUp", ANIMATION_STATE::JUMP_UP));
+	animationStateLookup.emplace(std::make_pair("AttackAir", ANIMATION_STATE::ATTACK_IN_AIR));
+	animationStateLookup.emplace(std::make_pair("AttackAir", ANIMATION_STATE::ATTACK_ON_GROUND));
+	animationStateLookup.emplace(std::make_pair("Walk", ANIMATION_STATE::WALK));
+	animationStateLookup.emplace(std::make_pair("WallJump", ANIMATION_STATE::WALL_JUMP));
+
 	//TODO: cache this.
 	std::map<std::string, MOVEMENT_DIRECTION> moveDirLookup;
 	moveDirLookup.emplace(std::make_pair("Right", MOVEMENT_DIRECTION::RIGHT));
 	moveDirLookup.emplace(std::make_pair("Left", MOVEMENT_DIRECTION::LEFT));
+
+
+
+
+	return;
 
 	std::ifstream animationDataFile;
 	animationDataFile.open(filePath);

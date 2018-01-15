@@ -51,13 +51,16 @@ public:
 
 	TileMap& GetMap();
 
+	const sf::Vector2f& GetStartPosition() const;
+
 	void PurgeMap();
 	void PurgeTileSet();
 
 private:
 	void BuildTileSheetData(xml_node<>* rootNode);
 	void BuildMapData(xml_node<>* rootNode);
-
+	void BuildPlatformLayer(xml_node<>* playerformLayer);
+	void SetPlayersPosition(xml_node<>* playerPositionLayer);
 
 private:
 	std::shared_ptr<TileSheetData> m_sheetData;
@@ -66,5 +69,6 @@ private:
 	TileMap m_map;
 	SharedContext& m_context;
 	std::string m_tileMapDataFileLocation;
+	sf::Vector2f m_startPosition;
 };
 

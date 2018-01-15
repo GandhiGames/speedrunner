@@ -29,12 +29,9 @@ public:
 
 	void Draw(sf::RenderWindow& window);
 
-
 private:
 	SharedContext& m_context;
 	TilemapParser m_mapParser; 
-
 	TileInfo m_defaultTile;
-	sf::Vector2f m_startPosition;
 };
 

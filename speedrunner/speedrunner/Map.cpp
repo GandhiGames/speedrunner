@@ -17,183 +17,11 @@ TileInfo& Map::GetDefaultTile() { return m_defaultTile; }
 const sf::Vector2u& Map::GetTileSize() const { return m_mapParser.GetTilesheetData()->m_tileSize; }
 float Map::GetGravity() const { return m_mapParser.GetMapData()->m_gravity; }
 const sf::Vector2u& Map::GetMapSize() const { return m_mapParser.GetMapData()->m_mapSize; }
-const sf::Vector2f& Map::GetStartPosition() const { return m_startPosition; }
+const sf::Vector2f& Map::GetStartPosition() const { return m_mapParser.GetStartPosition(); }
 
 void Map::LoadMap(std::string mapFilePath, std::string mapFileName)
 {
 	m_mapParser.Parse(mapFilePath, mapFileName);
-
-	return;
-	/*
-	std::ifstream mapFile;
-	mapFile.open(mapFilePath);
-	if (!mapFile.is_open())
-	{
-		Debug::LogError("Cannot find map data file");
-		return;
-	}
-
-	//EntityManager* entityMgr = m_context->m_entityManager;
-	std::string line;
-
-	while (std::getline(mapFile, line))
-	{
-		if (line[0] == '|') { continue; }
-
-		std::stringstream keystream(line);
-		std::string type;
-		keystream >> type;
-
-		if (type == "TILE")
-		{
-			int tileId = 0;
-			keystream >> tileId;
-			if (tileId < 0)
-			{
-				Debug::LogWarning("Bad tile id: " + tileId);
-				continue;
-			}
-
-			auto itr = m_tileSet.find(tileId);
-			if (itr == m_tileSet.end())
-			{
-				Debug::LogWarning("Tile id not found" + tileId);
-				continue;
-			}
-
-			sf::Vector2i tileCoords;
-			keystream >> tileCoords.x >> tileCoords.y;
-			/*
-			if (tileCoords.x > m_maxMapSize.x || tileCoords.y > m_maxMapSize.y)
-			{
-				Debug::LogWarning("Tile is out of range: " + tileCoords.x + ',' + tileCoords.y);
-				continue;
-			}
-			
-
-			std::shared_ptr<Tile> tile = std::make_shared<Tile>();
-			// Bind properties of a tile from a set.
-			tile->m_properties = itr->second;
-
-			/*
-			if (!m_map.emplace(Mathf::to1DIndex(tileCoords.x, tileCoords.y, m_maxMapSize.x), tile).second)
-			{
-				// Duplicate tile detected!
-				Debug::LogWarning("Duplicate tile: " + tileCoords.x + ',' + tileCoords.y);
-				tile = nullptr;
-				continue;
-			}
-			
-
-			std::string warp;
-			keystream >> warp;
-
-			//TODO: do we want to re-implement warp tiles?
-			//tile->m_warp = false;
-			//if (warp == "WARP") { tile->m_warp = true; }
-		}
-		/*
-		else if (type == "BACKGROUND") {
-			if (m_backgroundTexture != "") { continue; }
-			keystream >> m_backgroundTexture;
-			if (!m_context->m_textureManager->RequireResource(m_backgroundTexture)) {
-				m_backgroundTexture = "";
-				continue;
-			}
-			sf::Texture* texture = m_context->m_textureManager->GetResource(m_backgroundTexture);
-			m_background.setTexture(*texture);
-			sf::Vector2f viewSize = m_currentState->GetView().getSize();
-			sf::Vector2u textureSize = texture->getSize();
-			sf::Vector2f scaleFactors;
-			scaleFactors.x = viewSize.x / textureSize.x;
-			scaleFactors.y = viewSize.y / textureSize.y;
-			m_background.setScale(scaleFactors);
-		}
-	
-		else if (type == "SIZE") 
-		{
-			//keystream >> m_maxMapSize.x >> m_maxMapSize.y;
-		}
-		else if (type == "GRAVITY") 
-		{
-			keystream >> m_gravity;
-		}
-		else if (type == "DEFAULT_FRICTION") 
-		{
-			//keystream >> m_defaultTile.m_friction.x >> m_defaultTile.m_friction.y;
-		}
-		/*
-		else if (type == "NEXTMAP") {
-			keystream >> m_nextMap;
-		}
-		
-		else if (type == "PLAYER") 
-		{
-			float playerX = 0; float playerY = 0;
-			keystream >> playerX >> playerY;
-			m_startPosition = sf::Vector2f(playerX, playerY);
-		}
-		/*
-		else if (type == "ENEMY") {
-			std::string enemyName;
-			keystream >> enemyName;
-			int enemyId = entityMgr->Add(EntityType::Enemy, enemyName);
-			if (enemyId < 0) { continue; }
-			float enemyX = 0; float enemyY = 0;
-			keystream >> enemyX >> enemyY;
-			entityMgr->Find(enemyId)->SetPosition(enemyX, enemyY);
-		}
-		
-		else 
-		{
-			Debug::LogWarning("Unknown map data type " + type);
-		}
-	}
-	mapFile.close();
-	*/
-}
-
-void Map::LoadTiles(const std::string& tileDataPath,
-	const std::string& tileTexturePath)
-{
-	std::ifstream file;
-	file.open(tileDataPath);
-
-	if (!file.is_open())
-	{
-		Debug::LogWarning("Failed loading tile set file: " + tileDataPath);
-		return;
-	}
-
-	int textureId = m_context.m_textureManager->Add(tileTexturePath);
-	if (textureId < 0)
-	{
-		Debug::LogError("Map spritesheet not found: " + tileTexturePath);
-		return;
-	}
-
-	std::string line;
-	while (std::getline(file, line))
-	{
-		if (line[0] == '|') { continue; }
-
-		std::stringstream keystream(line);
-
-		int tileId;
-		keystream >> tileId;
-		if (tileId < 0) { continue; }
-
-		//std::shared_ptr<TileInfo> tile = std::make_shared<TileInfo>(m_context, textureId, tileId);
-		//keystream >> tile->m_name >> tile->m_friction.x >> tile->m_friction.y >> tile->m_deadly;
-
-		/*
-		if (!m_tileSet.emplace(tileId, tile).second)
-		{
-		//	Debug::LogWarning("Duplicate tile type: " + tile->m_name);
-		}
-		*/
-	}
-	file.close();
 }
 
 std::shared_ptr<Tile> Map::GetTile(unsigned int x, unsigned int y)
@@ -219,12 +47,15 @@ void Map::Draw(sf::RenderWindow& window)
 	sf::Vector2i tileBegin(floor(viewSpace.left / tileSize), floor(viewSpace.top / tileSize));
 	sf::Vector2i tileEnd(ceil((viewSpace.left + viewSpace.width) / tileSize), ceil((viewSpace.top + viewSpace.height) / tileSize));
 
-	unsigned int count = 0;
+	const unsigned int xMax = m_mapParser.GetMapData()->m_mapSize.x;
+	const unsigned int yMax = m_mapParser.GetMapData()->m_mapSize.y;
+
 	for (int x = tileBegin.x; x <= tileEnd.x; ++x)
 	{
 		for (int y = tileBegin.y; y <= tileEnd.y; ++y)
 		{
-			if (x < 0 || y < 0) { continue; }
+			if (x < 0 || y < 0 ) { continue; }
+			if (x > xMax || y > yMax) { break; }
 
 			std::shared_ptr<Tile> tile = GetTile(x, y);
 
@@ -234,8 +65,6 @@ void Map::Draw(sf::RenderWindow& window)
 			sf::Sprite& sprite = tile->m_properties->m_sprite;
 			sprite.setPosition(x * tileSize, y * tileSize);
 			window.draw(sprite);
-
-			count++;
 
 			// TODO: re-implement map debug drawing in debug class.
 			/*

@@ -169,6 +169,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MapBackground.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="rapidxml.hpp" />
     <ClInclude Include="rapidxml_iterators.hpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapBackground.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Raycast.cpp" />
     <ClCompile Include="StateManager.cpp" />

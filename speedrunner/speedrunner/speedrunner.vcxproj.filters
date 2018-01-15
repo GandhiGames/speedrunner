@@ -121,8 +121,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="TilemapParser.cpp">
-      <Filter>Level</Filter>
+      <Filter>Level\Tilemap</Filter>
     </ClCompile>
+    <ClCompile Include="MapBackground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h" />
@@ -269,9 +270,6 @@
     <ClInclude Include="C_MapCollision.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="TilemapParser.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="rapidxml_iterators.hpp">
       <Filter>RapidXML</Filter>
     </ClInclude>
@@ -284,6 +282,10 @@
     <ClInclude Include="rapidxml.hpp">
       <Filter>RapidXML</Filter>
     </ClInclude>
+    <ClInclude Include="TilemapParser.h">
+      <Filter>Level\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBackground.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">
@@ -330,6 +332,12 @@
     </Filter>
     <Filter Include="RapidXML">
       <UniqueIdentifier>{7f11340f-05ab-4369-972f-4342e18eb7ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Tilemap">
+      <UniqueIdentifier>{30b07936-5349-46d9-b971-e9098a1649aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Background">
+      <UniqueIdentifier>{2afb287e-eab8-4997-8fec-10c527c33faa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
