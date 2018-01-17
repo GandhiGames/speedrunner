@@ -8,11 +8,18 @@
 
 #include "Util.h"
 
+struct FrameData
+{
+	int x;
+	int y;
+	int w;
+	int h;
+};
+
 class Animation
 {
 public:
-	Animation(std::shared_ptr<sf::Texture> texture, int row, int width,
-		int height, int frameStart, int frameEnd, float frameSpeed, bool loop,
+	Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, bool loop,
 		MOVEMENT_DIRECTION facingDir);
 
 	void SetPosition(const sf::Vector2f& pos);
@@ -31,19 +38,20 @@ public:
 
 	MOVEMENT_DIRECTION GetFacingFirection();
 
+	void AddFrame(int x, int y, int w, int h);
+
+private:
+	void UpdateSpriteRect();
+
 private:
 	sf::Sprite m_sprite;
 
+	std::vector<FrameData> m_frames; //TODO: can increase performance by using fixed-size array
 	float m_timeDelta;
-	int m_row;
-	int m_width;
-	int m_height;
-	int m_frameCountStart;
-	int m_frameCountEnd;
 	int m_initialSpriteOffset;
 	float m_frameSpeed;
+	int m_currentFrameIndex;
 	int m_scale;
-	int m_currentFrame;
 	bool m_loop;
 	bool m_shouldAnimate;
 	MOVEMENT_DIRECTION m_initialFacingDir;

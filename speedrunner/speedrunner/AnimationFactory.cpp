@@ -13,7 +13,7 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 	animationStateLookup.emplace(std::make_pair("JumpDown", ANIMATION_STATE::JUMP_DOWN));
 	animationStateLookup.emplace(std::make_pair("JumpUp", ANIMATION_STATE::JUMP_UP));
 	animationStateLookup.emplace(std::make_pair("AttackAir", ANIMATION_STATE::ATTACK_IN_AIR));
-	animationStateLookup.emplace(std::make_pair("AttackAir", ANIMATION_STATE::ATTACK_ON_GROUND));
+	animationStateLookup.emplace(std::make_pair("AttackGround", ANIMATION_STATE::ATTACK_ON_GROUND));
 	animationStateLookup.emplace(std::make_pair("Walk", ANIMATION_STATE::WALK));
 	animationStateLookup.emplace(std::make_pair("WallJump", ANIMATION_STATE::WALL_JUMP));
 
@@ -22,26 +22,82 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 	moveDirLookup.emplace(std::make_pair("Right", MOVEMENT_DIRECTION::RIGHT));
 	moveDirLookup.emplace(std::make_pair("Left", MOVEMENT_DIRECTION::LEFT));
 
+	MOVEMENT_DIRECTION spriteDir = MOVEMENT_DIRECTION::COUNT;
 
+	char* cstr = new char[filePath.size() + 1];
+	strcpy_s(cstr, filePath.size() + 1, filePath.c_str());
+	rapidxml::file<> xmlFile(cstr);
+	rapidxml::xml_document<> doc;
+	doc.parse<0>(xmlFile.data());
 
+	xml_node<>* rootNode = doc.first_node("TextureAtlas");
 
-	return;
+	const std::string imagePath = "../resources/spritesheets/" + std::string(rootNode->first_attribute("imagePath")->value());
+	int imageWidth = std::atoi(rootNode->first_attribute("width")->value());
+	int imageHeight = std::atoi(rootNode->first_attribute("height")->value());
 
-	std::ifstream animationDataFile;
-	animationDataFile.open(filePath);
-	if (!animationDataFile.is_open())
+	xml_node<>* dirNode = rootNode->first_node("direction");
+	if (dirNode)
 	{
-		Debug::LogError("Cannot find animation data file");
+		spriteDir = moveDirLookup[dirNode->value()];
+	}
+	if (spriteDir == MOVEMENT_DIRECTION::COUNT)
+	{
+		Debug::LogError("Cannot load animations as no direction set");
 		return animations;
 	}
 
-	int xSize = -1;
-	int ySize = -1;
-	int xScale = 1;
-	int yScale = 1;
-	int textureIndex = -1;
-	MOVEMENT_DIRECTION spriteDir = MOVEMENT_DIRECTION::COUNT;
+	int textureId = context.m_textureManager->Add(imagePath);
+	if (textureId == -1)
+	{
+		Debug::LogError("Texture not found");
+	}
 
+
+	//TODO: add error checking - what if an attribute does not exist?
+	for (xml_node<> * node = rootNode->first_node("animation"); node; node = node->next_sibling())
+	{
+		const std::string animationName = node->first_attribute("name")->value();
+		if (animationStateLookup.find(animationName) == animationStateLookup.end())
+		{
+			Debug::LogError("No animation state found for animation name: " + animationName);
+			return animations;
+		}
+
+		ANIMATION_STATE animState = animationStateLookup[animationName];
+		float frameTime = std::atof(node->first_attribute("frameTime")->value());
+		bool loop = std::atoi(node->first_attribute("loop")->value());
+
+		//(std::shared_ptr<sf::Texture> texture, float frameSpeed, bool loop, MOVEMENT_DIRECTION facingDir)
+		std::shared_ptr<Animation> a = 
+			std::make_shared<Animation>(context.m_textureManager->Get(textureId), frameTime, loop, spriteDir);
+
+		for (xml_node<> * spriteNode = node->first_node("sprite"); spriteNode; spriteNode = spriteNode->next_sibling())
+		{
+			int x = std::atoi(spriteNode->first_attribute("x")->value());
+			int y = std::atoi(spriteNode->first_attribute("y")->value());
+			int width = std::atoi(spriteNode->first_attribute("w")->value());;
+			int height = std::atoi(spriteNode->first_attribute("h")->value());;
+
+			//TODO: implement sprite pivot point
+			//float pivotX = std::atof(spriteNode->first_attribute("pX")->value());;
+			//float pivotY = std::atof(spriteNode->first_attribute("pY")->value());
+
+			a->AddFrame(x, y, width, height);
+		}
+
+		//TODO: should check if animations already contains animation group with the same animation state
+		std::shared_ptr<AnimationGroup> g = std::make_shared<AnimationGroup>();
+		g->AddAnimation(a);
+		animations.emplace(std::make_pair(animState, g));
+	}
+
+	return animations;
+
+
+
+
+	/*
 	std::string line;
 	while (std::getline(animationDataFile, line))
 	{
@@ -139,6 +195,8 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 
 		}
 	}
+
+	*/
 
 	return animations;
 }

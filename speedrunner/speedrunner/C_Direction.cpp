@@ -7,8 +7,11 @@ C_Direction::C_Direction(Object* owner) :
 	m_moveDir(MOVEMENT_DIRECTION::RIGHT),
 	m_cached(false)
 {
-	//TODO: creates issue when components added out of order. Create Awake/Start methods and move these to them.
-	m_movement = owner->GetComponent<C_Velocity>();
+}
+
+void C_Direction::Awake()
+{
+	m_movement = m_owner->GetComponent<C_Velocity>();
 
 	if (!m_movement)
 	{

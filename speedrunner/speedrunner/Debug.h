@@ -17,6 +17,7 @@ public:
 
 	static void DrawLine(const sf::Vector2f& from, const sf::Vector2f& to, sf::Color colour = sf::Color::White);
 	static void DrawRay(const sf::Vector2f& from, const sf::Vector2f& to, sf::Color colour = sf::Color::White);
+	static void DrawRect(const sf::FloatRect& rect, sf::Color colour = sf::Color::White);
 	static void DrawRect(const sf::Vector2f& pos, const sf::Vector2f size, sf::Color colour = sf::Color::White);
 
 	static void Log(const sf::Vector2f& v);

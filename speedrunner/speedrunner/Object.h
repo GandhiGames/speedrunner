@@ -14,7 +14,7 @@
 #include "C_Tag.h"
 #include "C_StaticSprite.h"
 #include "C_AnimatedSprite.h"
-#include "C_DirectionalAnimation.h"
+#include "C_MovementAnimation.h"
 #include "C_KeyboardController.h"
 #include "C_BoxCollider.h"
 #include "C_CollidableTest.h"
@@ -29,6 +29,8 @@
 #include "C_Health.h"
 #include "C_KnockBack.h"
 #include "C_MapCollision.h"
+#include "C_DebugDrawCollider.h"
+#include "C_DebugDrawMapCollisions.h"
 
 class Object
 {

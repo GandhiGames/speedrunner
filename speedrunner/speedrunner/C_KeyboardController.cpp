@@ -83,9 +83,9 @@ void C_KeyboardController::CalculateMovementForce(float timeDelta, float gravity
 //TODO: give player small amount time after walking off ledge to still be able to jump.
 void C_KeyboardController::CalculateJumpForce(float timeDelta, float gravity)
 {
-	std::shared_ptr<TileInfo> standingOnTile = m_mapCollision->GetTileBelow();
+	bool isGrounded = m_mapCollision->IsGrounded();
 
-	if (standingOnTile)
+	if (isGrounded)
 	{
 		m_jumping = false;
 	}
@@ -98,12 +98,12 @@ void C_KeyboardController::CalculateJumpForce(float timeDelta, float gravity)
 		m_movement->SetVelocity(velocity.x, -m_jumpForce);
 	}
 
-	if (velocity.y > 0.f && !standingOnTile)
+	if (velocity.y > 0.f && !isGrounded)
 	{
 		velocity.y += gravity * (m_fallMultiplier - 1) * timeDelta;
 		m_movement->SetVelocity(velocity.x, velocity.y);
 	}
-	else if (velocity.y < 0.f && !standingOnTile && !Input::IsKeyPressed(Input::KEY::KEY_UP))
+	else if (velocity.y < 0.f && !isGrounded && !Input::IsKeyPressed(Input::KEY::KEY_UP))
 	{
 		velocity.y += gravity * (m_lowJumpMultiplier - 1) * timeDelta;
 		m_movement->SetVelocity(velocity.x, velocity.y);

@@ -41,7 +41,7 @@ void C_MeleeAttack::Update(float deltaTime)
 {
 	if (Input::IsKeyDown(Input::KEY::KEY_ATTACK))
 	{
-		m_animation->SetCurrentAnimation(ANIMATION_STATE::ATTACK);
+		m_animation->SetCurrentAnimation(ANIMATION_STATE::ATTACK_ON_GROUND); //TODO: check if in air and run different animation
 	}
 }
 

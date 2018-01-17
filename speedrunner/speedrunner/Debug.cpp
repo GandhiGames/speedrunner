@@ -85,6 +85,16 @@ void Debug::DrawRay(const sf::Vector2f& from, const sf::Vector2f& to, sf::Color 
 	}
 }
 
+void Debug::DrawRect(const sf::FloatRect& rect, sf::Color colour)
+{
+	sf::Vector2f size(rect.width, rect.height);
+	sf::Vector2f pos(rect.left + rect.width * 0.5f, rect.top + rect.height * 0.5f);
+	sf::RectangleShape shape(size);
+	shape.setPosition(pos);
+	shape.setFillColor(colour);
+	m_rects.push_back(shape);
+}
+
 void Debug::DrawRect(const sf::Vector2f& pos, const sf::Vector2f size, sf::Color colour)
 {
 	sf::RectangleShape shape(size);

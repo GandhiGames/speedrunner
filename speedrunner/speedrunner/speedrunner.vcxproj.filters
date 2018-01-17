@@ -15,16 +15,7 @@
     <ClCompile Include="C_Camera.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="C_CollidableTest.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="C_DebugPositionLabel.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="C_Direction.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="C_DirectionalAnimation.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="C_Health.cpp">
@@ -40,9 +31,6 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="C_MeleeAttack.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="C_RaycastTest.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="C_StaticSprite.cpp">
@@ -124,6 +112,24 @@
       <Filter>Level\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="MapBackground.cpp" />
+    <ClCompile Include="C_CollidableTest.cpp">
+      <Filter>Components\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="C_DebugPositionLabel.cpp">
+      <Filter>Components\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="C_RaycastTest.cpp">
+      <Filter>Components\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="C_DebugDrawCollider.cpp">
+      <Filter>Components\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="C_DebugDrawMapCollisions.cpp">
+      <Filter>Components\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="C_MovementAnimation.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h" />
@@ -141,16 +147,7 @@
     <ClInclude Include="C_Camera.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="C_CollidableTest.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="C_DebugPositionLabel.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="C_Direction.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="C_DirectionalAnimation.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="C_Health.h">
@@ -166,9 +163,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="C_MeleeAttack.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="C_RaycastTest.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="C_StaticSprite.h">
@@ -286,6 +280,24 @@
       <Filter>Level\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="MapBackground.h" />
+    <ClInclude Include="C_CollidableTest.h">
+      <Filter>Components\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="C_DebugPositionLabel.h">
+      <Filter>Components\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="C_RaycastTest.h">
+      <Filter>Components\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="C_DebugDrawCollider.h">
+      <Filter>Components\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="C_DebugDrawMapCollisions.h">
+      <Filter>Components\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="C_MovementAnimation.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">
@@ -338,6 +350,9 @@
     </Filter>
     <Filter Include="Level\Background">
       <UniqueIdentifier>{2afb287e-eab8-4997-8fec-10c527c33faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Debug">
+      <UniqueIdentifier>{f36509a6-1672-4ad8-826a-4b7f3a0d6f25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

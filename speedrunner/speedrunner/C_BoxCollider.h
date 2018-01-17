@@ -2,7 +2,6 @@
 
 #include "Component.h"
 #include "C_Collider2D.h"
-#include "C_Updateable.h"
 
 enum class Origin { Top_Left, Abs_Centre, Mid_Bottom };
 

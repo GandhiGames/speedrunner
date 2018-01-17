@@ -8,15 +8,16 @@
 #include "C_AnimatedSprite.h"
 #include "C_Velocity.h"
 #include "C_Direction.h"
+#include "C_MapCollision.h"
 #include "Util.h"
 
 //TODO: rename class
-class C_DirectionalAnimation : public Component, public C_Updateable
+class C_MovementAnimation : public Component, public C_Updateable
 {
 	friend class Object;
 
 public:
-	C_DirectionalAnimation(Object* owner);
+	C_MovementAnimation(Object* owner);
 
 	void Awake() override;
 
@@ -25,8 +26,10 @@ public:
 private:
 	std::shared_ptr<C_AnimatedSprite> m_sprite;
 	std::shared_ptr<C_Velocity> m_movement;
+	std::shared_ptr<C_MapCollision> m_mapCollision;
 
 	ANIMATION_STATE m_currentState;
 	float m_minWalkVelocity;
+	float m_minJumpVelocity;
 };
 

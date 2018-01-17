@@ -145,7 +145,7 @@ void TilemapParser::BuildPlatformLayer(xml_node<>* platformLayer)
 			// Bind properties of a tile from a set.
 			tile->m_properties = itr->second;
 
-			int tileX = count % m_mapData->m_mapSize.x;
+			int tileX = count % m_mapData->m_mapSize.x - 1;
 			int tileY = count / m_mapData->m_mapSize.x;
 
 			if (!m_map.emplace(Mathf::to1DIndex(tileX, tileY, m_mapData->m_mapSize.x), tile).second)

@@ -146,9 +146,11 @@
     <ClInclude Include="C_CollidableTest.h" />
     <ClInclude Include="C_Collider2D.h" />
     <ClInclude Include="C_Damageable.h" />
+    <ClInclude Include="C_DebugDrawCollider.h" />
+    <ClInclude Include="C_DebugDrawMapCollisions.h" />
     <ClInclude Include="C_DebugPositionLabel.h" />
     <ClInclude Include="C_Direction.h" />
-    <ClInclude Include="C_DirectionalAnimation.h" />
+    <ClInclude Include="C_MovementAnimation.h" />
     <ClInclude Include="C_Drawable.h" />
     <ClInclude Include="C_Health.h" />
     <ClInclude Include="C_InstanceID.h" />
@@ -200,9 +202,11 @@
     <ClCompile Include="C_CircleCollider.cpp" />
     <ClCompile Include="C_CollidableTest.cpp" />
     <ClCompile Include="C_Collider2D.cpp" />
+    <ClCompile Include="C_DebugDrawCollider.cpp" />
+    <ClCompile Include="C_DebugDrawMapCollisions.cpp" />
     <ClCompile Include="C_DebugPositionLabel.cpp" />
     <ClCompile Include="C_Direction.cpp" />
-    <ClCompile Include="C_DirectionalAnimation.cpp" />
+    <ClCompile Include="C_MovementAnimation.cpp" />
     <ClCompile Include="C_Drawable.cpp" />
     <ClCompile Include="C_Health.cpp" />
     <ClCompile Include="C_InstanceID.cpp" />

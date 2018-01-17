@@ -26,7 +26,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="hero_GetHit.png" x="448" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
 </animation>
 
-<animation name = "Idle" frameTime = "1" loop = "1">
+<animation name = "Idle" frameTime = "0.2" loop = "1">
     <sprite n="hero_Idle-0.png" x="480" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
     <sprite n="hero_Idle-1.png" x="0" y="32" w="32" h="32" pX="0.5" pY="0.5"/>
     <sprite n="hero_Idle-2.png" x="32" y="32" w="32" h="32" pX="0.5" pY="0.5"/>
@@ -57,7 +57,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="hero_Punch_Effect-3.png" x="144" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
     <sprite n="hero_Punch_Effect-4.png" x="104" y="32" w="40" h="40" pX="0.5" pY="0.5"/>
 </animation>	
-	<animation name = "Walk" frameTime = "1" loop = "1">
+	<animation name = "Walk" frameTime = "0.15" loop = "1">
     <sprite n="hero_Run-0.png" x="64" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
     <sprite n="hero_Run-1.png" x="96" y="0" w="32" h="32" pX="0.5" pY="0.5"/>
     <sprite n="hero_Run-2.png" x="32" y="0" w="32" h="32" pX="0.5" pY="0.5"/>

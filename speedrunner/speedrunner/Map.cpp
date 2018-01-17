@@ -42,9 +42,10 @@ void Map::Draw(sf::RenderWindow& window)
 
 	//TODO: cache this.
 	const unsigned int tileSize = GetTileSize().x;
+	const float halfTilesize = tileSize * 0.5f;
 
 	// Set up culling space
-	sf::Vector2i tileBegin(floor(viewSpace.left / tileSize), floor(viewSpace.top / tileSize));
+	sf::Vector2i tileBegin(floor(viewSpace.left / tileSize) - halfTilesize, floor(viewSpace.top / tileSize));
 	sf::Vector2i tileEnd(ceil((viewSpace.left + viewSpace.width) / tileSize), ceil((viewSpace.top + viewSpace.height) / tileSize));
 
 	const unsigned int xMax = m_mapParser.GetMapData()->m_mapSize.x;
@@ -63,7 +64,7 @@ void Map::Draw(sf::RenderWindow& window)
 
 			//TODO: do we need to set the sprite position every frame? Can we not set it once during initialisation.
 			sf::Sprite& sprite = tile->m_properties->m_sprite;
-			sprite.setPosition(x * tileSize, y * tileSize);
+			sprite.setPosition((x * tileSize) + halfTilesize, (y * tileSize) + halfTilesize);
 			window.draw(sprite);
 
 			// TODO: re-implement map debug drawing in debug class.

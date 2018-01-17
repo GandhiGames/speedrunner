@@ -11,6 +11,8 @@ class C_Direction : public Component, public C_Updateable
 public:
 	C_Direction(Object* owner);
 
+	void Awake() override;
+
 	void LateUpdate(float timeDelta) override;
 
 	MOVEMENT_DIRECTION Get();

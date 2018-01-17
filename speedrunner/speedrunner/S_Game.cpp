@@ -38,11 +38,13 @@ void S_Game::OnCreate()
 	collider1->SetCollidable(sf::FloatRect(0, 0, 32, 32)); 	//TODO: need to setup player collider size
 	collider1->SetLayer(CollisionLayer::Player);
 	m_player->AddComponent<C_MapCollision>();
+	m_player->AddComponent<C_DebugDrawCollider>();
+	m_player->AddComponent<C_DebugDrawMapCollisions>();
 
 	auto animation = m_player->AddComponent<C_AnimatedSprite>();
 	
 	std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> playerAnimations = 
-		AnimationFactory::FromFile(*context, "../resources/data/spritesheets/player_spritesheet.data");
+		AnimationFactory::FromFile(*context, "../resources/data/spritesheets/player_spritesheet.xml");
 	
 	for (auto& a : playerAnimations)
 	{
@@ -51,7 +53,7 @@ void S_Game::OnCreate()
 
 	animation->SetCurrentAnimation(ANIMATION_STATE::IDLE);
 
-	m_player->AddComponent<C_DirectionalAnimation>();
+	m_player->AddComponent<C_MovementAnimation>();
 
 
 	//TODO: change from relative path. Make sure you do this for all paths.

@@ -1,28 +1,26 @@
 #include "Animation.h"
 
 //TODO: current assumes sprites are facing right. May not always be the case.
-Animation::Animation(std::shared_ptr<sf::Texture> texture, int row, int width, int height, int frameStart,
-	int frameEnd, float frameSpeed, bool loop, MOVEMENT_DIRECTION facingDir) :
-	m_row(row),
-	m_width(width),
-	m_height(height),
-	m_frameCountStart(frameStart),
-	m_frameCountEnd(frameEnd),
+Animation::Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, bool loop, MOVEMENT_DIRECTION facingDir) :
 	m_frameSpeed(frameSpeed),
-	m_currentFrame(m_frameCountStart),
+	m_currentFrameIndex(0),
 	m_timeDelta(0.f),
 	m_initialSpriteOffset(0),
 	m_loop(loop),
 	m_shouldAnimate(true),
-	m_scale(1),
 	m_initialFacingDir(facingDir),
 	m_curFacingDir(facingDir)
 {
 	m_sprite.setTexture(*texture);
 
-	m_sprite.setOrigin(m_width / 2.f, m_height / 2.f);
-
-	Reset();
+	if (facingDir == MOVEMENT_DIRECTION::RIGHT)
+	{
+		m_scale = 1;
+	}
+	else
+	{
+		m_scale = -1;
+	}
 }
 
 void Animation::SetPosition(const sf::Vector2f& pos)
@@ -52,9 +50,9 @@ void Animation::Draw(sf::RenderWindow &window,
 void Animation::NextFrame()
 {
 	// check if we reached the last frame
-	if (m_currentFrame == (m_frameCountEnd - 1))
+	if (m_currentFrameIndex == (m_frames.size() - 1))
 	{
-		m_currentFrame = m_frameCountStart;
+		m_currentFrameIndex = 0;
 
 		if (!m_loop)
 		{
@@ -63,19 +61,15 @@ void Animation::NextFrame()
 	}
 	else
 	{
-		m_currentFrame++;
+		m_currentFrameIndex++;
 	}
 
-	// update the texture rect
-	m_sprite.setTextureRect(sf::IntRect(
-		m_width * m_currentFrame + m_initialSpriteOffset, 
-		(m_row * m_height), 
-		m_width * m_scale, 
-		m_height));
+	UpdateSpriteRect();
 
 	if (m_shouldAnimate)
 	{
-		auto actionKey = m_actions.find(m_currentFrame);
+		//TODO: can use bit mask as quick way of checking if frame has action.
+		auto actionKey = m_actions.find(m_currentFrameIndex);
 
 		if (actionKey != m_actions.end())
 		{
@@ -101,7 +95,8 @@ void Animation::SetFacingDirection(MOVEMENT_DIRECTION dir)
 	}
 	else
 	{
-		m_initialSpriteOffset = m_width;
+		//TODO: this assumes all sprites have same width. This should be caculated when reseting/drawing new frame.
+		m_initialSpriteOffset = m_frames.at(m_currentFrameIndex).w; 
 		m_scale = -1;
 	}
 }
@@ -111,17 +106,28 @@ MOVEMENT_DIRECTION Animation::GetFacingFirection()
 	return m_curFacingDir;
 }
 
+void Animation::AddFrame(int x, int y, int w, int h)
+{
+	FrameData d;
+	d.x = x;
+	d.y = y;
+	d.w = w;
+	d.h = h;
+
+	m_frames.emplace_back(d);
+
+	if (m_frames.size() == 1)
+	{
+		UpdateSpriteRect();
+	}
+}
+
 void Animation::Reset()
 {
 	m_shouldAnimate = true;
 	m_timeDelta = 0.f;
-	m_currentFrame = m_frameCountStart;
-	m_sprite.setTextureRect(sf::IntRect(
-		m_initialSpriteOffset, 
-		m_row * m_height, 
-		m_width * m_scale,
-		m_height
-	));
+	m_currentFrameIndex = 0;
+	UpdateSpriteRect();
 }
 
 const sf::Sprite& Animation::GetSprite() const
@@ -131,7 +137,7 @@ const sf::Sprite& Animation::GetSprite() const
 
 void Animation::SetFrameAction(int frame, std::function<void(void)> action)
 {
-	if (frame >= m_frameCountStart && frame <= m_frameCountEnd)
+	if (frame >= 0 && frame <= m_frames.size() - 1)
 	{
 		auto actionKey = m_actions.find(frame);
 
@@ -144,4 +150,14 @@ void Animation::SetFrameAction(int frame, std::function<void(void)> action)
 			actionKey->second = action;
 		}
 	}
+}
+
+void Animation::UpdateSpriteRect()
+{
+	FrameData* currentFrame = &m_frames.at(m_currentFrameIndex);
+	m_sprite.setTextureRect(sf::IntRect(
+		currentFrame->x + m_initialSpriteOffset,
+		currentFrame->y,
+		currentFrame->w * m_scale,
+		currentFrame->h));
 }

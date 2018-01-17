@@ -10,15 +10,17 @@
 
 struct MapCollisionElement
 {
-	MapCollisionElement(float area, std::shared_ptr<TileInfo> info, const sf::FloatRect& bounds) :
+	MapCollisionElement(float area, std::shared_ptr<TileInfo> info, const sf::FloatRect& bounds, float xDiff, float yDiff) :
 		m_area(area),
 		m_tile(info),
-		m_tileBounds(bounds) {}
+		m_tileBounds(bounds), m_xDiff(xDiff), m_yDiff(yDiff) {}
 	
 	
 	float m_area; 
 	std::shared_ptr<TileInfo> m_tile;
 	sf::FloatRect m_tileBounds;
+	float m_xDiff;
+	float m_yDiff;
 };
 
 class C_MapCollision : public Component, public C_Updateable
@@ -33,6 +35,10 @@ public:
 
 	std::shared_ptr<TileInfo> GetTileBelow();
 
+	const std::vector<MapCollisionElement>& GetCollisions() const;
+
+	bool IsGrounded() const;
+
 private:
 	static bool SortCollisions(const MapCollisionElement& a, const MapCollisionElement& b);
 	void CheckCollisions(Map* gameMap);
@@ -46,5 +52,6 @@ private:
 	std::shared_ptr<TileInfo> m_standingOnTile;
 	bool m_collidingOnX;
 	bool m_collidingOnY;
+	bool m_grounded;
 };
 

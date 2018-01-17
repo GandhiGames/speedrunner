@@ -39,6 +39,8 @@ void C_BoxCollider::SetPosition()
 	}
 }
 
+
+
 const sf::FloatRect& C_BoxCollider::GetCollidable()
 {
 	SetPosition();

@@ -5,7 +5,8 @@
 C_MapCollision::C_MapCollision(Object* owner) : 
 	Component(owner),
 	m_collidingOnX(false),
-	m_collidingOnY(false)
+	m_collidingOnY(false),
+	m_grounded(false)
 {
 }
 
@@ -33,6 +34,12 @@ void C_MapCollision::Awake()
 
 void C_MapCollision::Update(float deltaTime)
 {
+	/* 
+		Collisions are cleared at the beginning of the next update (rather than the end of the previous update)
+		so debug can use the collision data in late update.
+	*/
+	m_collisions.clear(); 
+
 	Map* gameMap = m_owner->m_context.m_map;
 	
 	CheckCollisions(gameMap);
@@ -41,7 +48,10 @@ void C_MapCollision::Update(float deltaTime)
 
 void C_MapCollision::CheckCollisions(Map* gameMap)
 {
+	m_grounded = false;
+
 	const unsigned int tileSize = gameMap->GetTileSize().x;
+	const float halfTileSize = tileSize * 0.5f;
 	const sf::FloatRect& AABB = m_collider->GetCollidable();
 
 	int fromX = floor(AABB.left / tileSize);
@@ -58,12 +68,20 @@ void C_MapCollision::CheckCollisions(Map* gameMap)
 			if (!tile) { continue; }
 
 			sf::FloatRect tileBounds(x * tileSize, y * tileSize, tileSize, tileSize);
+
+			float xDiff = (AABB.left + (AABB.width * 0.5f)) - (tileBounds.left + (tileBounds.width * 0.5f));
+			float yDiff = (AABB.top + (AABB.height * 0.5f)) - (tileBounds.top + (tileBounds.height * 0.5f));
+
+			if (abs(xDiff) < abs(yDiff) && yDiff < 0.f)
+			{
+				m_grounded = true;
+			}
+
 			sf::FloatRect intersection;
 			AABB.intersects(tileBounds, intersection); // Returns the overlapped rectangle in the intersection parameter.
 
 			float area = intersection.width * intersection.height;
-			MapCollisionElement e(area, tile->m_properties, tileBounds);
-			m_collisions.emplace_back(e);
+			m_collisions.emplace_back(MapCollisionElement(area, tile->m_properties, tileBounds, xDiff, yDiff));
 		}
 	}
 }
@@ -78,22 +96,18 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 	{
 		std::sort(m_collisions.begin(), m_collisions.end(), SortCollisions);
 
-		const unsigned int tileSize = gameMap->GetTileSize().x;
 		for (auto &itr : m_collisions)
 		{
 			const sf::FloatRect& AABB = m_collider->GetCollidable();
 			if (!AABB.intersects(itr.m_tileBounds)) { continue; }
 
-			float xDiff = (AABB.left + (AABB.width / 2)) - (itr.m_tileBounds.left + (itr.m_tileBounds.width / 2));
-			float yDiff = (AABB.top + (AABB.height / 2)) - (itr.m_tileBounds.top + (itr.m_tileBounds.height / 2));
-
 			float resolve = 0;
 
-			if (abs(xDiff) > abs(yDiff))
+			if (abs(itr.m_yDiff) > abs(itr.m_yDiff))
 			{
-				if (xDiff > 0)
+				if (itr.m_xDiff > 0)
 				{
-					resolve = (itr.m_tileBounds.left + tileSize) - AABB.left;
+					resolve = (itr.m_tileBounds.left + itr.m_tileBounds.width) - AABB.left;
 				}
 				else
 				{
@@ -108,9 +122,9 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 			}
 			else 
 			{ 
-				if (yDiff > 0) 
+				if (itr.m_yDiff > 0) 
 				{ 
-					resolve = (itr.m_tileBounds.top + tileSize) - AABB.top; 
+					resolve = (itr.m_tileBounds.top + itr.m_tileBounds.height) - AABB.top; 
 				} 
 				else 
 				{ 
@@ -123,7 +137,7 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 				
 				if (m_collidingOnY) { continue; } 
 				
-				if (yDiff < 0.f) // If tile below player
+				if (itr.m_yDiff < 0.f) // If tile below player
 				{
 					m_standingOnTile = itr.m_tile;
 				}
@@ -131,8 +145,12 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 				m_collidingOnY = true; 
 			}
 		} 
-		m_collisions.clear();
 	} 
+}
+
+const std::vector<MapCollisionElement>& C_MapCollision::GetCollisions() const
+{
+	return m_collisions;
 }
 
 bool C_MapCollision::SortCollisions(const MapCollisionElement& a, const MapCollisionElement& b)
@@ -140,7 +158,14 @@ bool C_MapCollision::SortCollisions(const MapCollisionElement& a, const MapColli
 	return a.m_area > b.m_area;
 }
 
+//TODO: this does not always return the tile below. Even if the player does not move, different frames
+// results in different returns.
 std::shared_ptr<TileInfo> C_MapCollision::GetTileBelow()
 {
 	return m_standingOnTile;
+}
+
+bool C_MapCollision::IsGrounded() const
+{
+	return m_grounded; 
 }
