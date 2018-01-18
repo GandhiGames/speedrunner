@@ -5,7 +5,6 @@
 
 C_MovementAnimation::C_MovementAnimation(Object* owner) :
 	Component(owner),
-	m_currentState(ANIMATION_STATE::COUNT),
 	m_minWalkVelocity(189.0f),
 	m_minJumpVelocity(0.f)
 {
@@ -20,8 +19,15 @@ void C_MovementAnimation::Awake()
 
 void C_MovementAnimation::Update(float deltaTime)
 {
+	ANIMATION_STATE animState = m_sprite->GetAnimationState();
+	
+	//TODO: look into a better way of checking whether an animation can be set. Maybe event system? entity flags?
+	if (animState == ANIMATION_STATE::ATTACK_IN_AIR || animState == ANIMATION_STATE::ATTACK_ON_GROUND)
+	{
+		return;
+	}
+
 	const sf::Vector2f& velocity = m_movement->GetVelocity();
-	ANIMATION_STATE animState = m_currentState;
 
 	bool grounded = m_mapCollision->IsGrounded();
 
@@ -38,22 +44,17 @@ void C_MovementAnimation::Update(float deltaTime)
 	}
 	else
 	{
-		if (velocity.y < 0.f)
+		if (velocity.y < 250.f)
 		{
 			animState = ANIMATION_STATE::JUMP_UP;
 		}
 		else
 		{
-			animState == ANIMATION_STATE::WALK;
+			animState = ANIMATION_STATE::JUMP_DOWN;
 		}
 	}
 
-	// Update playing animation
-	if (m_currentState != animState)
-	{
-		m_sprite->SetCurrentAnimation(animState);
-		m_currentState = animState;
-	}
+	m_sprite->SetAnimationState(animState);
 }
 
 

@@ -26,10 +26,6 @@ public:
 
 	void Draw(sf::RenderWindow &window, float timeDelta);
 
-	void NextFrame();
-
-	void Reset();
-
 	void SetFrameAction(int frame, std::function<void(void)> action);
 
 	const sf::Sprite& GetSprite() const;
@@ -40,8 +36,13 @@ public:
 
 	void AddFrame(int x, int y, int w, int h);
 
+	void Reset();
+
+	bool IsFinished();
+
 private:
 	void UpdateSpriteRect();
+	void NextFrame();
 
 private:
 	sf::Sprite m_sprite;

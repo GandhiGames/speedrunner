@@ -17,14 +17,16 @@ public:
 	void Awake() override;
 	void Start() override;
 
+	void Update(float deltaTime) override;
 	void LateUpdate(float deltaTime) override;
 
 	virtual void Draw(sf::RenderWindow &window, float timeDelta) override;
 
 	//TODO: look into optomising pass by-reference? convert to data only struct?
 	void AddAnimation(ANIMATION_STATE state, std::shared_ptr<AnimationGroup> animationGroup);
-	void SetCurrentAnimation(ANIMATION_STATE state);
-	
+	void SetAnimationState(ANIMATION_STATE state);
+	ANIMATION_STATE GetAnimationState();
+
 	std::shared_ptr<AnimationGroup> GetAnimation(ANIMATION_STATE state);
 
 	void SetAnimated(bool animated);
@@ -37,4 +39,5 @@ private:
 	std::shared_ptr<AnimationGroup> m_curAnimation;
 	bool m_animated;
 	MOVEMENT_DIRECTION m_curDirection;
+	ANIMATION_STATE m_curState;
 };

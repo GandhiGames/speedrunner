@@ -39,6 +39,14 @@ void C_StaticSprite::SetSprite(sf::Texture& texture, sf::IntRect rect)
 	m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
 }
 
+void C_StaticSprite::SetSprite(int id, sf::IntRect rect)
+{
+	std::shared_ptr<sf::Texture> texture = m_owner->m_context.m_textureManager->Get(id);
+	m_sprite.setTexture(*texture);
+	m_sprite.setTextureRect(rect);
+	m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
+}
+
 //TODO: remove this function and provide functionality through different methods.
 const sf::Sprite& C_StaticSprite::GetSprite() const
 {

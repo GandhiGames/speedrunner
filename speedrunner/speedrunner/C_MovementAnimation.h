@@ -28,7 +28,6 @@ private:
 	std::shared_ptr<C_Velocity> m_movement;
 	std::shared_ptr<C_MapCollision> m_mapCollision;
 
-	ANIMATION_STATE m_currentState;
 	float m_minWalkVelocity;
 	float m_minJumpVelocity;
 };

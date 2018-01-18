@@ -161,3 +161,8 @@ void Animation::UpdateSpriteRect()
 		currentFrame->w * m_scale,
 		currentFrame->h));
 }
+
+bool Animation::IsFinished()
+{
+	return !m_loop && !m_shouldAnimate;
+}

@@ -50,11 +50,11 @@ void S_Game::OnCreate()
 	{
 		animation->AddAnimation(a.first, a.second);
 	}
+	animation->SetAnimationState(ANIMATION_STATE::IDLE);
 
-	animation->SetCurrentAnimation(ANIMATION_STATE::IDLE);
 
 	m_player->AddComponent<C_MovementAnimation>();
-
+	m_player->AddComponent<C_MeleeAttack>();
 
 	//TODO: change from relative path. Make sure you do this for all paths.
 	//m_map.LoadTiles("../resources/data/test_tileset.data",

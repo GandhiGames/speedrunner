@@ -2,7 +2,7 @@
 #include "Object.h"
 
 C_AnimatedSprite::C_AnimatedSprite(Object* owner) : Component(owner),
-m_animated(false), m_curDirection(MOVEMENT_DIRECTION::COUNT)
+m_animated(false), m_curDirection(MOVEMENT_DIRECTION::COUNT), m_curState(ANIMATION_STATE::COUNT)
 {
 }
 
@@ -13,7 +13,7 @@ void C_AnimatedSprite::Awake()
 	if (!m_direction)
 	{
 		Debug::LogError("Cannot animate without direction. Adding Direction. To remove this warning add direction to object before this component");
-		
+
 		//TODO: enable ability to add components in awake function:
 		//m_direction = m_owner->AddComponent<C_Direction>();
 	}
@@ -22,6 +22,14 @@ void C_AnimatedSprite::Awake()
 void C_AnimatedSprite::Start()
 {
 	m_curDirection = m_direction->Get();
+}
+
+void C_AnimatedSprite::Update(float deltaTime)
+{
+	if (m_curAnimation->HasNextState() && m_curAnimation->IsFinished())
+	{
+		SetAnimationState(m_curAnimation->GetNextState());
+	}
 }
 
 void C_AnimatedSprite::LateUpdate(float deltaTime)
@@ -38,6 +46,7 @@ void C_AnimatedSprite::LateUpdate(float deltaTime)
 		}
 
 		m_curAnimation->Update(m_owner->m_transform->GetPosition());
+
 	}
 }
 
@@ -62,8 +71,14 @@ void C_AnimatedSprite::AddAnimation(ANIMATION_STATE state, std::shared_ptr<Anima
 	}
 }
 
-void C_AnimatedSprite::SetCurrentAnimation(ANIMATION_STATE state)
+void C_AnimatedSprite::SetAnimationState(ANIMATION_STATE state)
 {
+	if (m_curState == state)
+	{
+		return;
+	}
+
+	m_curState = state;
 	auto animation = m_animations.find(state);
 	if (animation != m_animations.end())
 	{
@@ -83,6 +98,11 @@ void C_AnimatedSprite::SetCurrentAnimation(ANIMATION_STATE state)
 
 		m_curAnimation->Reset();
 	}
+}
+
+ANIMATION_STATE C_AnimatedSprite::GetAnimationState()
+{
+	return m_curState;
 }
 
 std::shared_ptr<AnimationGroup> C_AnimatedSprite::GetAnimation(ANIMATION_STATE state)

@@ -69,8 +69,17 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 		bool loop = std::atoi(node->first_attribute("loop")->value());
 
 		//(std::shared_ptr<sf::Texture> texture, float frameSpeed, bool loop, MOVEMENT_DIRECTION facingDir)
-		std::shared_ptr<Animation> a = 
+		std::shared_ptr<Animation> anim = 
 			std::make_shared<Animation>(context.m_textureManager->Get(textureId), frameTime, loop, spriteDir);
+		std::shared_ptr<AnimationGroup> animationGroup = std::make_shared<AnimationGroup>();
+		animationGroup->AddAnimation(anim);
+
+		xml_attribute<>* goToState = node->first_attribute("goToState");
+		if (goToState)
+		{
+			ANIMATION_STATE state = animationStateLookup[goToState->value()];
+			animationGroup->SetNextState(state);
+		}
 
 		for (xml_node<> * spriteNode = node->first_node("sprite"); spriteNode; spriteNode = spriteNode->next_sibling())
 		{
@@ -83,13 +92,11 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 			//float pivotX = std::atof(spriteNode->first_attribute("pX")->value());;
 			//float pivotY = std::atof(spriteNode->first_attribute("pY")->value());
 
-			a->AddFrame(x, y, width, height);
+			anim->AddFrame(x, y, width, height);
 		}
 
 		//TODO: should check if animations already contains animation group with the same animation state
-		std::shared_ptr<AnimationGroup> g = std::make_shared<AnimationGroup>();
-		g->AddAnimation(a);
-		animations.emplace(std::make_pair(animState, g));
+		animations.emplace(std::make_pair(animState, animationGroup));
 	}
 
 	return animations;

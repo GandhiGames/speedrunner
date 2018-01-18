@@ -3,7 +3,10 @@
 #include "Debug.h"
 
 C_MeleeAttack::C_MeleeAttack(Object * owner) : Component(owner),
-hitDistance(10.f), hitRadius(20.f), dmgAmount(1)
+projectileForce(200.f), 
+dmgAmount(1),
+m_projTextureID(-1),
+m_projTextureRect(0, 0, 0, 0)
 {
 }
 
@@ -11,42 +14,58 @@ void C_MeleeAttack::Awake()
 {
 	m_moveDir = m_owner->GetComponent<C_Direction>();
 	m_animation = m_owner->GetComponent<C_AnimatedSprite>();
+	m_mapCollision = m_owner->GetComponent<C_MapCollision>();
 }
 
 void C_MeleeAttack::Start()
 {
-	/*
-	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::LEFT, sf::Vector2f(-hitDistance, 0.f)));
-	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::RIGHT, sf::Vector2f(hitDistance, 0.f)));
-	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::DOWN, sf::Vector2f(0.f, hitDistance)));
-	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::UP, sf::Vector2f(0.f, -hitDistance)));
+	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::LEFT, sf::Vector2f(-projectileForce, 0.f)));
+	m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::RIGHT, sf::Vector2f(projectileForce, 0.f)));
 
 
-	std::shared_ptr<AnimationGroup> swingAnimation = m_animation->GetAnimation(ANIMATION_STATE::SWING);
+	std::shared_ptr<AnimationGroup> groundAttackAnim = m_animation->GetAnimation(ANIMATION_STATE::ATTACK_ON_GROUND);
 
-	if (swingAnimation)
+	if (groundAttackAnim)
 	{
-		auto animations = swingAnimation->GetAnimations(SPRITE_TYPE::SWORD);
+		auto animations = groundAttackAnim->GetAnimations();
 
-		for (auto& a : animations)
+		if(animations.size() > 0) //TODO: needs to be a method of differentiating between animations in a group.
 		{
-			a->SetFrameAction(3, std::bind(&C_MeleeAttack::DoMeleeAttack, this));
+			animations[0]->SetFrameAction(3, std::bind(&C_MeleeAttack::DoAttack, this));
 		}
 	}
-	*/
 
+	m_projTextureID = m_owner->m_context.m_textureManager->Add();
+	m_projTextureRect = sf::IntRect();
 }
 
 void C_MeleeAttack::Update(float deltaTime)
 {
 	if (Input::IsKeyDown(Input::KEY::KEY_ATTACK))
 	{
-		m_animation->SetCurrentAnimation(ANIMATION_STATE::ATTACK_ON_GROUND); //TODO: check if in air and run different animation
+		bool isGrounded = m_mapCollision->IsGrounded();
+
+		ANIMATION_STATE attackState = isGrounded ? ANIMATION_STATE::ATTACK_ON_GROUND : ANIMATION_STATE::ATTACK_IN_AIR;
+
+		m_animation->SetAnimationState(attackState); 
 	}
 }
 
-void C_MeleeAttack::DoMeleeAttack()
+void C_MeleeAttack::DoAttack()
 {
+	std::shared_ptr<Object> projectile = std::make_shared<Object>(m_owner->m_context);
+	Object::Add(projectile);
+
+	projectile->m_transform->SetPosition(m_owner->m_transform->GetPosition());
+
+	std::shared_ptr<C_Velocity> projVel = projectile->AddComponent<C_Velocity>();
+	const MOVEMENT_DIRECTION moveDir = m_moveDir->Get();
+	projVel->SetAcceleration(m_hitDirections.at(moveDir));
+
+	std::shared_ptr<C_StaticSprite> projSprite = projectile->AddComponent<C_StaticSprite>();
+	projSprite->SetSprite();
+
+	/*
 	const MOVEMENT_DIRECTION moveDir = m_moveDir->Get();
 	const sf::Vector2f& pos = m_owner->m_transform->GetPosition();
 	auto inRange = Raycast::CircleCast(pos + m_hitDirections.at(moveDir), hitRadius, FOLLOWER_TAG);
@@ -64,4 +83,5 @@ void C_MeleeAttack::DoMeleeAttack()
 			d->DoDamage(dir, dmgAmount);
 		}
 	}
+	*/
 }

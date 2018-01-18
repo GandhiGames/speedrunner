@@ -7,7 +7,7 @@
 #include "Input.h"
 
 
-//TODO: rename to controller? or make work only with keyboard
+//TODO: rename to movementcontroller
 class C_KeyboardController : public Component, public C_Updateable
 {
 	friend class Object;

@@ -102,10 +102,12 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 			if (!AABB.intersects(itr.m_tileBounds)) { continue; }
 
 			float resolve = 0;
+			float xDiff = (AABB.left + (AABB.width * 0.5f)) - (itr.m_tileBounds.left + (itr.m_tileBounds.width * 0.5f));
+			float yDiff = (AABB.top + (AABB.height * 0.5f)) - (itr.m_tileBounds.top + (itr.m_tileBounds.height * 0.5f));
 
-			if (abs(itr.m_yDiff) > abs(itr.m_yDiff))
+			if (abs(xDiff) > abs(yDiff))
 			{
-				if (itr.m_xDiff > 0)
+				if (xDiff > 0)
 				{
 					resolve = (itr.m_tileBounds.left + itr.m_tileBounds.width) - AABB.left;
 				}
@@ -122,7 +124,7 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 			}
 			else 
 			{ 
-				if (itr.m_yDiff > 0) 
+				if (yDiff > 0) 
 				{ 
 					resolve = (itr.m_tileBounds.top + itr.m_tileBounds.height) - AABB.top; 
 				} 

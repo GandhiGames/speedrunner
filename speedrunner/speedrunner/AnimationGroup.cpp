@@ -1,5 +1,6 @@
 #include "AnimationGroup.h"
 
+AnimationGroup::AnimationGroup() : m_goToState(ANIMATION_STATE::COUNT) {}
 
 void AnimationGroup::AddAnimation(std::shared_ptr<Animation> animation)
 {
@@ -44,34 +45,32 @@ void AnimationGroup::Reset()
 	}
 }
 
-/*
-std::vector<std::shared_ptr<Animation>> AnimationGroup::GetAnimations(MOVEMENT_DIRECTION dir)
+std::vector<std::shared_ptr<Animation>>& AnimationGroup::GetAnimations()
 {
-	auto animationGroup = m_animations.find(dir);
-
-	if (animationGroup != m_animations.end())
-	{
-		return animationGroup->second;
-	}
-
-	return std::vector<std::shared_ptr<Animation>>();
+	return m_animations;
 }
 
-std::vector<std::shared_ptr<Animation>> AnimationGroup::GetAnimations(SPRITE_TYPE animationType)
+bool AnimationGroup::IsFinished()
 {
-	std::vector<std::shared_ptr<Animation>> animations;
-
-	for (auto& animationsGroup : m_animations)
+	for (auto& a : m_animations)
 	{
-		for (auto& animation : animationsGroup.second)
-		{
-			if (animation->GetType() == animationType)
-			{
-				animations.push_back(animation);
-			}
-		}
+		if (!a->IsFinished()) { return false; }
 	}
 
-	return animations;
+	return true;
 }
-*/
+
+bool AnimationGroup::HasNextState() 
+{
+	return m_goToState != ANIMATION_STATE::COUNT;
+}
+
+ANIMATION_STATE AnimationGroup::GetNextState()
+{
+	return m_goToState;
+}
+
+void AnimationGroup::SetNextState(ANIMATION_STATE state)
+{
+	m_goToState = state;
+}
