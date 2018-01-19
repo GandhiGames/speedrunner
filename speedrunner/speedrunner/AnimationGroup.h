@@ -13,7 +13,7 @@ public:
 
 	void AddAnimation(std::shared_ptr<Animation> animation);
 	void Draw(sf::RenderWindow &window, float timeDelta);
-	void Update(const sf::Vector2f pos);
+	void SetPosition(const sf::Vector2f pos);
 	void Reset();
 
 	void SetFacingDirection(MOVEMENT_DIRECTION dir);

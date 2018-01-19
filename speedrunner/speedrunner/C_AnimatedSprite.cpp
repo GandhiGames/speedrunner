@@ -45,7 +45,7 @@ void C_AnimatedSprite::LateUpdate(float deltaTime)
 			m_curAnimation->Reset();
 		}
 
-		m_curAnimation->Update(m_owner->m_transform->GetPosition());
+		m_curAnimation->SetPosition(m_owner->m_transform->GetPosition());
 
 	}
 }

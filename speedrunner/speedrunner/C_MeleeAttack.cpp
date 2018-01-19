@@ -3,10 +3,11 @@
 #include "Debug.h"
 
 C_MeleeAttack::C_MeleeAttack(Object * owner) : Component(owner),
-projectileForce(200.f), 
+projectileForce(500.f), 
 dmgAmount(1),
 m_projTextureID(-1),
-m_projTextureRect(0, 0, 0, 0)
+m_projTextureRect(0, 0, 0, 0),
+m_projOffset(5.f, 14.f)
 {
 }
 
@@ -24,19 +25,30 @@ void C_MeleeAttack::Start()
 
 
 	std::shared_ptr<AnimationGroup> groundAttackAnim = m_animation->GetAnimation(ANIMATION_STATE::ATTACK_ON_GROUND);
-
 	if (groundAttackAnim)
 	{
 		auto animations = groundAttackAnim->GetAnimations();
-
 		if(animations.size() > 0) //TODO: needs to be a method of differentiating between animations in a group.
 		{
-			animations[0]->SetFrameAction(3, std::bind(&C_MeleeAttack::DoAttack, this));
+			animations[0]->SetFrameAction(1, std::bind(&C_MeleeAttack::DoAttack, this));
+		}
+	}
+	std::shared_ptr<AnimationGroup> airAttackAnim = m_animation->GetAnimation(ANIMATION_STATE::ATTACK_IN_AIR);
+	if (airAttackAnim)
+	{
+		auto animations = airAttackAnim->GetAnimations();
+		if (animations.size() > 0) //TODO: needs to be a method of differentiating between animations in a group.
+		{
+			animations[0]->SetFrameAction(1, std::bind(&C_MeleeAttack::DoAttack, this));
 		}
 	}
 
-	m_projTextureID = m_owner->m_context.m_textureManager->Add();
-	m_projTextureRect = sf::IntRect();
+	m_projTextureID = m_owner->m_context.m_textureManager->Add("../resources/spritesheets/weapons/hand_swords.png");
+	if (m_projTextureID == -1)
+	{
+		Debug::LogError("Weapon sprite not found");
+	}
+	m_projTextureRect = sf::IntRect(0, 284, 320, 47);
 }
 
 void C_MeleeAttack::Update(float deltaTime)
@@ -51,19 +63,27 @@ void C_MeleeAttack::Update(float deltaTime)
 	}
 }
 
+//TODO: create generic object pool, use for projectiles.
 void C_MeleeAttack::DoAttack()
 {
 	std::shared_ptr<Object> projectile = std::make_shared<Object>(m_owner->m_context);
 	Object::Add(projectile);
 
-	projectile->m_transform->SetPosition(m_owner->m_transform->GetPosition());
+	projectile->m_transform->SetPosition(m_owner->m_transform->GetPosition() + m_projOffset);
 
 	std::shared_ptr<C_Velocity> projVel = projectile->AddComponent<C_Velocity>();
 	const MOVEMENT_DIRECTION moveDir = m_moveDir->Get();
-	projVel->SetAcceleration(m_hitDirections.at(moveDir));
+	const sf::Vector2f& vel = m_hitDirections.at(moveDir);
+	projVel->SetMaxVelocity(abs(vel.x), abs(vel.y));
+	projVel->SetVelocity(vel);
 
 	std::shared_ptr<C_StaticSprite> projSprite = projectile->AddComponent<C_StaticSprite>();
-	projSprite->SetSprite();
+	projSprite->SetSprite(m_projTextureID, m_projTextureRect, 0.1f, 0.1f);
+	if (moveDir == MOVEMENT_DIRECTION::LEFT)
+	{
+		projSprite->Flip();
+	}
+	projSprite->SetSortOrder(2000); //TODO: setup sort layers.
 
 	/*
 	const MOVEMENT_DIRECTION moveDir = m_moveDir->Get();

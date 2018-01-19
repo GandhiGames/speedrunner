@@ -1,0 +1,6 @@
+boss iterations:
+
+1. run up, one hit and boss removed
+2. extra hits, bar, health hit animation
+3. boss_director: animates enemy health bar entry
+4.

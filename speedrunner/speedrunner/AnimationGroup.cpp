@@ -29,7 +29,7 @@ void AnimationGroup::Draw(sf::RenderWindow &window, float timeDelta)
 	}
 }
 
-void AnimationGroup::Update(const sf::Vector2f pos)
+void AnimationGroup::SetPosition(const sf::Vector2f pos)
 {
 	for (auto& a : m_animations)
 	{

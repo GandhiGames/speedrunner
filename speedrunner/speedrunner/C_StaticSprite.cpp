@@ -6,7 +6,7 @@ C_StaticSprite::C_StaticSprite(Object* owner) : Component(owner)
 {
 }
 
-void C_StaticSprite::Update(float deltaTime)
+void C_StaticSprite::LateUpdate(float deltaTime)
 {
 	m_sprite.setPosition(m_owner->m_transform->GetPosition());
 }
@@ -39,12 +39,16 @@ void C_StaticSprite::SetSprite(sf::Texture& texture, sf::IntRect rect)
 	m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
 }
 
-void C_StaticSprite::SetSprite(int id, sf::IntRect rect)
+void C_StaticSprite::SetSprite(int id, sf::IntRect rect, float scaleX, float scaleY)
 {
 	std::shared_ptr<sf::Texture> texture = m_owner->m_context.m_textureManager->Get(id);
-	m_sprite.setTexture(*texture);
-	m_sprite.setTextureRect(rect);
-	m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
+	if (texture)
+	{
+		m_sprite.setTexture(*texture);
+		m_sprite.setTextureRect(rect);
+		m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
+		m_sprite.setScale(scaleX, scaleY);
+	}
 }
 
 //TODO: remove this function and provide functionality through different methods.
@@ -61,6 +65,17 @@ void C_StaticSprite::SetColour(const sf::Color& colour)
 void C_StaticSprite::SetScale(sf::Vector2f& scale)
 {
 	m_sprite.setScale(scale);
+}
+
+void C_StaticSprite::Flip()
+{
+	const sf::IntRect& rect = m_sprite.getTextureRect();
+	m_sprite.setTextureRect(sf::IntRect(
+		rect.left + rect.width,
+		rect.top,
+		-rect.width,
+		rect.height
+	));
 }
 
 

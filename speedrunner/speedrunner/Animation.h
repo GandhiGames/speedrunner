@@ -22,6 +22,8 @@ public:
 	Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, bool loop,
 		MOVEMENT_DIRECTION facingDir);
 
+	void RunAction();
+
 	void SetPosition(const sf::Vector2f& pos);
 
 	void Draw(sf::RenderWindow &window, float timeDelta);

@@ -18,10 +18,11 @@ public:
 	void AddVelocity(float x, float y);
 	void AddVelocity(sf::Vector2f& velocity);
 
-	void SetVelocity(sf::Vector2f& velocity);
+	void SetVelocity(const sf::Vector2f& velocity);
 	void SetVelocity(float x, float y);
 	const sf::Vector2f& GetVelocity() const;
 
+	void SetMaxVelocity(float x, float y);
 	void SetMaxVelocity(const sf::Vector2f& max);
 
 	void ApplyFriction(float x, float y);

@@ -10,13 +10,15 @@ class C_StaticSprite : public Component, public C_Drawable, public C_Updateable
 public:
 	C_StaticSprite(Object* owner);
 	
-	void Update(float deltaTime) override;
+	void LateUpdate(float deltaTime) override;
 
 	void Draw(sf::RenderWindow &window, float timeDelta) override;
 
 	void SetSprite(sf::Texture& texture);
 	void SetSprite(sf::Texture& texture, sf::IntRect rect);
-	void SetSprite(int id, sf::IntRect rect);
+	void SetSprite(int id, sf::IntRect rect, float scaleX, float scaleY);
+
+	void Flip();
 
 	const sf::Sprite& GetSprite() const;
 

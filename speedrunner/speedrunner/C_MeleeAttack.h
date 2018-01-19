@@ -30,5 +30,6 @@ private:
 	int dmgAmount;
 	int m_projTextureID;
 	sf::IntRect m_projTextureRect;
+	sf::Vector2f m_projOffset;
 };
 

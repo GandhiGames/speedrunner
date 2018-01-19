@@ -23,6 +23,23 @@ Animation::Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, boo
 	}
 }
 
+void Animation::RunAction()
+{
+	if (m_shouldAnimate)
+	{
+		if (m_actions.size() > 0)
+		{
+			//TODO: can use bit mask as quick way of checking if frame has action.
+			auto actionKey = m_actions.find(m_currentFrameIndex);
+
+			if (actionKey != m_actions.end())
+			{
+				actionKey->second();
+			}
+		}
+	}
+}
+
 void Animation::SetPosition(const sf::Vector2f& pos)
 {
 	m_sprite.setPosition(pos);
@@ -33,15 +50,14 @@ void Animation::Draw(sf::RenderWindow &window,
 {
 	if (m_shouldAnimate)
 	{
-		// add the elapsed time since the last draw call to the aggregate
-		m_timeDelta += timeDelta;
-
 		// check if the frame should be updated
 		if (m_timeDelta >= m_frameSpeed)
 		{
 			NextFrame();
 			m_timeDelta = 0;
 		}
+
+		m_timeDelta += timeDelta;
 	}
 
 	window.draw(m_sprite);
@@ -65,17 +81,7 @@ void Animation::NextFrame()
 	}
 
 	UpdateSpriteRect();
-
-	if (m_shouldAnimate)
-	{
-		//TODO: can use bit mask as quick way of checking if frame has action.
-		auto actionKey = m_actions.find(m_currentFrameIndex);
-
-		if (actionKey != m_actions.end())
-		{
-			actionKey->second();
-		}
-	}
+	RunAction();
 }
 
 void Animation::SetFacingDirection(MOVEMENT_DIRECTION dir)
@@ -95,7 +101,7 @@ void Animation::SetFacingDirection(MOVEMENT_DIRECTION dir)
 	}
 	else
 	{
-		//TODO: this assumes all sprites have same width. This should be caculated when reseting/drawing new frame.
+		//TODO: this assumes all sprites have same width. This should be re-caculated when reseting/drawing new frame.
 		m_initialSpriteOffset = m_frames.at(m_currentFrameIndex).w; 
 		m_scale = -1;
 	}
@@ -128,6 +134,7 @@ void Animation::Reset()
 	m_timeDelta = 0.f;
 	m_currentFrameIndex = 0;
 	UpdateSpriteRect();
+	RunAction();
 }
 
 const sf::Sprite& Animation::GetSprite() const

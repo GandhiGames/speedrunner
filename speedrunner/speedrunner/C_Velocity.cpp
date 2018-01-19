@@ -111,7 +111,7 @@ void C_Velocity::AddVelocity(sf::Vector2f& velocity)
 	ClampVelocity();
 }
 
-void C_Velocity::SetVelocity(sf::Vector2f& velocity)
+void C_Velocity::SetVelocity(const sf::Vector2f& velocity)
 {
 	m_velocity = velocity;
 
@@ -198,6 +198,12 @@ void C_Velocity::ApplyFriction(float x, float y)
 const sf::Vector2f& C_Velocity::GetVelocity() const
 {
 	return m_velocity;
+}
+
+void C_Velocity::SetMaxVelocity(float x, float y)
+{
+	m_maxVelocity.x = x;
+	m_maxVelocity.y = y;
 }
 
 void C_Velocity::SetMaxVelocity(const sf::Vector2f& max)
