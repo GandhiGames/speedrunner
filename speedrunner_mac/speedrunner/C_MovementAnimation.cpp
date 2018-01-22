@@ -44,14 +44,8 @@ void C_MovementAnimation::Update(float deltaTime)
 	}
 	else
 	{
-		if (velocity.y < 250.f)
-		{
-			animState = ANIMATION_STATE::JUMP_UP;
-		}
-		else
-		{
-			animState = ANIMATION_STATE::JUMP_DOWN;
-		}
+        animState = ANIMATION_STATE::JUMP_ANGLED_UP;
+        //TODO:: add angled jump
 	}
 
 	m_sprite->SetAnimationState(animState);

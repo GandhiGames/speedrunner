@@ -35,7 +35,7 @@ void S_Game::OnCreate()
 	m_player->AddComponent<C_KeyboardController>();
 	m_player->AddComponent<C_Direction>();
 	auto collider1 = m_player->AddComponent<C_BoxCollider>();
-	collider1->SetCollidable(sf::FloatRect(0, 0, 32, 32)); 	//TODO: need to setup player collider size
+	collider1->SetCollidable(sf::FloatRect(0, 0, 25, 40)); 	//TODO: need to setup player collider size
 	collider1->SetLayer(CollisionLayer::Player);
 	m_player->AddComponent<C_MapCollision>();
 	m_player->AddComponent<C_DebugDrawCollider>();
@@ -44,7 +44,7 @@ void S_Game::OnCreate()
 	auto animation = m_player->AddComponent<C_AnimatedSprite>();
 	
 	std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> playerAnimations = 
-		AnimationFactory::FromFile(*context, resourcePath() + "data/spritesheets/player_spritesheet.xml");
+		AnimationFactory::FromFile(*context, resourcePath() + "data/spritesheets/ghouls_n_ghosts_character.xml");
 	
 	for (auto& a : playerAnimations)
 	{

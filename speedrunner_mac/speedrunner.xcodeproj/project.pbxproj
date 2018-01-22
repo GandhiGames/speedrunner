@@ -627,6 +627,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GSVX5LD945;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "speedrunner/speedrunner-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -639,6 +640,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GSVX5LD945;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "speedrunner/speedrunner-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

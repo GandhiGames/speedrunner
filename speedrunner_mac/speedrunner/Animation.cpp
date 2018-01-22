@@ -23,6 +23,7 @@ Animation::Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, boo
 	}
 }
 
+//TODO: action is not run on first frame
 void Animation::RunAction()
 {
 	if (m_shouldAnimate)
@@ -45,6 +46,7 @@ void Animation::SetPosition(const sf::Vector2f& pos)
 	m_sprite.setPosition(pos);
 }
 
+//TODO: split into update and draw methods
 void Animation::Draw(sf::RenderWindow &window, 
 	float timeDelta)
 {
@@ -134,7 +136,6 @@ void Animation::Reset()
 	m_timeDelta = 0.f;
 	m_currentFrameIndex = 0;
 	UpdateSpriteRect();
-	RunAction();
 }
 
 const sf::Sprite& Animation::GetSprite() const
@@ -144,6 +145,10 @@ const sf::Sprite& Animation::GetSprite() const
 
 void Animation::SetFrameAction(int frame, std::function<void(void)> action)
 {
+    if(frame == 0)
+    {
+        Debug::LogError("First frame actions currently not supported");
+    }
 	if (frame >= 0 && frame <= m_frames.size() - 1)
 	{
 		auto actionKey = m_actions.find(frame);
@@ -181,6 +186,9 @@ bool Animation::IsLooped()
 
 int Animation::GetFrameCount() const
 {
-    return fmaxf(m_frames.size() - 1, 0);
+    int count = m_frames.size() - 1;
+    int max = fmax(count, 0);
+    
+    return max;
 }
 

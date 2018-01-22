@@ -6,6 +6,7 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 
+#include "Debug.h"
 #include "Util.h"
 
 struct FrameData

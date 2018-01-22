@@ -10,12 +10,11 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 	std::map<std::string, ANIMATION_STATE> animationStateLookup;
 	animationStateLookup.emplace(std::make_pair("Hurt", ANIMATION_STATE::HURT));
 	animationStateLookup.emplace(std::make_pair("Idle", ANIMATION_STATE::IDLE));
-	animationStateLookup.emplace(std::make_pair("JumpDown", ANIMATION_STATE::JUMP_DOWN));
-	animationStateLookup.emplace(std::make_pair("JumpUp", ANIMATION_STATE::JUMP_UP));
+	animationStateLookup.emplace(std::make_pair("JumpStraightUp", ANIMATION_STATE::JUMP_STRAIGHT_UP));
+	animationStateLookup.emplace(std::make_pair("JumpAngledUp", ANIMATION_STATE::JUMP_ANGLED_UP));
 	animationStateLookup.emplace(std::make_pair("AttackAir", ANIMATION_STATE::ATTACK_IN_AIR));
 	animationStateLookup.emplace(std::make_pair("AttackGround", ANIMATION_STATE::ATTACK_ON_GROUND));
 	animationStateLookup.emplace(std::make_pair("Walk", ANIMATION_STATE::WALK));
-	animationStateLookup.emplace(std::make_pair("WallJump", ANIMATION_STATE::WALL_JUMP));
 
 	//TODO: cache this.
 	std::map<std::string, MOVEMENT_DIRECTION> moveDirLookup;
