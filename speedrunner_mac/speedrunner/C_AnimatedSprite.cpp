@@ -46,7 +46,6 @@ void C_AnimatedSprite::LateUpdate(float deltaTime)
 		}
 
 		m_curAnimation->SetPosition(m_owner->m_transform->GetPosition());
-
 	}
 }
 
@@ -59,14 +58,13 @@ void C_AnimatedSprite::Draw(sf::RenderWindow &window, float timeDelta)
 	}
 }
 
-void C_AnimatedSprite::AddAnimation(ANIMATION_STATE state, std::shared_ptr<AnimationGroup> animationGroup)
+void C_AnimatedSprite::AddAnimation(ANIMATION_STATE state, std::shared_ptr<Animation> animation)
 {
-	auto inserted = m_animations.insert(std::make_pair(state, animationGroup));
+	auto inserted = m_animations.insert(std::make_pair(state, animation));
 
 	if (!m_curAnimation)
 	{
-		m_curAnimation = inserted.first->second;
-
+        SetAnimationState(state);
 		m_animated = true;
 	}
 }
@@ -97,6 +95,7 @@ void C_AnimatedSprite::SetAnimationState(ANIMATION_STATE state)
 		}
 
 		m_curAnimation->Reset();
+        m_curAnimation->OnStart();
 	}
 }
 
@@ -105,7 +104,7 @@ ANIMATION_STATE C_AnimatedSprite::GetAnimationState()
 	return m_curState;
 }
 
-std::shared_ptr<AnimationGroup> C_AnimatedSprite::GetAnimation(ANIMATION_STATE state)
+std::shared_ptr<Animation> C_AnimatedSprite::GetAnimation(ANIMATION_STATE state)
 {
 	auto animation = m_animations.find(state);
 	if (animation != m_animations.end())

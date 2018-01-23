@@ -21,7 +21,7 @@ void C_Velocity::Update(float timeDelta)
 	if (m_inverseMass < 0.0f) { return; }
 
 	Move(m_velocity * timeDelta);
-	ClampToMap();
+	//ClampToMap();
 
 	sf::Vector2f resultingAcc = m_acceleration;
 	resultingAcc += m_force * m_inverseMass;

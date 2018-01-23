@@ -2,9 +2,9 @@
 #include "SharedContext.h"
 #include "ResourceManager.h"
 
-std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::FromFile(SharedContext& context, const std::string& filePath)
+std::map<ANIMATION_STATE, std::shared_ptr<Animation>> AnimationFactory::FromFile(SharedContext& context, const std::string& filePath)
 {
-	std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> animations;
+	std::map<ANIMATION_STATE, std::shared_ptr<Animation>> animations;
 
 	//TODO: cache this.
 	std::map<std::string, ANIMATION_STATE> animationStateLookup;
@@ -70,16 +70,14 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 		bool loop = std::atoi(node->first_attribute("loop")->value());
 
 		//(std::shared_ptr<sf::Texture> texture, float frameSpeed, bool loop, MOVEMENT_DIRECTION facingDir)
-		std::shared_ptr<Animation> anim = 
+		std::shared_ptr<Animation> animation =
 			std::make_shared<Animation>(context.m_textureManager->Get(textureId), frameTime, loop, spriteDir);
-		std::shared_ptr<AnimationGroup> animationGroup = std::make_shared<AnimationGroup>();
-		animationGroup->AddAnimation(anim);
-
+		
 		xml_attribute<>* goToState = node->first_attribute("goToState");
 		if (goToState)
 		{
 			ANIMATION_STATE state = animationStateLookup[goToState->value()];
-			animationGroup->SetNextState(state);
+			animation->SetNextState(state);
 		}
 
 		for (xml_node<> * spriteNode = node->first_node("sprite"); spriteNode; spriteNode = spriteNode->next_sibling())
@@ -93,11 +91,11 @@ std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> AnimationFactory::Fro
 			//float pivotX = std::atof(spriteNode->first_attribute("pX")->value());;
 			//float pivotY = std::atof(spriteNode->first_attribute("pY")->value());
 
-			anim->AddFrame(x, y, width, height);
+			animation->AddFrame(x, y, width, height);
 		}
 
 		//TODO: should check if animations already contains animation group with the same animation state
-		animations.emplace(std::make_pair(animState, animationGroup));
+		animations.emplace(std::make_pair(animState, animation));
 	}
 
 	return animations;

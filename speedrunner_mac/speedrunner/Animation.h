@@ -49,6 +49,10 @@ public:
     
     int GetFrameCount() const;
 
+    void SetNextState(ANIMATION_STATE state);
+    bool HasNextState() const;
+    ANIMATION_STATE GetNextState() const;
+    
 private:
 	void UpdateSpriteRect();
 	void NextFrame();
@@ -66,7 +70,7 @@ private:
 	bool m_shouldAnimate;
 	MOVEMENT_DIRECTION m_initialFacingDir;
 	MOVEMENT_DIRECTION m_curFacingDir;
-
+    ANIMATION_STATE m_goToState;
 	std::map<int, std::function<void(void)>> m_actions;
 };
 

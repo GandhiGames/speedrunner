@@ -9,7 +9,8 @@ Animation::Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, boo
 	m_loop(loop),
 	m_shouldAnimate(true),
 	m_initialFacingDir(facingDir),
-	m_curFacingDir(facingDir)
+	m_curFacingDir(facingDir),
+    m_goToState(ANIMATION_STATE::COUNT)
 {
 	m_sprite.setTexture(*texture);
 
@@ -75,6 +76,10 @@ void Animation::NextFrame()
 	// check if we reached the last frame
 	if (m_currentFrameIndex == (m_frames.size() - 1))
 	{
+        // Temporarily increases frame index above frame count to check if there are any end of animation actions
+        m_currentFrameIndex++;
+        RunAction();
+        
 		m_currentFrameIndex = 0;
 
 		if (!m_loop)
@@ -149,7 +154,7 @@ const sf::Sprite& Animation::GetSprite() const
 
 void Animation::SetFrameAction(int frame, std::function<void(void)> action)
 {
-	if (frame >= 0 && frame <= m_frames.size() - 1)
+	if (frame >= 0 && frame <= m_frames.size())
 	{
 		auto actionKey = m_actions.find(frame);
 
@@ -198,3 +203,17 @@ int Animation::GetFrameCount() const
     return max;
 }
 
+void Animation::SetNextState(ANIMATION_STATE state)
+{
+    m_goToState = state;
+}
+
+bool Animation::HasNextState() const
+{
+    return m_goToState != ANIMATION_STATE::COUNT;
+}
+
+ANIMATION_STATE Animation::GetNextState() const
+{
+    return m_goToState;
+}

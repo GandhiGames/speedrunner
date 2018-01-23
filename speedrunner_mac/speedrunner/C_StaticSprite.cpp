@@ -30,6 +30,8 @@ void C_StaticSprite::SetSprite(sf::Texture& texture)
 
 	// Set the origin of the sprite.
 	m_sprite.setOrigin(width / 2.f, height / 2.f);
+    
+    m_sprite.setPosition(m_owner->m_transform->GetPosition());
 }
 
 void C_StaticSprite::SetSprite(sf::Texture& texture, sf::IntRect rect)
@@ -37,6 +39,7 @@ void C_StaticSprite::SetSprite(sf::Texture& texture, sf::IntRect rect)
 	m_sprite.setTexture(texture);
 	m_sprite.setTextureRect(rect);
 	m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
+    m_sprite.setPosition(m_owner->m_transform->GetPosition());
 }
 
 void C_StaticSprite::SetSprite(int id, sf::IntRect rect, float scaleX, float scaleY)
@@ -48,6 +51,7 @@ void C_StaticSprite::SetSprite(int id, sf::IntRect rect, float scaleX, float sca
 		m_sprite.setTextureRect(rect);
 		m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
 		m_sprite.setScale(scaleX, scaleY);
+        m_sprite.setPosition(m_owner->m_transform->GetPosition());
 	}
 }
 

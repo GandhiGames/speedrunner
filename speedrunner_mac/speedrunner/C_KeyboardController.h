@@ -31,9 +31,11 @@ private:
 	std::shared_ptr<C_MapCollision> m_mapCollision;
 	//TODO: should keyboard controller decide movement speed? nope.
 	int m_speed;
-	float m_jumpForce;
+    sf::Vector2f m_jumpForce;
 	float m_fallMultiplier;
 	float m_lowJumpMultiplier;
 	bool m_jumping;
+    int m_jumpCount;
+    int m_currentJumpCount;
 };
 

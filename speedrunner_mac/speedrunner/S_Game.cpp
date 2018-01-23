@@ -43,7 +43,7 @@ void S_Game::OnCreate()
 
 	auto animation = m_player->AddComponent<C_AnimatedSprite>();
 	
-	std::map<ANIMATION_STATE, std::shared_ptr<AnimationGroup>> playerAnimations = 
+	std::map<ANIMATION_STATE, std::shared_ptr<Animation>> playerAnimations =
 		AnimationFactory::FromFile(*context, resourcePath() + "data/spritesheets/ghouls_n_ghosts_character.xml");
 	
 	for (auto& a : playerAnimations)

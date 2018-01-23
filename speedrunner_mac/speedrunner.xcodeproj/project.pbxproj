@@ -24,7 +24,6 @@
 		E1D429AE2013E70E0006C8FB /* C_Health.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D4295F2013E7060006C8FB /* C_Health.cpp */; };
 		E1D429AF2013E70E0006C8FB /* Raycast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429602013E7060006C8FB /* Raycast.cpp */; };
 		E1D429B02013E70E0006C8FB /* C_MovementAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429612013E7060006C8FB /* C_MovementAnimation.cpp */; };
-		E1D429B12013E70E0006C8FB /* AnimationGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429642013E7060006C8FB /* AnimationGroup.cpp */; };
 		E1D429B22013E70E0006C8FB /* C_DebugDrawCollider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429652013E7060006C8FB /* C_DebugDrawCollider.cpp */; };
 		E1D429B32013E70E0006C8FB /* C_CollidableTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429662013E7060006C8FB /* C_CollidableTest.cpp */; };
 		E1D429B42013E70E0006C8FB /* C_KeyboardController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429672013E7060006C8FB /* C_KeyboardController.cpp */; };
@@ -99,7 +98,6 @@
 		E1D429612013E7060006C8FB /* C_MovementAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C_MovementAnimation.cpp; sourceTree = "<group>"; };
 		E1D429622013E7060006C8FB /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 		E1D429632013E7060006C8FB /* C_BehaviorApplier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C_BehaviorApplier.h; sourceTree = "<group>"; };
-		E1D429642013E7060006C8FB /* AnimationGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationGroup.cpp; sourceTree = "<group>"; };
 		E1D429652013E7060006C8FB /* C_DebugDrawCollider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C_DebugDrawCollider.cpp; sourceTree = "<group>"; };
 		E1D429662013E7060006C8FB /* C_CollidableTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C_CollidableTest.cpp; sourceTree = "<group>"; };
 		E1D429672013E7060006C8FB /* C_KeyboardController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C_KeyboardController.cpp; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 		E1D429692013E7070006C8FB /* Raycast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raycast.h; sourceTree = "<group>"; };
 		E1D4296A2013E7070006C8FB /* C_Damageable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C_Damageable.h; sourceTree = "<group>"; };
 		E1D4296B2013E7070006C8FB /* C_Drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C_Drawable.h; sourceTree = "<group>"; };
-		E1D4296C2013E7070006C8FB /* AnimationGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationGroup.h; sourceTree = "<group>"; };
 		E1D4296D2013E7070006C8FB /* C_MovementBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C_MovementBehavior.h; sourceTree = "<group>"; };
 		E1D4296E2013E7070006C8FB /* C_RaycastTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C_RaycastTest.h; sourceTree = "<group>"; };
 		E1D4296F2013E7080006C8FB /* C_Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C_Transform.cpp; sourceTree = "<group>"; };
@@ -319,8 +316,6 @@
 				E1D4299C2013E70D0006C8FB /* Animation.h */,
 				E1D429532013E7040006C8FB /* AnimationFactory.cpp */,
 				E1D4298D2013E70B0006C8FB /* AnimationFactory.h */,
-				E1D429642013E7060006C8FB /* AnimationGroup.cpp */,
-				E1D4296C2013E7070006C8FB /* AnimationGroup.h */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -512,7 +507,6 @@
 				E1D429B02013E70E0006C8FB /* C_MovementAnimation.cpp in Sources */,
 				E1D429AA2013E70E0006C8FB /* CollisionResolver.cpp in Sources */,
 				E1D429C72013E70E0006C8FB /* C_AnimatedSprite.cpp in Sources */,
-				E1D429B12013E70E0006C8FB /* AnimationGroup.cpp in Sources */,
 				E1D429AB2013E70E0006C8FB /* AnimationFactory.cpp in Sources */,
 				E1D429AF2013E70E0006C8FB /* Raycast.cpp in Sources */,
 				E1D429C52013E70E0006C8FB /* StateManager.cpp in Sources */,

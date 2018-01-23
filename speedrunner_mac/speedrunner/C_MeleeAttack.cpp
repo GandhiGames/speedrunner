@@ -3,7 +3,7 @@
 #include "Debug.h"
 
 C_MeleeAttack::C_MeleeAttack(Object * owner) : Component(owner),
-projectileForce(400.f),
+projectileForce(600.f),
 dmgAmount(1),
 m_projTextureID(-1),
 m_projTextureRect(0, 0, 0, 0),
@@ -25,31 +25,24 @@ void C_MeleeAttack::Start()
     m_hitDirections.insert(std::make_pair(MOVEMENT_DIRECTION::RIGHT, sf::Vector2f(projectileForce, 0.f)));
     
     
-    std::shared_ptr<AnimationGroup> groundAttackAnim = m_animation->GetAnimation(ANIMATION_STATE::ATTACK_ON_GROUND);
+    std::shared_ptr<Animation> groundAttackAnim = m_animation->GetAnimation(ANIMATION_STATE::ATTACK_ON_GROUND);
     if (groundAttackAnim)
     {
-        auto animations = groundAttackAnim->GetAnimations();
-        if(animations.size() > 0) //TODO: needs to be a method of differentiating between animations in a group.
-        {
-            animations[0]->SetFrameAction(0, std::bind(&C_MeleeAttack::DoAttack, this));
-
-            int maxFrame = animations[0]->GetFrameCount();
-            animations[0]->SetFrameAction(maxFrame, std::bind(&C_MeleeAttack::AllowMovement, this));
-        }
+        groundAttackAnim->SetFrameAction(0, std::bind(&C_MeleeAttack::DoAttack, this));
+        
+        int maxFrame = groundAttackAnim->GetFrameCount();
+        groundAttackAnim->SetFrameAction(maxFrame + 1, std::bind(&C_MeleeAttack::AllowMovement, this));
     }
     
-    std::shared_ptr<AnimationGroup> airAttackAnim = m_animation->GetAnimation(ANIMATION_STATE::ATTACK_IN_AIR);
+    std::shared_ptr<Animation> airAttackAnim = m_animation->GetAnimation(ANIMATION_STATE::ATTACK_IN_AIR);
     if (airAttackAnim)
     {
-        auto animations = airAttackAnim->GetAnimations();
-        if (animations.size() > 0) //TODO: needs to be a method of differentiating between animations in a group.
-        {
-           animations[0]->SetFrameAction(0, std::bind(&C_MeleeAttack::DoAttack, this));
-            
-            int maxFrame = animations[0]->GetFrameCount();
-            animations[0]->SetFrameAction(maxFrame, std::bind(&C_MeleeAttack::AllowMovement, this));
-        }
+        airAttackAnim->SetFrameAction(0, std::bind(&C_MeleeAttack::DoAttack, this));
+        
+        int maxFrame = airAttackAnim->GetFrameCount();
+        airAttackAnim->SetFrameAction(maxFrame + 1, std::bind(&C_MeleeAttack::AllowMovement, this));
     }
+    
     
     m_projTextureID = m_owner->m_context.m_textureManager->Add(resourcePath() + "spritesheets/weapons/hand_swords.png");
     if (m_projTextureID == -1)
@@ -61,7 +54,7 @@ void C_MeleeAttack::Start()
 
 void C_MeleeAttack::Update(float deltaTime)
 {
-    if (Input::IsKeyPressed(Input::KEY::KEY_ATTACK))
+    if (Input::IsKeyDown(Input::KEY::KEY_ATTACK))
     {
         ANIMATION_STATE curState = m_animation->GetAnimationState();
         
@@ -105,6 +98,7 @@ void C_MeleeAttack::DoAttack()
         projSprite->Flip();
     }
     projSprite->SetSortOrder(2000); //TODO: setup sort layers.
+    
     
     /*
      const MOVEMENT_DIRECTION moveDir = m_moveDir->Get();

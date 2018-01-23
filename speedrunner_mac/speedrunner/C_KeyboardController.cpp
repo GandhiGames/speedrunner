@@ -4,11 +4,13 @@
 #include "Map.h"
 
 C_KeyboardController::C_KeyboardController(Object* owner) : Component(owner),
-m_speed(200),
-m_jumpForce(400.f),
+m_speed(150),
+m_jumpForce(150.f, 300.f),
 m_fallMultiplier(2.5f),
 m_lowJumpMultiplier(2.f),
-m_jumping(false)
+m_jumping(false),
+m_currentJumpCount(0),
+m_jumpCount(2)
 {
 }
 
@@ -30,8 +32,12 @@ void C_KeyboardController::Update(float timeDelta)
 {
 	float gravity = m_owner->m_context.m_map->GetGravity();
 
-	CalculateMovementForce(timeDelta, gravity);
-	CalculateJumpForce(timeDelta, gravity);
+    if(!m_jumping)
+    {
+        CalculateMovementForce(timeDelta, gravity);
+    }
+    
+    CalculateJumpForce(timeDelta, gravity);
 }
 
 void C_KeyboardController::CalculateMovementForce(float timeDelta, float gravity)
@@ -88,16 +94,30 @@ void C_KeyboardController::CalculateJumpForce(float timeDelta, float gravity)
 	if (isGrounded)
 	{
 		m_jumping = false;
+        m_currentJumpCount = 0;
 	}
 
-	sf::Vector2f velocity = m_movement->GetVelocity();
-
-	if (Input::IsKeyPressed(Input::KEY::KEY_UP) && !m_jumping)
+	if (Input::IsKeyDown(Input::KEY::KEY_UP) && m_currentJumpCount <= m_jumpCount)
 	{
 		m_jumping = true;
-		m_movement->SetVelocity(velocity.x, -m_jumpForce);
+        m_currentJumpCount++;
+        
+        float xVel = 0.f;
+        if(Input::IsKeyPressed(Input::KEY::KEY_RIGHT))
+        {
+            xVel = m_jumpForce.x;
+        }
+        else if(Input::IsKeyPressed(Input::KEY::KEY_LEFT))
+        {
+            xVel = -m_jumpForce.x;
+        }
+        
+		m_movement->SetVelocity(xVel, -m_jumpForce.y);
 	}
 
+    return;
+    
+    sf::Vector2f velocity = m_movement->GetVelocity();
 	if (velocity.y > 0.f && !isGrounded)
 	{
 		velocity.y += gravity * (m_fallMultiplier - 1) * timeDelta;

@@ -5,7 +5,7 @@
 
 C_MovementAnimation::C_MovementAnimation(Object* owner) :
 	Component(owner),
-	m_minWalkVelocity(189.0f),
+	m_minWalkVelocity(0.0f),
 	m_minJumpVelocity(0.f)
 {
 }
@@ -44,8 +44,15 @@ void C_MovementAnimation::Update(float deltaTime)
 	}
 	else
 	{
-        animState = ANIMATION_STATE::JUMP_ANGLED_UP;
-        //TODO:: add angled jump
+        if(abs(velocity.x) > 0.f)
+        {
+            animState = ANIMATION_STATE::JUMP_ANGLED_UP;
+        }
+        else
+        {
+            animState = ANIMATION_STATE::JUMP_STRAIGHT_UP;
+        }
+        
 	}
 
 	m_sprite->SetAnimationState(animState);
