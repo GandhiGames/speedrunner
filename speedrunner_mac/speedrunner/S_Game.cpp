@@ -38,7 +38,7 @@ void S_Game::OnCreate()
 	collider1->SetCollidable(sf::FloatRect(0, 0, 25, 40)); 	//TODO: need to setup player collider size
 	collider1->SetLayer(CollisionLayer::Player);
 	m_player->AddComponent<C_MapCollision>();
-	m_player->AddComponent<C_DebugDrawCollider>();
+	//m_player->AddComponent<C_DebugDrawCollider>();
 	m_player->AddComponent<C_DebugDrawMapCollisions>();
 
 	auto animation = m_player->AddComponent<C_AnimatedSprite>();

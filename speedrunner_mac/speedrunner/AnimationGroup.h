@@ -11,6 +11,7 @@ class AnimationGroup
 public:
 	AnimationGroup();
 
+    
 	void AddAnimation(std::shared_ptr<Animation> animation);
 	void Draw(sf::RenderWindow &window, float timeDelta);
 	void SetPosition(const sf::Vector2f pos);

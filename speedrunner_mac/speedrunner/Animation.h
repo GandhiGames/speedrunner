@@ -23,6 +23,8 @@ public:
 	Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, bool loop,
 		MOVEMENT_DIRECTION facingDir);
 
+    void OnStart();
+    
 	void RunAction();
 
 	void SetPosition(const sf::Vector2f& pos);

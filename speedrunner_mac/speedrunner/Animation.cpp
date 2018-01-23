@@ -23,6 +23,11 @@ Animation::Animation(std::shared_ptr<sf::Texture> texture, float frameSpeed, boo
 	}
 }
 
+void Animation::OnStart()
+{
+    RunAction(); // Makes sure that any 0 frame actions are run.
+}
+
 //TODO: action is not run on first frame
 void Animation::RunAction()
 {
@@ -96,14 +101,13 @@ void Animation::SetFacingDirection(MOVEMENT_DIRECTION dir)
 
 	m_curFacingDir = dir;
 
-	if (m_initialFacingDir == dir) 	// Need to undo any scalling.
+	if (m_initialFacingDir == dir) 	// Need to undo any scaling.
 	{
 		m_initialSpriteOffset =  0;
 		m_scale = 1;
 	}
 	else
 	{
-		//TODO: this assumes all sprites have same width. This should be re-caculated when reseting/drawing new frame.
 		m_initialSpriteOffset = m_frames.at(m_currentFrameIndex).w; 
 		m_scale = -1;
 	}
@@ -145,10 +149,6 @@ const sf::Sprite& Animation::GetSprite() const
 
 void Animation::SetFrameAction(int frame, std::function<void(void)> action)
 {
-    if(frame == 0)
-    {
-        Debug::LogError("First frame actions currently not supported");
-    }
 	if (frame >= 0 && frame <= m_frames.size() - 1)
 	{
 		auto actionKey = m_actions.find(frame);
@@ -167,6 +167,12 @@ void Animation::SetFrameAction(int frame, std::function<void(void)> action)
 void Animation::UpdateSpriteRect()
 {
 	FrameData* currentFrame = &m_frames.at(m_currentFrameIndex);
+    
+    if(m_initialSpriteOffset !=  0)
+    {
+        m_initialSpriteOffset = m_frames.at(m_currentFrameIndex).w;
+    }
+    
 	m_sprite.setTextureRect(sf::IntRect(
 		currentFrame->x + m_initialSpriteOffset,
 		currentFrame->y,

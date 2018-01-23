@@ -31,10 +31,10 @@ void C_MeleeAttack::Start()
         auto animations = groundAttackAnim->GetAnimations();
         if(animations.size() > 0) //TODO: needs to be a method of differentiating between animations in a group.
         {
-            animations[0]->SetFrameAction(1, std::bind(&C_MeleeAttack::DoAttack, this));
+            animations[0]->SetFrameAction(0, std::bind(&C_MeleeAttack::DoAttack, this));
 
             int maxFrame = animations[0]->GetFrameCount();
-            animations[0]->SetFrameAction(maxFrame - 1, std::bind(&C_MeleeAttack::AllowMovement, this));
+            animations[0]->SetFrameAction(maxFrame, std::bind(&C_MeleeAttack::AllowMovement, this));
         }
     }
     
@@ -44,10 +44,10 @@ void C_MeleeAttack::Start()
         auto animations = airAttackAnim->GetAnimations();
         if (animations.size() > 0) //TODO: needs to be a method of differentiating between animations in a group.
         {
-           animations[0]->SetFrameAction(1, std::bind(&C_MeleeAttack::DoAttack, this));
+           animations[0]->SetFrameAction(0, std::bind(&C_MeleeAttack::DoAttack, this));
             
             int maxFrame = animations[0]->GetFrameCount();
-            animations[0]->SetFrameAction(maxFrame - 1, std::bind(&C_MeleeAttack::AllowMovement, this));
+            animations[0]->SetFrameAction(maxFrame, std::bind(&C_MeleeAttack::AllowMovement, this));
         }
     }
     
