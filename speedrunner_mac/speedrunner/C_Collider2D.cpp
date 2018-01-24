@@ -1,6 +1,6 @@
 #include "C_Collider2D.h"
 
-C_Collider2D::C_Collider2D() : m_isTrigger(false), m_layer(CollisionLayer::Default)
+C_Collider2D::C_Collider2D() : m_isTrigger(false), m_layer(COLLISION_LAYER::DEFAULT)
 {
 }
 
@@ -19,12 +19,12 @@ void C_Collider2D::SetTrigger(bool isTrigger)
 	m_isTrigger = isTrigger;
 }
 
-CollisionLayer C_Collider2D::GetLayer() const
+COLLISION_LAYER C_Collider2D::GetLayer() const
 {
 	return m_layer;
 }
 
-void C_Collider2D::SetLayer(CollisionLayer layer)
+void C_Collider2D::SetLayer(COLLISION_LAYER layer)
 {
 	m_layer = layer;
 }

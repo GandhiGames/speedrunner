@@ -36,7 +36,7 @@ void S_Game::OnCreate()
 	m_player->AddComponent<C_Direction>();
 	auto collider1 = m_player->AddComponent<C_BoxCollider>();
 	collider1->SetCollidable(sf::FloatRect(0, 0, 25, 40)); 	//TODO: need to setup player collider size
-	collider1->SetLayer(CollisionLayer::Player);
+	collider1->SetLayer(COLLISION_LAYER::PLAYER);
 	m_player->AddComponent<C_MapCollision>();
 	//m_player->AddComponent<C_DebugDrawCollider>();
 	m_player->AddComponent<C_DebugDrawMapCollisions>();
@@ -62,12 +62,24 @@ void S_Game::OnCreate()
 	m_map.LoadMap(resourcePath() + "data/maps/boss_1/", "boss_1_map.tmx");
 
 	const sf::Vector2f& mapPos = m_map.GetStartPosition();
-
+    m_player->m_transform->SetPosition(sf::Vector2f(mapPos.x + 200.f, mapPos.y));
 	m_view.setCenter(mapPos);
 
+    
+    
+    // Create boss
+    std::shared_ptr<Object> boss = std::make_shared<Object>(*context);
+    boss->m_transform->SetPosition(sf::Vector2f(850.f, 280.f));
+    auto bossSprite = boss->AddComponent<C_StaticSprite>();
+    int bossTextureID = m_textureManager.Add(resourcePath() + "spritesheets/characters/boss_1/enemy2_Sheet.png");
+    bossSprite->SetSprite(bossTextureID, sf::IntRect(50, 0, 18, 24), 1.5f, 1.5f);
+    bossSprite->SetSortOrder(2001);
+    auto bossCollider = boss->AddComponent<C_BoxCollider>();
+    bossCollider->SetCollidable(sf::FloatRect(0, 0, 24, 14));
+    bossCollider->SetLayer(COLLISION_LAYER::BOSS);
+    Object::Add(boss);
+    
 	context->m_map = &m_map;
-
-	m_player->m_transform->SetPosition(mapPos);
 
 	Raycast::Initialise(context);
 	Debug::Initialise(*context);

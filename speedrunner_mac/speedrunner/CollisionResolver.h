@@ -15,7 +15,7 @@ public:
 	void ProcessNewObjects();
 	void Resolve();
 
-	std::map<CollisionLayer, Bitmask> COLLISION_LAYERS;
+	std::map<COLLISION_LAYER, Bitmask> COLLISION_LAYERS;
 
 	void ProcessCollisions(std::vector<std::shared_ptr<Object>>& first, std::vector<std::shared_ptr<Object>>& second);
 
@@ -27,7 +27,7 @@ private:
 
 private:
 
-	std::map<CollisionLayer, std::vector<std::shared_ptr<Object>>> m_collidables;
+	std::map<COLLISION_LAYER, std::vector<std::shared_ptr<Object>>> m_collidables;
 
 	std::set<std::pair<std::shared_ptr<Object>, std::shared_ptr<Object>>> m_colliding;
 

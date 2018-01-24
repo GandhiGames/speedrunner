@@ -173,7 +173,7 @@ void Object::ProcessNewObjects()
 	}
 }
 
-std::vector<std::shared_ptr<Object>> Object::GetNewObjects()
+const std::vector<std::shared_ptr<Object>>& Object::GetNewObjects()
 {
 	return m_newObjects;
 }

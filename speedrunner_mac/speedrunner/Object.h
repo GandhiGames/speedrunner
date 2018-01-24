@@ -31,6 +31,7 @@
 #include "C_MapCollision.h"
 #include "C_DebugDrawCollider.h"
 #include "C_DebugDrawMapCollisions.h"
+#include "C_RemoveOnCollision.hpp"
 
 class Object
 {
@@ -139,7 +140,7 @@ public:
 	static std::vector<std::shared_ptr<Object>>& GetObjects();
 	static std::vector<std::shared_ptr<Object>> GetObjectsWithTag(const std::string& tag);
 	static void ProcessNewObjects();
-	static std::vector<std::shared_ptr<Object>> GetNewObjects();
+	static const std::vector<std::shared_ptr<Object>>& GetNewObjects();
 	static void UpdateAll(float deltaTime);
 	static void LateUpdateAll(float deltaTime);
 	static void DrawAll(sf::RenderWindow& window, float deltaTime);

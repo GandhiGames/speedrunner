@@ -2,25 +2,11 @@
 
 CollisionResolver::CollisionResolver()
 {
-	COLLISION_LAYERS.insert(std::make_pair(CollisionLayer::Default, Bitmask(0)));
-	COLLISION_LAYERS.insert(std::make_pair(CollisionLayer::Player, Bitmask(4)));
-	COLLISION_LAYERS.insert(std::make_pair(CollisionLayer::Followers, Bitmask(0)));
-
-	/*
-	0 - 0
-	0 - 1
-	1 - 0
-	1 - 2
-
-	colliding: 0 + 0
-	colliding: 0 + 1
-	colliding: 1 + 0
-	colliding: 2 + 0
-	colliding: 1 + 2
-	colliding: 2 + 1
-	colliding: 2 + 2
-
-	*/
+    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::DEFAULT, Bitmask(0)));
+    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::PLAYER, Bitmask(0)));
+    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::FOLLOWERS, Bitmask(0)));
+    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::BOSS, Bitmask(0)));
+    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::PROJECTILE, Bitmask(16)));
 }
 
 
@@ -63,7 +49,7 @@ void CollisionResolver::ProcessNewObjects()
 		auto collider = obj->GetComponent<C_Collider2D>();
 		if (collider)
 		{
-			CollisionLayer layer = collider->GetLayer();
+			COLLISION_LAYER layer = collider->GetLayer();
 
 			auto itr = m_collidables.find(layer);
 
@@ -92,33 +78,22 @@ void CollisionResolver::Resolve()
 	{
 		for (auto maps2 = maps; maps2 != m_collidables.end(); ++maps2)
 		{
+            if(maps == maps2) { continue; }
+            
 			bool firstSecond = COLLISION_LAYERS[maps->first].GetBit((int)maps2->first);
 			bool secondFirst = COLLISION_LAYERS[maps2->first].GetBit((int)maps->first);
-			if (firstSecond)
+			
+            if (firstSecond)
 			{
-				/*
-				char result2[100];
-				sprintf_s(result2, "\n colliding: %d + %d", maps->first, maps2->first);
-				printf(result2);
-				*/
-
 				ProcessCollisions(maps->second, maps2->second);
 			}
 
-			if (secondFirst && ((firstSecond && maps != maps2) || !firstSecond))
+			if (secondFirst)
 			{
-				/*
-				char result[100];
-				sprintf_s(result, "\n colliding: %d + %d", maps2->first, maps->first);
-				printf(result);
-				*/
-
 				ProcessCollisions(maps2->second, maps->second);
 			}
 
-		}
-
-
+        }
 	}
 }
 

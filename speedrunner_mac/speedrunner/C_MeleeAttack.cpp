@@ -99,7 +99,12 @@ void C_MeleeAttack::DoAttack()
     }
     projSprite->SetSortOrder(2000); //TODO: setup sort layers.
     
+    std::shared_ptr<C_BoxCollider> projCollider = projectile->AddComponent<C_BoxCollider>();
+    projCollider->SetCollidable(sf::FloatRect(0.f, 0.f, 18.f, 18.f));
+    projCollider->SetLayer(COLLISION_LAYER::PROJECTILE);
+    projCollider->SetTrigger(true);
     
+    projectile->AddComponent<C_RemoveOnCollision>();
     /*
      const MOVEMENT_DIRECTION moveDir = m_moveDir->Get();
      const sf::Vector2f& pos = m_owner->m_transform->GetPosition();

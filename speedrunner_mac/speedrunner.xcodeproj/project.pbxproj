@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E126161A2018903B0067631E /* C_RemoveOnCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E12616182018903B0067631E /* C_RemoveOnCollision.cpp */; };
 		E1BD10622016283E0006E6F2 /* spritesheets in Resources */ = {isa = PBXBuildFile; fileRef = E1BD105F2016283E0006E6F2 /* spritesheets */; };
 		E1BD10642016283E0006E6F2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = E1BD10612016283E0006E6F2 /* fonts */; };
 		E1BD106620162AED0006E6F2 /* data in Resources */ = {isa = PBXBuildFile; fileRef = E1BD106520162AED0006E6F2 /* data */; };
@@ -58,6 +59,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E12616182018903B0067631E /* C_RemoveOnCollision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C_RemoveOnCollision.cpp; sourceTree = "<group>"; };
+		E12616192018903B0067631E /* C_RemoveOnCollision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_RemoveOnCollision.hpp; sourceTree = "<group>"; };
 		E14291862013AAD300ECDFF3 /* speedrunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedrunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E142918A2013AAD300ECDFF3 /* speedrunner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "speedrunner-Info.plist"; sourceTree = "<group>"; };
 		E1BD105F2016283E0006E6F2 /* spritesheets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spritesheets; sourceTree = "<group>"; };
@@ -243,6 +246,8 @@
 		E1BD105A2016126C0006E6F2 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E12616182018903B0067631E /* C_RemoveOnCollision.cpp */,
+				E12616192018903B0067631E /* C_RemoveOnCollision.hpp */,
 				E1D4299B2013E70D0006C8FB /* C_Tag.cpp */,
 				E1D429792013E7090006C8FB /* C_Tag.h */,
 				E1D4296F2013E7080006C8FB /* C_Transform.cpp */,
@@ -483,6 +488,7 @@
 				E1D429A42013E70E0006C8FB /* S_Intro.cpp in Sources */,
 				E1D429C32013E70E0006C8FB /* Input.cpp in Sources */,
 				E1D429AC2013E70E0006C8FB /* C_Drawable.cpp in Sources */,
+				E126161A2018903B0067631E /* C_RemoveOnCollision.cpp in Sources */,
 				E1D429B72013E70E0006C8FB /* C_RaycastTest.cpp in Sources */,
 				E1D429B52013E70E0006C8FB /* C_Transform.cpp in Sources */,
 				E1D429222013E2A60006C8FB /* ResourcePath.mm in Sources */,

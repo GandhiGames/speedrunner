@@ -5,11 +5,14 @@
 
 #include "Bitmask.h"
 
-enum class CollisionLayer
+// enum ints used when defining collision layers
+enum class COLLISION_LAYER
 {
-	Default = 0,
-	Player = 1,
-	Followers = 2
+	DEFAULT = 0,
+	PLAYER = 1,
+	FOLLOWERS = 2,
+    PROJECTILE = 3,
+    BOSS = 4
 };
 
 struct Manifold
@@ -30,11 +33,11 @@ public:
 	bool IsTrigger() const;
 	void SetTrigger(bool isTrigger);
 
-	CollisionLayer GetLayer() const;
-	void SetLayer(CollisionLayer layer);
+	COLLISION_LAYER GetLayer() const;
+	void SetLayer(COLLISION_LAYER layer);
 
 private:
 	bool m_isTrigger;
-	CollisionLayer m_layer;
+	COLLISION_LAYER m_layer;
 };
 
