@@ -24,9 +24,12 @@ enum class MOVEMENT_DIRECTION
 	COUNT
 };
 
-const std::string PLAYER_TAG = "Player";
-const std::string FOLLOWER_TAG = "Follower";
-const std::string ENEMY_TAG = "Follower";
+enum class TAG
+{
+    DEFAULT,
+    PLAYER,
+    BOSS
+};
 
 const std::string BODY_PARTS_ROOT_FOLDER = "../resources/characters/body_parts/";
 

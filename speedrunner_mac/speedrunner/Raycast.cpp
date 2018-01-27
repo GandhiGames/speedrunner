@@ -119,7 +119,7 @@ std::vector<sf::Vector2f> Raycast::BresenhamLine(const sf::Vector2f& from, const
 }
 
 
-std::vector<std::shared_ptr<Object>> Raycast::CircleCast(const sf::Vector2f& pos, float radius, const std::string& tag)
+std::vector<std::shared_ptr<Object>> Raycast::CircleCast(const sf::Vector2f& pos, float radius, TAG tag)
 {
 	auto entities = Object::GetObjects();
 

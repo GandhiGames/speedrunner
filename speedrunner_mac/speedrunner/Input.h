@@ -2,28 +2,27 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Bitmask.h"
+
 class Input
 {
 public:
 
 	/**
-	* An enum denoting all possible input keys.
+	* An enum denoting all possible input keys. int values used for input bitmask.
 	*/
 	enum class KEY
 	{
-		KEY_LEFT,
-		KEY_RIGHT,
-		KEY_UP,
-		KEY_DOWN,
-		KEY_ATTACK,
-		KEY_ESC,
-		KEY_RETURN
+		LEFT = 1,
+		RIGHT = 2,
+		UP = 3,
+		DOWN = 4,
+		ATTACK = 5,
+		ESC = 6,
+		RETURN = 7
 	};
 
-	static void Initialise();
-
-	static void EarlyUpdate();
-	static void LateUpdate();
+	static void Update();
 
 	static bool IsKeyPressed(KEY keycode);
 	static bool IsKeyDown(KEY keycode);
@@ -31,7 +30,7 @@ public:
 
 private:
 	static void SetPressedKeys();
-	static std::map<KEY, bool> m_thisFrame;
-	static std::map<KEY, bool> m_lastFrame;
+	static Bitmask m_thisFrame;
+	static Bitmask m_lastFrame;
 };
 

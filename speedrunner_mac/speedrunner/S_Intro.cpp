@@ -32,7 +32,7 @@ void S_Intro::Deactivate()
 
 void S_Intro::Update(float deltaTime)
 {
-	if (Input::IsKeyPressed(Input::KEY::KEY_RETURN))
+	if (Input::IsKeyPressed(Input::KEY::RETURN))
 	{
 		m_stateManager->SwitchTo(StateType::Game);
 	}

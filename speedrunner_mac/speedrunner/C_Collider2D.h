@@ -18,7 +18,7 @@ enum class COLLISION_LAYER
 struct Manifold
 {
 	bool colliding = false;
-	sf::Vector2f resolve = sf::Vector2f(0.f, 0.f);
+    sf::FloatRect m_intersection;
 };
 
 class C_Collider2D 

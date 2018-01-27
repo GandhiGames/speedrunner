@@ -21,7 +21,7 @@ const sf::Vector2f C_Seperation::GetForce()
 
 	for (auto obj : Object::GetObjects())
 	{
-		if (obj->m_tag->Get() == FOLLOWER_TAG)
+        if (obj->m_tag->Get() == TAG::DEFAULT)
 		{
 			if (obj->m_instanceID->Get() != m_owner->m_instanceID->Get())
 			{

@@ -9,8 +9,9 @@ public:
 	C_Health(Object* owner);
 
 	void DoDamage(const sf::Vector2f& dir, int amount) override;
-
+    void SetMaxHealth(int health);
+    
 private:
-	int currentHealth;
+	int m_currentHealth;
 };
 

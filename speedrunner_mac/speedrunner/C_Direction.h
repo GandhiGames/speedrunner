@@ -6,6 +6,7 @@
 #include "C_Velocity.h"
 #include "Util.h"
 
+//TODO: add method for checking if direction has changed since last frame.ß
 class C_Direction : public Component, public C_Updateable
 {
 public:
@@ -13,13 +14,10 @@ public:
 
 	void Awake() override;
 
-	void LateUpdate(float timeDelta) override;
-
 	MOVEMENT_DIRECTION Get();
-
+    
 private:
 	std::shared_ptr<C_Velocity> m_movement;
-	MOVEMENT_DIRECTION m_moveDir;	
-	bool m_cached;
+    MOVEMENT_DIRECTION m_moveDir;
 };
 

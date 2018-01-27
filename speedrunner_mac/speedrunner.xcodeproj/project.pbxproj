@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		E126161A2018903B0067631E /* C_RemoveOnCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E12616182018903B0067631E /* C_RemoveOnCollision.cpp */; };
+		E126161D2018A2590067631E /* C_DamageOnCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E126161B2018A2580067631E /* C_DamageOnCollision.cpp */; };
 		E1BD10622016283E0006E6F2 /* spritesheets in Resources */ = {isa = PBXBuildFile; fileRef = E1BD105F2016283E0006E6F2 /* spritesheets */; };
 		E1BD10642016283E0006E6F2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = E1BD10612016283E0006E6F2 /* fonts */; };
 		E1BD106620162AED0006E6F2 /* data in Resources */ = {isa = PBXBuildFile; fileRef = E1BD106520162AED0006E6F2 /* data */; };
+		E1C88418201A073500CF5582 /* C_DirectionalAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1C88416201A073500CF5582 /* C_DirectionalAnimation.cpp */; };
+		E1C8841B201A27C800CF5582 /* C_PlayAnimationOnDamage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1C88419201A27C800CF5582 /* C_PlayAnimationOnDamage.cpp */; };
+		E1C8841E201B6B0700CF5582 /* MapBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1C8841C201B6B0700CF5582 /* MapBackgroundLayer.cpp */; };
 		E1D429222013E2A60006C8FB /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = E1D429212013E2A60006C8FB /* ResourcePath.mm */; };
 		E1D429A42013E70E0006C8FB /* S_Intro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429442013E7030006C8FB /* S_Intro.cpp */; };
 		E1D429A52013E70E0006C8FB /* C_BehaviorApplier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D429482013E7030006C8FB /* C_BehaviorApplier.cpp */; };
@@ -61,11 +65,19 @@
 /* Begin PBXFileReference section */
 		E12616182018903B0067631E /* C_RemoveOnCollision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C_RemoveOnCollision.cpp; sourceTree = "<group>"; };
 		E12616192018903B0067631E /* C_RemoveOnCollision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_RemoveOnCollision.hpp; sourceTree = "<group>"; };
+		E126161B2018A2580067631E /* C_DamageOnCollision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C_DamageOnCollision.cpp; sourceTree = "<group>"; };
+		E126161C2018A2590067631E /* C_DamageOnCollision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_DamageOnCollision.hpp; sourceTree = "<group>"; };
 		E14291862013AAD300ECDFF3 /* speedrunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedrunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E142918A2013AAD300ECDFF3 /* speedrunner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "speedrunner-Info.plist"; sourceTree = "<group>"; };
 		E1BD105F2016283E0006E6F2 /* spritesheets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spritesheets; sourceTree = "<group>"; };
 		E1BD10612016283E0006E6F2 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		E1BD106520162AED0006E6F2 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
+		E1C88416201A073500CF5582 /* C_DirectionalAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C_DirectionalAnimation.cpp; sourceTree = "<group>"; };
+		E1C88417201A073500CF5582 /* C_DirectionalAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_DirectionalAnimation.hpp; sourceTree = "<group>"; };
+		E1C88419201A27C800CF5582 /* C_PlayAnimationOnDamage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C_PlayAnimationOnDamage.cpp; sourceTree = "<group>"; };
+		E1C8841A201A27C800CF5582 /* C_PlayAnimationOnDamage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_PlayAnimationOnDamage.hpp; sourceTree = "<group>"; };
+		E1C8841C201B6B0700CF5582 /* MapBackgroundLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapBackgroundLayer.cpp; sourceTree = "<group>"; };
+		E1C8841D201B6B0700CF5582 /* MapBackgroundLayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapBackgroundLayer.hpp; sourceTree = "<group>"; };
 		E1D429202013E2A50006C8FB /* ResourcePath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
 		E1D429212013E2A60006C8FB /* ResourcePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
 		E1D429432013E7030006C8FB /* C_Updateable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C_Updateable.h; sourceTree = "<group>"; };
@@ -285,6 +297,8 @@
 				E1D429502013E7040006C8FB /* C_MapCollision.cpp */,
 				E1D429732013E7080006C8FB /* C_MapCollision.h */,
 				E1D429752013E7080006C8FB /* C_MeleeAttack.cpp */,
+				E126161B2018A2580067631E /* C_DamageOnCollision.cpp */,
+				E126161C2018A2590067631E /* C_DamageOnCollision.hpp */,
 				E1D429A22013E70E0006C8FB /* C_MeleeAttack.h */,
 				E1D429612013E7060006C8FB /* C_MovementAnimation.cpp */,
 				E1D4294B2013E7030006C8FB /* C_MovementAnimation.h */,
@@ -294,6 +308,10 @@
 				E1D4295D2013E7050006C8FB /* C_Seperation.h */,
 				E1D429A32013E70E0006C8FB /* C_StaticSprite.cpp */,
 				E1D429922013E70C0006C8FB /* C_StaticSprite.h */,
+				E1C88419201A27C800CF5582 /* C_PlayAnimationOnDamage.cpp */,
+				E1C8841A201A27C800CF5582 /* C_PlayAnimationOnDamage.hpp */,
+				E1C88416201A073500CF5582 /* C_DirectionalAnimation.cpp */,
+				E1C88417201A073500CF5582 /* C_DirectionalAnimation.hpp */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -360,6 +378,8 @@
 				E1D429802013E70A0006C8FB /* Tile.h */,
 				E1D4298F2013E70B0006C8FB /* TilemapParser.cpp */,
 				E1D429542013E7040006C8FB /* TilemapParser.h */,
+				E1C8841C201B6B0700CF5582 /* MapBackgroundLayer.cpp */,
+				E1C8841D201B6B0700CF5582 /* MapBackgroundLayer.hpp */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -486,6 +506,7 @@
 				E1D429C82013E70E0006C8FB /* S_Game.cpp in Sources */,
 				E1D429BB2013E70E0006C8FB /* Map.cpp in Sources */,
 				E1D429A42013E70E0006C8FB /* S_Intro.cpp in Sources */,
+				E1C8841B201A27C800CF5582 /* C_PlayAnimationOnDamage.cpp in Sources */,
 				E1D429C32013E70E0006C8FB /* Input.cpp in Sources */,
 				E1D429AC2013E70E0006C8FB /* C_Drawable.cpp in Sources */,
 				E126161A2018903B0067631E /* C_RemoveOnCollision.cpp in Sources */,
@@ -508,6 +529,8 @@
 				E1D429AD2013E70E0006C8FB /* C_CircleCollider.cpp in Sources */,
 				E1D429C22013E70E0006C8FB /* Object.cpp in Sources */,
 				E1D429B42013E70E0006C8FB /* C_KeyboardController.cpp in Sources */,
+				E1C8841E201B6B0700CF5582 /* MapBackgroundLayer.cpp in Sources */,
+				E1C88418201A073500CF5582 /* C_DirectionalAnimation.cpp in Sources */,
 				E1D429BE2013E70E0006C8FB /* C_InstanceID.cpp in Sources */,
 				E1D429CF2013E7DD0006C8FB /* main.cpp in Sources */,
 				E1D429B02013E70E0006C8FB /* C_MovementAnimation.cpp in Sources */,
@@ -523,6 +546,7 @@
 				E1D429B22013E70E0006C8FB /* C_DebugDrawCollider.cpp in Sources */,
 				E1D429BA2013E70E0006C8FB /* C_Seperation.cpp in Sources */,
 				E1D429C42013E70E0006C8FB /* TilemapParser.cpp in Sources */,
+				E126161D2018A2590067631E /* C_DamageOnCollision.cpp in Sources */,
 				E1D429D32013E9C90006C8FB /* Debug.cpp in Sources */,
 				E1D429A62013E70E0006C8FB /* Game.cpp in Sources */,
 				E1D429A82013E70E0006C8FB /* C_MapCollision.cpp in Sources */,

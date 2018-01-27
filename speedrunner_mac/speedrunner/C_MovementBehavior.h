@@ -17,7 +17,7 @@ public:
 	virtual const sf::Vector2f GetForce() = 0;
 
 protected:
-	std::vector<std::shared_ptr<Object>> GetEntitiesInSight(float sightRadius, const std::string& tag) const;
+	std::vector<std::shared_ptr<Object>> GetEntitiesInSight(float sightRadius, TAG tag) const;
 
 	void SetWeight(int weight);
 

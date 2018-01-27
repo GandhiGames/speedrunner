@@ -53,6 +53,8 @@ public:
     bool HasNextState() const;
     ANIMATION_STATE GetNextState() const;
     
+    void SetScale(float x, float y);
+    
 private:
 	void UpdateSpriteRect();
 	void NextFrame();

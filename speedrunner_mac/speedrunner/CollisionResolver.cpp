@@ -3,12 +3,12 @@
 CollisionResolver::CollisionResolver()
 {
     COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::DEFAULT, Bitmask(0)));
-    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::PLAYER, Bitmask(0)));
+    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::PLAYER, Bitmask(16)));
     COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::FOLLOWERS, Bitmask(0)));
-    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::BOSS, Bitmask(0)));
     COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::PROJECTILE, Bitmask(16)));
-}
+    COLLISION_LAYERS.insert(std::make_pair(COLLISION_LAYER::BOSS, Bitmask(2)));
 
+}
 
 CollisionResolver::~CollisionResolver()
 {

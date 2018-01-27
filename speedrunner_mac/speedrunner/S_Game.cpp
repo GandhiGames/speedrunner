@@ -29,7 +29,7 @@ void S_Game::OnCreate()
 
 	context->m_player = m_player;
 
-	m_player->GetComponent<C_Tag>()->Set(PLAYER_TAG);
+    m_player->m_tag->Set(TAG::PLAYER);
 	m_player->AddComponent<C_Camera>();
 	m_player->AddComponent<C_Velocity>();
 	m_player->AddComponent<C_KeyboardController>();
@@ -52,7 +52,7 @@ void S_Game::OnCreate()
 	}
 	animation->SetAnimationState(ANIMATION_STATE::IDLE);
 
-
+    m_player->AddComponent<C_DirectionalAnimation>();
 	m_player->AddComponent<C_MovementAnimation>();
 	m_player->AddComponent<C_MeleeAttack>();
 
@@ -60,20 +60,39 @@ void S_Game::OnCreate()
 	//m_map.LoadTiles("../resources/data/test_tileset.data",
 	//	"../resources/spritesheets/test_tileset.png");
 	m_map.LoadMap(resourcePath() + "data/maps/boss_1/", "boss_1_map.tmx");
+    
+    std::vector<std::string> backgroundLayerPaths {
+        resourcePath() + "spritesheets/environments/jungle_1_background_back.png", resourcePath() + "spritesheets/environments/jungle_1_background_fore.png"
+        
+    };
+    m_map.LoadBackground(backgroundLayerPaths);
 
+    
 	const sf::Vector2f& mapPos = m_map.GetStartPosition();
     m_player->m_transform->SetPosition(sf::Vector2f(mapPos.x + 200.f, mapPos.y));
 	m_view.setCenter(mapPos);
-
     
     
     // Create boss
     std::shared_ptr<Object> boss = std::make_shared<Object>(*context);
     boss->m_transform->SetPosition(sf::Vector2f(850.f, 280.f));
-    auto bossSprite = boss->AddComponent<C_StaticSprite>();
-    int bossTextureID = m_textureManager.Add(resourcePath() + "spritesheets/characters/boss_1/enemy2_Sheet.png");
-    bossSprite->SetSprite(bossTextureID, sf::IntRect(50, 0, 18, 24), 1.5f, 1.5f);
-    bossSprite->SetSortOrder(2001);
+    boss->m_tag->Set(TAG::BOSS);
+    auto bossHealth = boss->AddComponent<C_Health>();
+    bossHealth->SetMaxHealth(2);
+    auto bossAnimation = boss->AddComponent<C_AnimatedSprite>();
+    std::map<ANIMATION_STATE, std::shared_ptr<Animation>> bossAnimations =
+    AnimationFactory::FromFile(*context, resourcePath() + "data/spritesheets/boss_1.xml");
+    
+    for (auto& a : bossAnimations)
+    {
+        bossAnimation->AddAnimation(a.first, a.second);
+    }
+    bossAnimation->SetAnimationState(ANIMATION_STATE::IDLE);
+    bossAnimation->SetScale(2.f, 2.f);
+    bossAnimation->SetSortOrder(2001);
+    
+    boss->AddComponent<C_PlayAnimationOnDamage>();
+    
     auto bossCollider = boss->AddComponent<C_BoxCollider>();
     bossCollider->SetCollidable(sf::FloatRect(0, 0, 24, 14));
     bossCollider->SetLayer(COLLISION_LAYER::BOSS);
@@ -83,7 +102,6 @@ void S_Game::OnCreate()
 
 	Raycast::Initialise(context);
 	Debug::Initialise(*context);
-	Input::Initialise();
 }
 
 void S_Game::OnDestroy()
@@ -97,16 +115,18 @@ void S_Game::Deactivate() {}
 
 void S_Game::Update(float deltaTime)
 {
-	Input::EarlyUpdate();
+	Input::Update();
 
 	m_collisions.Resolve();
 
 	Object::UpdateAll(deltaTime);
 
-	if (Input::IsKeyPressed(Input::KEY::KEY_ESC))
+	if (Input::IsKeyPressed(Input::KEY::ESC))
 	{
 		m_stateManager->m_context->m_window->close();
 	}
+    
+    m_map.Update(m_player->m_transform->GetPosition().x, deltaTime);
 }
 
 void S_Game::Draw(float deltaTime)
@@ -137,6 +157,4 @@ void S_Game::LateUpdate(float deltaTime)
 	m_collisions.ProcessNewObjects();
 
 	Object::ProcessNewObjects();
-
-	Input::LateUpdate();
 }

@@ -32,8 +32,7 @@ void TilemapParser::Parse(const std::string& fileLocation, const std::string& fi
 	xml_node<>* rootNode = doc.first_node("map");
 
 	BuildTileSheetData(rootNode);
-	BuildMapData(rootNode);
-
+    BuildMapData(rootNode);
 }
 
 //TODO:add support for mroe than one tilemap (including tilemaps of different sizes).

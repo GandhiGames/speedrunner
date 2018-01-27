@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="characters/boss_1.png" width="144" height="48">
+
+<direction>Right</direction>
+<animation name = "Idle" frameTime = "0" loop = "0">
+    <sprite n="hero_Idle-0.png" x="50" y="1" w="18" h="22" pX="0.5" pY="0.5"/>
+</animation>
+<animation name = "Hurt" frameTime = "0.08" loop = "0" goToState = "Idle">
+    <sprite n="hero_Idle-0.png" x="51" y="25" w="18" h="22" pX="0.5" pY="0.5"/>
+</animation>
+
+</TextureAtlas>

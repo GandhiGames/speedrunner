@@ -5,8 +5,8 @@
 C_MapCollision::C_MapCollision(Object* owner) : 
 	Component(owner),
 	m_collidingOnX(false),
-	m_collidingOnY(false),
-	m_grounded(false)
+	m_collidingOnY(false)
+	//m_grounded(false)
 {
 }
 
@@ -48,7 +48,7 @@ void C_MapCollision::Update(float deltaTime)
 
 void C_MapCollision::CheckCollisions(Map* gameMap)
 {
-	m_grounded = false;
+	//m_grounded = false;
 
 	const unsigned int tileSize = gameMap->GetTileSize().x;
 	const float halfTileSize = tileSize * 0.5f;
@@ -68,20 +68,12 @@ void C_MapCollision::CheckCollisions(Map* gameMap)
 			if (!tile) { continue; }
 
 			sf::FloatRect tileBounds(x * tileSize, y * tileSize, tileSize, tileSize);
-
-			float xDiff = (AABB.left + (AABB.width * 0.5f)) - (tileBounds.left + (tileBounds.width * 0.5f));
-			float yDiff = (AABB.top + (AABB.height * 0.5f)) - (tileBounds.top + (tileBounds.height * 0.5f));
-
-			if (abs(xDiff) < abs(yDiff) && yDiff < 0.f)
-			{
-				m_grounded = true;
-			}
-
+             
 			sf::FloatRect intersection;
 			AABB.intersects(tileBounds, intersection); // Returns the overlapped rectangle in the intersection parameter.
 
 			float area = intersection.width * intersection.height;
-			m_collisions.emplace_back(MapCollisionElement(area, tile->m_properties, tileBounds, xDiff, yDiff));
+			m_collisions.emplace_back(MapCollisionElement(area, tile->m_properties, tileBounds));
 		}
 	}
 }
@@ -116,9 +108,17 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 					resolve = -((AABB.left + AABB.width) - itr.m_tileBounds.left);
 				}
 
-				m_velocity->Move(resolve, 0);
-
-				m_velocity->SetVelocity(0.f, m_velocity->GetVelocity().y);
+                m_owner->m_transform->AddPosition(resolve, 0);
+                
+                sf::Vector2f vel = m_velocity->GetVelocity();
+                if(resolve < 0.f && vel.x > 0.f)
+                {
+                    m_velocity->SetVelocity(0.f, m_velocity->GetVelocity().y);
+                }
+                else if(resolve > 0.f && vel.x < 0.f)
+                {
+                    m_velocity->SetVelocity(0.f, m_velocity->GetVelocity().y);
+                }
 
 				m_collidingOnX = true;
 			}
@@ -133,13 +133,22 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 					resolve = -((AABB.top + AABB.height) - itr.m_tileBounds.top); 
 				} 
 				
-				m_velocity->Move(0, resolve);
-
-				m_velocity->SetVelocity(m_velocity->GetVelocity().x, 0.f);
+                m_owner->m_transform->AddPosition(0, resolve);
+                
+                sf::Vector2f vel = m_velocity->GetVelocity();
+                if(resolve < 0.f && vel.y > 0.f)
+                {
+                    m_velocity->SetVelocity(m_velocity->GetVelocity().x, 0.f);
+                }
+                else if(resolve > 0.f && vel.y < 0.f)
+                {
+                    m_velocity->SetVelocity(m_velocity->GetVelocity().x, 0.f);
+                }
+			
 				
 				if (m_collidingOnY) { continue; } 
 				
-				if (itr.m_yDiff < 0.f) // If tile below player
+				if (yDiff < 0.f) // If tile below player
 				{
 					m_standingOnTile = itr.m_tile;
 				}
@@ -169,5 +178,20 @@ std::shared_ptr<TileInfo> C_MapCollision::GetTileBelow()
 
 bool C_MapCollision::IsGrounded() const
 {
-	return m_grounded; 
+
+    const sf::Vector2f& pos = m_owner->m_transform->GetPosition();
+    const sf::Vector2f downPos = pos + sf::Vector2f(0.f,25.f);
+    
+    auto gameMap = m_owner->m_context.m_map;
+    
+    const unsigned int tileSize = gameMap->GetTileSize().x;
+    const sf::FloatRect& AABB = m_collider->GetCollidable();
+    
+    int fromX = floor(downPos.x / tileSize);
+    int fromY = floor(downPos.y / tileSize);
+    
+    auto tile = gameMap->GetTile(fromX, fromY);
+    
+	return tile != nullptr;
+   // return m_standingOnTile != nullptr;
 }

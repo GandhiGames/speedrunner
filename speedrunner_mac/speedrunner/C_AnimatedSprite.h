@@ -13,9 +13,6 @@ class C_AnimatedSprite : public Component, public C_Drawable, public C_Updateabl
 
 public:
 	C_AnimatedSprite(Object* owner);
-	
-	void Awake() override;
-	void Start() override;
 
 	void Update(float deltaTime) override;
 	void LateUpdate(float deltaTime) override;
@@ -32,12 +29,15 @@ public:
 	void SetAnimated(bool animated);
 
 	bool IsAnimated();
+    
+    void SetDirection(MOVEMENT_DIRECTION dir);
+    
+    void SetScale(float x, float y);
 private:
 	std::map<ANIMATION_STATE, std::shared_ptr<Animation>> m_animations;
 	
 	std::shared_ptr<C_Direction> m_direction;
 	std::shared_ptr<Animation> m_curAnimation;
 	bool m_animated;
-	MOVEMENT_DIRECTION m_curDirection;
 	ANIMATION_STATE m_curState;
 };

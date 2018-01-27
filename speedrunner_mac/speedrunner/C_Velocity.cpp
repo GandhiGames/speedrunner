@@ -20,7 +20,7 @@ void C_Velocity::Update(float timeDelta)
 {
 	if (m_inverseMass < 0.0f) { return; }
 
-	Move(m_velocity * timeDelta);
+    m_owner->m_transform->AddPosition(m_velocity * timeDelta);
 	//ClampToMap();
 
 	sf::Vector2f resultingAcc = m_acceleration;
@@ -252,14 +252,4 @@ void C_Velocity::SetMaxVelocity(float x, float y)
 void C_Velocity::SetMaxVelocity(const sf::Vector2f& max)
 {
 	m_maxVelocity = max;
-}
-
-void C_Velocity::Move(const sf::Vector2f& move)
-{
-	m_owner->m_transform->AddPosition(move);
-}
-
-void C_Velocity::Move(float x, float y)
-{
-	m_owner->m_transform->AddPosition(x, y);
 }

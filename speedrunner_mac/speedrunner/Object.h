@@ -32,6 +32,9 @@
 #include "C_DebugDrawCollider.h"
 #include "C_DebugDrawMapCollisions.h"
 #include "C_RemoveOnCollision.hpp"
+#include "C_DamageOnCollision.hpp"
+#include "C_DirectionalAnimation.hpp"
+#include "C_PlayAnimationOnDamage.hpp"
 
 class Object
 {
@@ -42,6 +45,7 @@ public:
 	*/
 	Object(SharedContext& context);
 
+    //TODO: enable ability to add components in awake function
 	void Awake();
 	void Start();
 
@@ -138,7 +142,7 @@ public:
 	//static:
 	static void Add(std::shared_ptr<Object> object);
 	static std::vector<std::shared_ptr<Object>>& GetObjects();
-	static std::vector<std::shared_ptr<Object>> GetObjectsWithTag(const std::string& tag);
+	static std::vector<std::shared_ptr<Object>> GetObjectsWithTag(TAG tag);
 	static void ProcessNewObjects();
 	static const std::vector<std::shared_ptr<Object>>& GetNewObjects();
 	static void UpdateAll(float deltaTime);

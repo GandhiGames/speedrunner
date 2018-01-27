@@ -54,7 +54,7 @@ void C_MeleeAttack::Start()
 
 void C_MeleeAttack::Update(float deltaTime)
 {
-    if (Input::IsKeyDown(Input::KEY::KEY_ATTACK))
+    if (Input::IsKeyDown(Input::KEY::ATTACK))
     {
         ANIMATION_STATE curState = m_animation->GetAnimationState();
         
@@ -104,7 +104,10 @@ void C_MeleeAttack::DoAttack()
     projCollider->SetLayer(COLLISION_LAYER::PROJECTILE);
     projCollider->SetTrigger(true);
     
+    auto bossDmg = projectile->AddComponent<C_DamageOnCollision>();
+    bossDmg->SetTargetTag(TAG::BOSS);
     projectile->AddComponent<C_RemoveOnCollision>();
+    
     /*
      const MOVEMENT_DIRECTION moveDir = m_moveDir->Get();
      const sf::Vector2f& pos = m_owner->m_transform->GetPosition();

@@ -44,11 +44,11 @@ void C_KeyboardController::CalculateMovementForce(float timeDelta, float gravity
 {
 	sf::Vector2f velocity = m_movement->GetVelocity();
 	velocity.x = 0.f;
-	if (Input::IsKeyPressed(Input::KEY::KEY_LEFT))
+	if (Input::IsKeyPressed(Input::KEY::LEFT))
 	{
 		velocity.x = -m_speed;
 	}
-	else if (Input::IsKeyPressed(Input::KEY::KEY_RIGHT))
+	else if (Input::IsKeyPressed(Input::KEY::RIGHT))
 	{
 		velocity.x = m_speed;
 	}
@@ -97,26 +97,28 @@ void C_KeyboardController::CalculateJumpForce(float timeDelta, float gravity)
         m_currentJumpCount = 0;
 	}
 
-	if (Input::IsKeyDown(Input::KEY::KEY_UP) && m_currentJumpCount <= m_jumpCount)
+    if (Input::IsKeyDown(Input::KEY::UP) && m_currentJumpCount < m_jumpCount)
 	{
 		m_jumping = true;
         m_currentJumpCount++;
         
         float xVel = 0.f;
-        if(Input::IsKeyPressed(Input::KEY::KEY_RIGHT))
+        if(Input::IsKeyPressed(Input::KEY::RIGHT))
         {
             xVel = m_jumpForce.x;
         }
-        else if(Input::IsKeyPressed(Input::KEY::KEY_LEFT))
+        else if(Input::IsKeyPressed(Input::KEY::LEFT))
         {
             xVel = -m_jumpForce.x;
         }
         
+        
 		m_movement->SetVelocity(xVel, -m_jumpForce.y);
 	}
 
-    return;
-    
+
+    //Enables variable height jumps
+    /*
     sf::Vector2f velocity = m_movement->GetVelocity();
 	if (velocity.y > 0.f && !isGrounded)
 	{
@@ -128,6 +130,7 @@ void C_KeyboardController::CalculateJumpForce(float timeDelta, float gravity)
 		velocity.y += gravity * (m_lowJumpMultiplier - 1) * timeDelta;
 		m_movement->SetVelocity(velocity.x, velocity.y);
 	}
+     */
 }
 
 void C_KeyboardController::SetMovementSpeed(int speed)

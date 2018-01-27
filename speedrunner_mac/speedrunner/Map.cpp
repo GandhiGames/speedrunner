@@ -3,11 +3,10 @@
 
 Map::Map(SharedContext& context) : m_context(context),
 m_defaultTile(),
-m_mapParser(context)
+m_mapParser(context),
+m_background(context)
 {
-	
 }
-
 
 Map::~Map()
 {
@@ -19,9 +18,32 @@ float Map::GetGravity() const { return m_mapParser.GetMapData()->m_gravity; }
 const sf::Vector2u& Map::GetMapSize() const { return m_mapParser.GetMapData()->m_mapSize; }
 const sf::Vector2f& Map::GetStartPosition() const { return m_mapParser.GetStartPosition(); }
 
-void Map::LoadMap(std::string mapFilePath, std::string mapFileName)
+void Map::LoadMap(const std::string& mapFilePath, const std::string& mapFileName)
 {
 	m_mapParser.Parse(mapFilePath, mapFileName);
+}
+
+
+void Map::LoadBackground(std::vector<std::string>& layerPaths)
+{
+    //TODO: pre-calculate values based on number of background layers.
+    float moveSpeed = 0.f;
+    float moveSpeedStep = 0.1f;
+    
+    for(auto& p : layerPaths)
+    {
+        int textId = m_context.m_textureManager->Add(p);
+        
+        if(textId != -1)
+        {
+            std::shared_ptr<MapBackgroundLayer> backLayer = std::make_shared<MapBackgroundLayer>(m_context);
+            backLayer->SetSprite(textId);
+            backLayer->SetMoveSpeed(moveSpeed);
+            m_background.Add(backLayer);
+            
+            moveSpeed += moveSpeedStep;
+        }
+    }
 }
 
 std::shared_ptr<Tile> Map::GetTile(unsigned int x, unsigned int y)
@@ -32,8 +54,15 @@ std::shared_ptr<Tile> Map::GetTile(unsigned int x, unsigned int y)
 	return(itr != map.end() ? itr->second : nullptr);
 }
 
+void Map::Update(float target, float deltaTime)
+{
+    m_background.Update(target, deltaTime);
+}
+
 void Map::Draw(sf::RenderWindow& window)
 {
+    m_background.Draw(window);
+    
 	//TODO: create window class and move this to window.getviewspace
 	sf::Vector2f viewCenter(window.getView().getCenter());
 	sf::Vector2f viewSize(window.getView().getSize());

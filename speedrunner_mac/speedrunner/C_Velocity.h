@@ -32,9 +32,6 @@ public:
     
 	void ApplyFriction(float x, float y);
 
-	void Move(const sf::Vector2f& move);
-	void Move(float x, float y);
-
 	void SetAcceleration(float x, float y);
 	void SetAcceleration(const sf::Vector2f& acceleration);
 	const sf::Vector2f& GetAcceleration() const;

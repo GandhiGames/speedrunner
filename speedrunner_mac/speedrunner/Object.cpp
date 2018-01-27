@@ -134,7 +134,7 @@ void Object::Add(std::shared_ptr<Object> object)
 }
 
 //TODO: cache?
-std::vector<std::shared_ptr<Object>> Object::GetObjectsWithTag(const std::string& tag)
+std::vector<std::shared_ptr<Object>> Object::GetObjectsWithTag(TAG tag)
 {
 	std::vector<std::shared_ptr<Object>> retObjects;
 

@@ -12,7 +12,7 @@ C_MovementBehavior::~C_MovementBehavior()
 {
 }
 
-std::vector<std::shared_ptr<Object>> C_MovementBehavior::GetEntitiesInSight(float sightRadius, const std::string& tag) const
+std::vector<std::shared_ptr<Object>> C_MovementBehavior::GetEntitiesInSight(float sightRadius, TAG tag) const
 {
 	auto entities = Object::GetObjects();
 

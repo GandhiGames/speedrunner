@@ -47,6 +47,11 @@ void Animation::RunAction()
 	}
 }
 
+void Animation::SetScale(float x, float y)
+{
+    m_sprite.setScale(x, y);
+}
+
 void Animation::SetPosition(const sf::Vector2f& pos)
 {
 	m_sprite.setPosition(pos);

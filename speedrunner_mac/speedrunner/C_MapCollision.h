@@ -10,17 +10,15 @@
 
 struct MapCollisionElement
 {
-	MapCollisionElement(float area, std::shared_ptr<TileInfo> info, const sf::FloatRect& bounds, float xDiff, float yDiff) :
+	MapCollisionElement(float area, std::shared_ptr<TileInfo> info, const sf::FloatRect& bounds) :
 		m_area(area),
 		m_tile(info),
-		m_tileBounds(bounds), m_xDiff(xDiff), m_yDiff(yDiff) {}
+		m_tileBounds(bounds) {}
 	
 	
 	float m_area; 
 	std::shared_ptr<TileInfo> m_tile;
 	sf::FloatRect m_tileBounds;
-	float m_xDiff;
-	float m_yDiff;
 };
 
 class C_MapCollision : public Component, public C_Updateable
@@ -52,6 +50,5 @@ private:
 	std::shared_ptr<TileInfo> m_standingOnTile;
 	bool m_collidingOnX;
 	bool m_collidingOnY;
-	bool m_grounded;
 };
 

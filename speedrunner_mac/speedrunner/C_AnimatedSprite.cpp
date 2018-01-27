@@ -2,27 +2,11 @@
 #include "Object.h"
 
 C_AnimatedSprite::C_AnimatedSprite(Object* owner) : Component(owner),
-m_animated(false), m_curDirection(MOVEMENT_DIRECTION::COUNT), m_curState(ANIMATION_STATE::COUNT)
+m_animated(false),
+m_curState(ANIMATION_STATE::COUNT)
 {
 }
 
-void C_AnimatedSprite::Awake()
-{
-	m_direction = m_owner->GetComponent<C_Direction>();
-
-	if (!m_direction)
-	{
-		Debug::LogError("Cannot animate without direction. Adding Direction. To remove this warning add direction to object before this component");
-
-		//TODO: enable ability to add components in awake function:
-		//m_direction = m_owner->AddComponent<C_Direction>();
-	}
-}
-
-void C_AnimatedSprite::Start()
-{
-	m_curDirection = m_direction->Get();
-}
 
 void C_AnimatedSprite::Update(float deltaTime)
 {
@@ -36,15 +20,6 @@ void C_AnimatedSprite::LateUpdate(float deltaTime)
 {
 	if (m_curAnimation)
 	{
-		MOVEMENT_DIRECTION curDir = m_direction->Get();
-
-		if (curDir != m_curDirection)
-		{
-			m_curDirection = curDir;
-			m_curAnimation->SetFacingDirection(curDir);
-			m_curAnimation->Reset();
-		}
-
 		m_curAnimation->SetPosition(m_owner->m_transform->GetPosition());
 	}
 }
@@ -99,6 +74,14 @@ void C_AnimatedSprite::SetAnimationState(ANIMATION_STATE state)
 	}
 }
 
+void C_AnimatedSprite::SetScale(float x, float y)
+{
+    for(auto a : m_animations)
+    {
+        a.second->SetScale(x, y);
+    }
+}
+
 ANIMATION_STATE C_AnimatedSprite::GetAnimationState()
 {
 	return m_curState;
@@ -130,14 +113,11 @@ bool C_AnimatedSprite::IsAnimated()
 	return m_animated;
 }
 
-/*
-const sf::Sprite* C_AnimatedSprite::GetSprite()
+void C_AnimatedSprite::SetDirection(MOVEMENT_DIRECTION dir)
 {
-	if (m_curAnimation)
-	{
-		return &m_curAnimation->m_sprite;
-	}
-
-	return nullptr;
+    if(m_curAnimation && dir != m_curAnimation->GetFacingFirection())
+    {
+        m_curAnimation->SetFacingDirection(dir);
+        m_curAnimation->Reset();
+    }
 }
-*/
