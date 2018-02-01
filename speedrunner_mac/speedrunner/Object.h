@@ -35,6 +35,7 @@
 #include "C_DamageOnCollision.hpp"
 #include "C_DirectionalAnimation.hpp"
 #include "C_PlayAnimationOnDamage.hpp"
+#include "C_EntityEvents.hpp"
 
 class Object
 {

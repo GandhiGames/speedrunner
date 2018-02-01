@@ -2,7 +2,8 @@
 #include "Object.h"
 
 C_Transform::C_Transform(Object* owner) : Component(owner),
-m_position({ 0.f, 0.f }) {}
+m_position(0.f, 0.f),
+m_isStatic(false){}
 
 C_Transform::~C_Transform() {}
 
@@ -93,3 +94,12 @@ const std::vector<std::shared_ptr<C_Transform>>& C_Transform::GetChildren() cons
 	return m_children;
 }
 
+void C_Transform::SetStatic(bool isStatic)
+{
+    m_isStatic = isStatic;
+}
+
+bool C_Transform::isStatic() const
+{
+    return m_isStatic;
+}

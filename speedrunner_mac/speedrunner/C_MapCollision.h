@@ -8,6 +8,7 @@
 #include "C_Velocity.h"
 #include "Tile.h"
 
+//TODO: this should contain Manifold (in C_Collider class).
 struct MapCollisionElement
 {
 	MapCollisionElement(float area, std::shared_ptr<TileInfo> info, const sf::FloatRect& bounds) :
@@ -34,8 +35,6 @@ public:
 	std::shared_ptr<TileInfo> GetTileBelow();
 
 	const std::vector<MapCollisionElement>& GetCollisions() const;
-
-	bool IsGrounded() const;
 
 private:
 	static bool SortCollisions(const MapCollisionElement& a, const MapCollisionElement& b);

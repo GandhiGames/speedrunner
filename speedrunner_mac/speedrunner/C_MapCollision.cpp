@@ -97,6 +97,7 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
 			float xDiff = (AABB.left + (AABB.width * 0.5f)) - (itr.m_tileBounds.left + (itr.m_tileBounds.width * 0.5f));
 			float yDiff = (AABB.top + (AABB.height * 0.5f)) - (itr.m_tileBounds.top + (itr.m_tileBounds.height * 0.5f));
 
+            //TODO: duplicate code in C_boxcollider
 			if (abs(xDiff) > abs(yDiff))
 			{
 				if (xDiff > 0)
@@ -145,7 +146,6 @@ void C_MapCollision::ResolveCollisions(Map* gameMap)
                     m_velocity->SetVelocity(m_velocity->GetVelocity().x, 0.f);
                 }
 			
-				
 				if (m_collidingOnY) { continue; } 
 				
 				if (yDiff < 0.f) // If tile below player
@@ -176,22 +176,4 @@ std::shared_ptr<TileInfo> C_MapCollision::GetTileBelow()
 	return m_standingOnTile;
 }
 
-bool C_MapCollision::IsGrounded() const
-{
 
-    const sf::Vector2f& pos = m_owner->m_transform->GetPosition();
-    const sf::Vector2f downPos = pos + sf::Vector2f(0.f,25.f);
-    
-    auto gameMap = m_owner->m_context.m_map;
-    
-    const unsigned int tileSize = gameMap->GetTileSize().x;
-    const sf::FloatRect& AABB = m_collider->GetCollidable();
-    
-    int fromX = floor(downPos.x / tileSize);
-    int fromY = floor(downPos.y / tileSize);
-    
-    auto tile = gameMap->GetTile(fromX, fromY);
-    
-	return tile != nullptr;
-   // return m_standingOnTile != nullptr;
-}

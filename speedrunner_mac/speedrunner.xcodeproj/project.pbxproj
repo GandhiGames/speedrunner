@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E126161A2018903B0067631E /* C_RemoveOnCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E12616182018903B0067631E /* C_RemoveOnCollision.cpp */; };
 		E126161D2018A2590067631E /* C_DamageOnCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E126161B2018A2580067631E /* C_DamageOnCollision.cpp */; };
+		E134FE47201D1DC00063A97B /* EventSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E134FE45201D1DC00063A97B /* EventSystem.cpp */; };
 		E1BD10622016283E0006E6F2 /* spritesheets in Resources */ = {isa = PBXBuildFile; fileRef = E1BD105F2016283E0006E6F2 /* spritesheets */; };
 		E1BD10642016283E0006E6F2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = E1BD10612016283E0006E6F2 /* fonts */; };
 		E1BD106620162AED0006E6F2 /* data in Resources */ = {isa = PBXBuildFile; fileRef = E1BD106520162AED0006E6F2 /* data */; };
@@ -67,6 +68,12 @@
 		E12616192018903B0067631E /* C_RemoveOnCollision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_RemoveOnCollision.hpp; sourceTree = "<group>"; };
 		E126161B2018A2580067631E /* C_DamageOnCollision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C_DamageOnCollision.cpp; sourceTree = "<group>"; };
 		E126161C2018A2590067631E /* C_DamageOnCollision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_DamageOnCollision.hpp; sourceTree = "<group>"; };
+		E134FE43201D1D9A0063A97B /* Event.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Event.hpp; sourceTree = "<group>"; };
+		E134FE45201D1DC00063A97B /* EventSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EventSystem.cpp; sourceTree = "<group>"; };
+		E134FE46201D1DC00063A97B /* EventSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EventSystem.hpp; sourceTree = "<group>"; };
+		E134FE4C2020C7540063A97B /* EventCollidingBelow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EventCollidingBelow.hpp; sourceTree = "<group>"; };
+		E134FE4F2020C7DD0063A97B /* C_EntityEvents.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C_EntityEvents.hpp; sourceTree = "<group>"; };
+		E134FE552020E3120063A97B /* EventNotCollidingBelow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EventNotCollidingBelow.hpp; sourceTree = "<group>"; };
 		E14291862013AAD300ECDFF3 /* speedrunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedrunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E142918A2013AAD300ECDFF3 /* speedrunner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "speedrunner-Info.plist"; sourceTree = "<group>"; };
 		E1BD105F2016283E0006E6F2 /* spritesheets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spritesheets; sourceTree = "<group>"; };
@@ -194,6 +201,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E134FE41201D1D850063A97B /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				E134FE43201D1D9A0063A97B /* Event.hpp */,
+				E134FE45201D1DC00063A97B /* EventSystem.cpp */,
+				E134FE46201D1DC00063A97B /* EventSystem.hpp */,
+				E134FE4C2020C7540063A97B /* EventCollidingBelow.hpp */,
+				E134FE552020E3120063A97B /* EventNotCollidingBelow.hpp */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
 		E142917C2013AAD300ECDFF3 = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +232,7 @@
 		E14291882013AAD300ECDFF3 /* speedrunner */ = {
 			isa = PBXGroup;
 			children = (
+				E134FE41201D1D850063A97B /* Events */,
 				E1BD106920162C4C0006E6F2 /* Collisions */,
 				E1BD106820162C3B0006E6F2 /* Raycast */,
 				E1BD106720162C150006E6F2 /* Utilities */,
@@ -312,6 +332,7 @@
 				E1C8841A201A27C800CF5582 /* C_PlayAnimationOnDamage.hpp */,
 				E1C88416201A073500CF5582 /* C_DirectionalAnimation.cpp */,
 				E1C88417201A073500CF5582 /* C_DirectionalAnimation.hpp */,
+				E134FE4F2020C7DD0063A97B /* C_EntityEvents.hpp */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -532,6 +553,7 @@
 				E1C8841E201B6B0700CF5582 /* MapBackgroundLayer.cpp in Sources */,
 				E1C88418201A073500CF5582 /* C_DirectionalAnimation.cpp in Sources */,
 				E1D429BE2013E70E0006C8FB /* C_InstanceID.cpp in Sources */,
+				E134FE47201D1DC00063A97B /* EventSystem.cpp in Sources */,
 				E1D429CF2013E7DD0006C8FB /* main.cpp in Sources */,
 				E1D429B02013E70E0006C8FB /* C_MovementAnimation.cpp in Sources */,
 				E1D429AA2013E70E0006C8FB /* CollisionResolver.cpp in Sources */,

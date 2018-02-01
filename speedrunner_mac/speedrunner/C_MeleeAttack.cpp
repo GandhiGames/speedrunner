@@ -60,7 +60,7 @@ void C_MeleeAttack::Update(float deltaTime)
         
         if(curState != ANIMATION_STATE::ATTACK_IN_AIR && curState != ANIMATION_STATE::ATTACK_ON_GROUND)
         {
-            bool isGrounded = m_mapCollision->IsGrounded();
+            bool isGrounded = true;
             
             ANIMATION_STATE attackState = isGrounded ? ANIMATION_STATE::ATTACK_ON_GROUND : ANIMATION_STATE::ATTACK_IN_AIR;
             

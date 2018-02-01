@@ -44,7 +44,9 @@ public:
 
 	const std::vector<std::shared_ptr<C_Transform>>& GetChildren() const;
 
-
+    void SetStatic(bool isStatic);
+    bool isStatic() const;
+    
 private:
 	/**
 	* The position of the object in the game window.
@@ -52,4 +54,5 @@ private:
 	sf::Vector2f m_position;
 	std::shared_ptr<C_Transform> m_parent;
 	std::vector<std::shared_ptr<C_Transform>> m_children;
+    bool m_isStatic;
 };

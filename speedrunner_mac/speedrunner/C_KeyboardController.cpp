@@ -10,7 +10,8 @@ m_fallMultiplier(2.5f),
 m_lowJumpMultiplier(2.f),
 m_jumping(false),
 m_currentJumpCount(0),
-m_jumpCount(2)
+m_jumpCount(2),
+m_grounded(false)
 {
 }
 
@@ -18,15 +19,36 @@ void C_KeyboardController::Awake()
 {
 	m_movement = m_owner->GetComponent<C_Velocity>();
 	m_mapCollision = m_owner->GetComponent<C_MapCollision>();
+    m_events = m_owner->GetComponent<C_EntityEvents>();
 }
 
 void C_KeyboardController::Start()
 {
 	float gravity = m_owner->m_context.m_map->GetGravity();
 	m_movement->SetAcceleration(0.f, gravity);
+    
+    //TODO: this should be moved to OnEnable (need to write remove listener) and add the to Ondisable (both methods also need implementing)
+    m_events->m_eventSystem.AddListener<EventCollidingBelow>(std::bind(&C_KeyboardController::OnCollidingBelow, this, std::placeholders::_1));
 }
 
-//TODO: keyboard controller should not have calculate friction/gravity etc. 
+void C_KeyboardController::OnCollidingBelow(const Event& e)
+{
+    m_grounded = true;
+    
+    if(m_jumping)
+    {
+        m_movement->SetVelocity(0.f, 0.f);
+        m_jumping = false;
+        m_currentJumpCount = 0;
+    }
+}
+
+void C_KeyboardController::OnNotCollidingBelow(const Event& e)
+{
+    m_grounded = false;
+}
+
+//TODO: keyboard controller should not have to calculate friction/gravity etc.
 //Move to seperate physics class.
 void C_KeyboardController::Update(float timeDelta)
 {
@@ -37,7 +59,10 @@ void C_KeyboardController::Update(float timeDelta)
         CalculateMovementForce(timeDelta, gravity);
     }
     
-    CalculateJumpForce(timeDelta, gravity);
+    if(m_grounded)
+    {
+        CalculateJumpForce(timeDelta, gravity);
+    }
 }
 
 void C_KeyboardController::CalculateMovementForce(float timeDelta, float gravity)
@@ -88,15 +113,7 @@ void C_KeyboardController::CalculateMovementForce(float timeDelta, float gravity
 
 //TODO: give player small amount time after walking off ledge to still be able to jump.
 void C_KeyboardController::CalculateJumpForce(float timeDelta, float gravity)
-{
-	bool isGrounded = m_mapCollision->IsGrounded();
-
-	if (isGrounded)
-	{
-		m_jumping = false;
-        m_currentJumpCount = 0;
-	}
-
+{    
     if (Input::IsKeyDown(Input::KEY::UP) && m_currentJumpCount < m_jumpCount)
 	{
 		m_jumping = true;

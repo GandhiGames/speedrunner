@@ -79,7 +79,7 @@ void CollisionResolver::Resolve()
 		for (auto maps2 = maps; maps2 != m_collidables.end(); ++maps2)
 		{
             if(maps == maps2) { continue; }
-            
+      
 			bool firstSecond = COLLISION_LAYERS[maps->first].GetBit((int)maps2->first);
 			bool secondFirst = COLLISION_LAYERS[maps2->first].GetBit((int)maps->first);
 			
@@ -103,11 +103,17 @@ void CollisionResolver::ProcessCollisions(std::vector<std::shared_ptr<Object>>& 
 	{
 		auto first = (*itr);
 		auto collider1 = first->GetComponent<C_Collider2D>();
-
+        
 		for (auto itr2 = second.begin(); itr2 != second.end(); ++itr2)
 		{
 			auto second = (*itr2);
 
+            // Do not need to test collisions between two static objects.
+            if(first->m_transform->isStatic() && second->m_transform->isStatic())
+            {
+                continue;
+            }
+            
 			if (first->m_instanceID->Get() == second->m_instanceID->Get())
 			{
 				continue;
@@ -144,8 +150,9 @@ void CollisionResolver::ProcessCollisions(std::vector<std::shared_ptr<Object>>& 
 				//Prevent non-trigger colliders from intersecting
 				if (!firstIsTrigger && !secondIsTrigger)
 				{
+                    //TODO: how do we want to handle this? Do we want both to attempt resolution? 
 					collider1->ResolveOverlap(m);
-					m.resolve = -m.resolve;
+					//m.resolve = -m.resolve;
 					collider2->ResolveOverlap(m);
 				}
 			}

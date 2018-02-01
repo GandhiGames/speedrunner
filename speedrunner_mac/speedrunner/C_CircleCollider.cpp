@@ -26,7 +26,8 @@ Manifold C_CircleCollider::Intersects(std::shared_ptr<C_Collider2D> other)
 	std::shared_ptr<C_CircleCollider> c = std::dynamic_pointer_cast<C_CircleCollider>(other);
 
 	Manifold m;
-
+    //TODO: implmenet or remove class.
+    /*
 	if (c)
 	{
 		// Setup a couple pointers to each object
@@ -61,11 +62,14 @@ Manifold C_CircleCollider::Intersects(std::shared_ptr<C_Collider2D> other)
 			m.resolve = sf::Vector2f(1.f, 0.f) * GetRadius();
 		}
 	}
+     */
 
 	return m;
 }
 
 void C_CircleCollider::ResolveOverlap(const Manifold& m)
 {
+    /*
 	m_owner->m_transform->SetPosition(m_owner->m_transform->GetPosition() + m.resolve);
+     */
 }

@@ -37,6 +37,7 @@ void S_Game::OnCreate()
 	auto collider1 = m_player->AddComponent<C_BoxCollider>();
 	collider1->SetCollidable(sf::FloatRect(0, 0, 25, 40)); 	//TODO: need to setup player collider size
 	collider1->SetLayer(COLLISION_LAYER::PLAYER);
+    collider1->SetTrigger(false);
 	m_player->AddComponent<C_MapCollision>();
 	//m_player->AddComponent<C_DebugDrawCollider>();
 	m_player->AddComponent<C_DebugDrawMapCollisions>();
@@ -55,7 +56,8 @@ void S_Game::OnCreate()
     m_player->AddComponent<C_DirectionalAnimation>();
 	m_player->AddComponent<C_MovementAnimation>();
 	m_player->AddComponent<C_MeleeAttack>();
-
+    m_player->AddComponent<C_EntityEvents>();
+    
 	//TODO: change from relative path. Make sure you do this for all paths.
 	//m_map.LoadTiles("../resources/data/test_tileset.data",
 	//	"../resources/spritesheets/test_tileset.png");
@@ -76,6 +78,7 @@ void S_Game::OnCreate()
     // Create boss
     std::shared_ptr<Object> boss = std::make_shared<Object>(*context);
     boss->m_transform->SetPosition(sf::Vector2f(850.f, 280.f));
+    boss->m_transform->SetStatic(true);
     boss->m_tag->Set(TAG::BOSS);
     auto bossHealth = boss->AddComponent<C_Health>();
     bossHealth->SetMaxHealth(2);
@@ -94,7 +97,8 @@ void S_Game::OnCreate()
     boss->AddComponent<C_PlayAnimationOnDamage>();
     
     auto bossCollider = boss->AddComponent<C_BoxCollider>();
-    bossCollider->SetCollidable(sf::FloatRect(0, 0, 24, 14));
+    bossCollider->SetCollidable(sf::FloatRect(0, 0, 80, 24));
+    bossCollider->SetTrigger(false);
     bossCollider->SetLayer(COLLISION_LAYER::BOSS);
     Object::Add(boss);
     
@@ -117,10 +121,10 @@ void S_Game::Update(float deltaTime)
 {
 	Input::Update();
 
-	m_collisions.Resolve();
-
 	Object::UpdateAll(deltaTime);
 
+    m_collisions.Resolve();
+    
 	if (Input::IsKeyPressed(Input::KEY::ESC))
 	{
 		m_stateManager->m_context->m_window->close();
